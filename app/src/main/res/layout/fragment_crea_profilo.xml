@@ -98,6 +98,7 @@
         android:layout_height="wrap_content"
         android:text="@string/crea_profilo_btn_conferma"
         android:id="@+id/button_conferma"
+        android:onClick="confermaCreaProfilo"
         android:layout_gravity="center_horizontal|bottom" />
 
 </FrameLayout>

@@ -1,5 +1,8 @@
 package com.hirvorn.qtb_test.CreaProfilo;
 
+import android.widget.Button;
+import android.widget.EditText;
+
 import java.util.Scanner;
 
 public class OttieniDati {

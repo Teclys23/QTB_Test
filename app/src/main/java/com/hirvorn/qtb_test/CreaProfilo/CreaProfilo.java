@@ -26,11 +26,9 @@ public class CreaProfilo extends AppCompatActivity{
 	}
 	
 	
-	public void init(){
+	public void init(String nome, String cognome, String mail, String telefono){
 
 		Log.v(StartPage.LOG_TAG, "-------------***** ---------------------- **********-----------");
-
-		fragment = new Fragment_CreaProfilo();
 
 		/*
 		if (!isFinishing()) {
@@ -47,9 +45,9 @@ public class CreaProfilo extends AppCompatActivity{
 
 		fragmentTransaction.commit();*/
 
-		OttieniDati ottieniDati = new OttieniDati();
-		this.profilo = new Profilo(ottieniDati.getNome(), ottieniDati.getCognome(), ottieniDati.getMail(), ottieniDati.getTelefono());
-		Log.v(StartPage.LOG_TAG, "NUOVO PROFILO " + ottieniDati.getNome() + ottieniDati.getCognome() + ottieniDati.getMail() + ottieniDati.getTelefono() );
+		//OttieniDati ottieniDati = new OttieniDati();
+		this.profilo = new Profilo(nome, cognome, mail, telefono);
+		Log.v(StartPage.LOG_TAG, "NUOVO PROFILO " + nome + " " + cognome + " " + mail + " " + telefono);
 		profilo.configCodiceProfilo();
 	}
 	
