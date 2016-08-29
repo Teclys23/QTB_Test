@@ -1,19 +1,24 @@
 package com.hirvorn.qtb_test.CreaProfilo;
 
-import android.content.Context;
+import android.support.v4.app.*;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import java.util.ArrayList;
 
 import com.hirvorn.qtb_test.CreaBrevetto.*;
 import com.hirvorn.qtb_test.Main.Principale;
+import com.hirvorn.qtb_test.R;
 import com.hirvorn.qtb_test.Settings.PropertiesWriter;
 import com.hirvorn.qtb_test.StartPage;
 import com.hirvorn.qtb_test.Utente.Profilo;
 
-public class CreaProfilo {
+public class CreaProfilo extends AppCompatActivity{
 
 	private Profilo profilo;
+	private Fragment fragment;
 	
 	
 	public CreaProfilo(){
@@ -22,6 +27,26 @@ public class CreaProfilo {
 	
 	
 	public void init(){
+
+		Log.v(StartPage.LOG_TAG, "-------------***** ---------------------- **********-----------");
+
+		fragment = new Fragment_CreaProfilo();
+
+		/*
+		if (!isFinishing()) {
+			FragmentTransaction ft = getSupportFragmentManager()
+					.beginTransaction();
+			ft.replace(R.id.fragment_main, fragment);
+			ft.commit();
+		}
+
+/*
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		fragmentTransaction.replace(R.id.fragment_main, fragment);
+
+		fragmentTransaction.commit();*/
+
 		OttieniDati ottieniDati = new OttieniDati();
 		this.profilo = new Profilo(ottieniDati.getNome(), ottieniDati.getCognome(), ottieniDati.getMail(), ottieniDati.getTelefono());
 		Log.v(StartPage.LOG_TAG, "NUOVO PROFILO " + ottieniDati.getNome() + ottieniDati.getCognome() + ottieniDati.getMail() + ottieniDati.getTelefono() );

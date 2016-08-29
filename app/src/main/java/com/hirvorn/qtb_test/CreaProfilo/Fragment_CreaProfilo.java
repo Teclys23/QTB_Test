@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.hirvorn.qtb_test.R;
 
+
 public class Fragment_CreaProfilo extends Fragment {
 
     @Override

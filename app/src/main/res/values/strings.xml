@@ -2,7 +2,15 @@
     <string name="app_name">QTB_Test</string>
     <string name="sessioneCorrente">null</string>
 
-    <string name="hello_main_fragment">Hello main fragment!</string>
+    <string name="hello_main_fragment"></string>
+
+    <!-- fragment_crea_profilo -->
+    <string name="crea_profilo_titolo">Crea nuovo profilo</string>
+    <string name="crea_profilo_nome">Nome:</string>
+    <string name="crea_profilo_cognome">Cognome:</string>
+    <string name="crea_profilo_mail">Mail:</string>
+    <string name="crea_profilo_telefono">Telefono:</string>
+    <string name="crea_profilo_btn_conferma">Conferma</string>
 
 
 </resources>
