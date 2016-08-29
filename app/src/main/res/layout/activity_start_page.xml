@@ -17,4 +17,13 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Large Text"
         android:id="@+id/tw_sessioneCorrente" />
+
+    <fragment
+        android:name="com.hirvorn.qtb_test.Main.Fragment_Main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_main">
+
+    </fragment>
+
 </LinearLayout>

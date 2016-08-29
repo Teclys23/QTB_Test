@@ -16,6 +16,7 @@ import com.hirvorn.qtb_test.StartPage;
 import java.util.ArrayList;
 import java.util.Map;
 
+
 public class Principale {
 
 	//ConfigFile
@@ -54,7 +55,6 @@ public class Principale {
 		controller.setSessione(login.ultimaSessione(lastSessionFile, this.context));
 		Log.v(StartPage.LOG_TAG, "controller - sessione: " + controller.getSessione());
 		
-		
 		//se esiste l'ultima sessione, la apre
 		if(controller.getSessione().isValidSession()){
 			//System.out.println("Sessione attiva: " + controller.getSessione().getCodiceUtente())
@@ -64,6 +64,7 @@ public class Principale {
 		}//altrimenti..
 		else{
 			Log.v(StartPage.LOG_TAG, "Sessione non valida. Avvio creazione profilo.");
+
 
 			login.creaNuovoProfilo();
 			login.creaNuovoBrevetto();

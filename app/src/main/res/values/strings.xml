@@ -2,6 +2,7 @@
     <string name="app_name">QTB_Test</string>
     <string name="sessioneCorrente">null</string>
 
+    <string name="hello_main_fragment">Hello main fragment!</string>
 
 
 </resources>
