@@ -40,12 +40,21 @@ public class Sessione {
 	public String getCodiceUtente() {
 		return codiceUtente;
 	}
+
 	public void setCodiceUtente(String sessione) {
 		this.codiceUtente = sessione;
 	}
+
 	public boolean isValidSession() {
-		return validSession;
+		if(!getCodiceUtente().equals("null")){
+			return validSession;
+		}
+		else{
+			return false;
+		}
+
 	}
+
 	public void setValidSession(boolean validSession) {
 		this.validSession = validSession;
 	}
