@@ -3,10 +3,14 @@ package com.hirvorn.qtb_test;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,6 +21,7 @@ import com.hirvorn.qtb_test.CreaProfilo.Fragment_CreaProfilo;
 import com.hirvorn.qtb_test.Login.Login;
 import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.Settings.ReadPropertyValues;
+import com.hirvorn.qtb_test.Utils.CustomViewPager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,12 +39,36 @@ public class StartPage extends AppCompatActivity {
     private static EditText crea_profilo_mail;
     private static EditText crea_profilo_telefono;
 
+    /**
+     * The number of pages (wizard steps) to show in this demo.
+     */
+    private static final int NUM_PAGES = 5;
+
+    /**
+     * The pager widget, which handles animation and allows swiping horizontally to access previous
+     * and next wizard steps.
+     */
+    private CustomViewPager mPager;
+
+    /**
+     * The pager adapter, which provides the pages to the view pager widget.
+     */
+    private PagerAdapter mPagerAdapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.activity_start_page);
+
+        // Instantiate a ViewPager and a PagerAdapter.
+        mPager = (CustomViewPager) findViewById(R.id.pager);
+
+
+        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        mPager.setPagingEnabled(false);
+        mPager.setAdapter(mPagerAdapter);
 
         init();
     }
@@ -76,14 +105,20 @@ public class StartPage extends AppCompatActivity {
     }
 
     private void iniziaCreaProfilo(){
+        mPager.setCurrentItem(0);
+        /*
         Fragment fragment = new Fragment_CreaProfilo();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_main, fragment);
-        fragmentTransaction.commit();
+        fragmentTransaction.commit();*/
 
     }
 
+    /**
+     * Creazione di un nuovo profilo
+     * @param view
+     */
     public void confermaCreaProfilo(View view){
         Login login = new Login();
 
@@ -119,4 +154,37 @@ public class StartPage extends AppCompatActivity {
             login.creaNuovoProfilo(nome, cognome, mail, telefono);
         }
     }
+
+    /**
+     * Creazione di un nuovo brevetto
+     * @param view
+     */
+    public void confermaBrevetto(View view){
+
+    }
+
+    private void transizioneFragment(int vecchioFrag, int nuovoFrag){
+
+    }
+
+    /**
+     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+     * sequence.
+     */
+    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        public ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return new Fragment_CreaProfilo();
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_PAGES;
+        }
+    }
+
 }

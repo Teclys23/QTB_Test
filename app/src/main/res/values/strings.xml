@@ -12,5 +12,12 @@
     <string name="crea_profilo_telefono">Telefono:</string>
     <string name="crea_profilo_btn_conferma">Conferma</string>
 
+    <!-- fragment_crea_brevetto -->
+    <string name="crea_brevetto_codice">Codice:</string>
+    <string name="crea_brevetto_data_rilascio">Data rilascio:</string>
+    <string name="crea_brevetto_data_scadenza">Data scadenza</string>
+    <string name="crea_brevetto_btn_conferma">Conferma</string>
+
+
 
 </resources>

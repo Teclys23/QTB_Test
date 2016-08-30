@@ -10,7 +10,6 @@
     tools:context="com.hirvorn.qtb_test.StartPage"
     android:orientation="vertical">
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,12 +17,25 @@
         android:text="@string/sessioneCorrente"
         android:id="@+id/tw_sessioneCorrente" />
 
-    <fragment
-        android:name="com.hirvorn.qtb_test.Main.Fragment_Main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/fragment_main">
+    <!-- activity_screen_slide.xml -->
 
-    </fragment>
+
+    <!--<android.support.v4.view.ViewPager-->
+    <com.hirvorn.qtb_test.Utils.CustomViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!--
+
+
+        <fragment
+            android:name="com.hirvorn.qtb_test.Main.Fragment_Main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fragment_main">
+
+        </fragment> -->
 
 </LinearLayout>
