@@ -83,9 +83,9 @@ public class Login {
 	}
 	
 	//crea un nuovo brevetto e lo aggancia al profilo
-	public void creaNuovoBrevetto(){
-		CreaBrevetto creaB = new CreaBrevetto();
-		creaB.init();
+	public void creaNuovoBrevetto(String codiceUtente, String codice, String data_rilascio, String data_scadenza){
+		CreaBrevetto creaB = new CreaBrevetto(codiceUtente);
+		creaB.init(codice, data_rilascio, data_scadenza);
 		creaB.salvaBrevetto();
 	}
 	

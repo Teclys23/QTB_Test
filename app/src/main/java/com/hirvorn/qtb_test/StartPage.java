@@ -36,10 +36,16 @@ public class StartPage extends AppCompatActivity {
     //Componenti
     private static TextView sessioneCorrente;
 
+    //Profilo
     private static EditText crea_profilo_nome;
     private static EditText crea_profilo_cognome;
     private static EditText crea_profilo_mail;
     private static EditText crea_profilo_telefono;
+
+    //Brevetto
+    private static EditText crea_brevetto_codice;
+    private static EditText crea_brevetto_data_rilascio;
+    private static EditText crea_brevetto_data_scadenza;
 
     /**
      * The number of pages (wizard steps) to show in this demo.
@@ -108,12 +114,6 @@ public class StartPage extends AppCompatActivity {
 
     private void iniziaCreaProfilo(){
         mPager.setCurrentItem(0);
-        /*
-        Fragment fragment = new Fragment_CreaProfilo();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_main, fragment);
-        fragmentTransaction.commit();*/
 
     }
 
@@ -156,8 +156,6 @@ public class StartPage extends AppCompatActivity {
             login.creaNuovoProfilo(nome, cognome, mail, telefono);
             mPager.setCurrentItem(1, true);
         }
-
-
     }
 
     /**
@@ -166,10 +164,32 @@ public class StartPage extends AppCompatActivity {
      */
     public void confermaBrevetto(View view){
 
-    }
+        Login login = new Login();
 
-    private void transizioneFragment(int vecchioFrag, int nuovoFrag){
+        crea_brevetto_codice = (EditText)findViewById(R.id.editText_codice);
+        String codice = crea_brevetto_codice.getText().toString();
 
+        if(TextUtils.isEmpty(codice)){
+            crea_brevetto_codice.setError("Codice mancante");
+        }
+
+        crea_brevetto_data_rilascio = (EditText)findViewById(R.id.editText_data_rilascio);
+        String data_rilascio = crea_brevetto_data_rilascio.getText().toString();
+
+        if(TextUtils.isEmpty(data_rilascio)){
+            crea_brevetto_data_rilascio.setError("Data rilascio mancante");
+        }
+
+        crea_brevetto_data_scadenza = (EditText)findViewById(R.id.editText_data_scadenza);
+        String data_scadenza = crea_brevetto_data_scadenza.getText().toString();
+
+        if(TextUtils.isEmpty(data_scadenza)){
+            crea_brevetto_data_scadenza.setError("Data scadenza mancancete");
+        }
+
+        if(!TextUtils.isEmpty(codice) && !TextUtils.isEmpty(data_rilascio) && !TextUtils.isEmpty(data_scadenza)){
+            login.creaNuovoBrevetto(Principale.getController().getSessione().getCodiceUtente(), codice, data_rilascio, data_scadenza);
+        }
     }
 
     /**

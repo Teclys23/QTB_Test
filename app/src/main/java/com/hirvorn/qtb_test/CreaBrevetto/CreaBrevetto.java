@@ -1,35 +1,41 @@
 package com.hirvorn.qtb_test.CreaBrevetto;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 import com.hirvorn.qtb_test.Main.Principale;
+import com.hirvorn.qtb_test.Objects.Sessione;
 import com.hirvorn.qtb_test.Settings.PropertiesWriter;
+import com.hirvorn.qtb_test.StartPage;
 import com.hirvorn.qtb_test.Utente.Brevetto;
+import com.hirvorn.qtb_test.Utente.Profilo;
 
 public class CreaBrevetto {
 
 	private Brevetto brevetto;
+	private String codiceUtente;
 	
 	/**
 	 * Costruttore
 	 */
-	public CreaBrevetto(){
+	public CreaBrevetto(String codiceUtente){
 		this.brevetto = null;
+		this.codiceUtente = codiceUtente;
 	}
 
 	
 	/**
 	 * Metodi
 	 */
-	public void init(){
-		OttieniDati dati = new OttieniDati();
-		this.setBrevetto(new Brevetto(dati.getCodice(), dati.getDataRilascio(), dati.getDataScadenza()));
+	public void init(String codice, String dataRilascio, String dataScadenza){
+		this.brevetto = new Brevetto(codice, dataRilascio, dataScadenza);
+		Log.v(StartPage.LOG_TAG, "Nuovo Brevetto -- cod: " + this.brevetto.getCodice() + " dataR: " + this.brevetto.getData_rilascio() + " dataS: " + this.brevetto.getData_scadenza());
 	}
 	
 	public void salvaBrevetto(){
-		PropertiesWriter writer = new PropertiesWriter(Principale.getController().getSessione().getCodiceUtente() + ".properties", Principale.getController().getContext());
+		PropertiesWriter writer = new PropertiesWriter(this.codiceUtente + Principale.getConfig().getUserExtension(), Principale.getController().getContext());
 		
 		//Creo l'elenco di chiavi
 		ArrayList<String> keys = new ArrayList<String>();

@@ -79,5 +79,6 @@
         android:layout_height="wrap_content"
         android:text="@string/crea_brevetto_btn_conferma"
         android:id="@+id/button"
+        android:onClick="confermaBrevetto"
         android:layout_gravity="center_horizontal|bottom" />
 </FrameLayout>

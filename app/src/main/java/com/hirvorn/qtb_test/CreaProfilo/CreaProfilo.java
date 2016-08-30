@@ -30,22 +30,6 @@ public class CreaProfilo extends AppCompatActivity{
 
 		Log.v(StartPage.LOG_TAG, "-------------***** ---------------------- **********-----------");
 
-		/*
-		if (!isFinishing()) {
-			FragmentTransaction ft = getSupportFragmentManager()
-					.beginTransaction();
-			ft.replace(R.id.fragment_main, fragment);
-			ft.commit();
-		}
-
-/*
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		fragmentTransaction.replace(R.id.fragment_main, fragment);
-
-		fragmentTransaction.commit();*/
-
-		//OttieniDati ottieniDati = new OttieniDati();
 		this.profilo = new Profilo(nome, cognome, mail, telefono);
 		Log.v(StartPage.LOG_TAG, "NUOVO PROFILO " + nome + " " + cognome + " " + mail + " " + telefono);
 		profilo.configCodiceProfilo();
