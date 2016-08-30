@@ -78,6 +78,7 @@ public class Login {
 		//---------------
 		Log.v(StartPage.LOG_TAG, "QUAAAAAAAAAAAAAAAAAA");
 		Principale.getController().setSessione(new Sessione(this.getProfilo().getCodice()));
+		Principale.getController().setProfilo(this.getProfilo());
 		Log.v(StartPage.LOG_TAG, "QUAAAAAAAAAAAAAAAAAA 2");
 		//---------------
 	}
@@ -87,6 +88,9 @@ public class Login {
 		CreaBrevetto creaB = new CreaBrevetto(codiceUtente);
 		creaB.init(codice, data_rilascio, data_scadenza);
 		creaB.salvaBrevetto();
+
+		//Imposta il brevetto nel controllore
+		Principale.getController().setBrevetto(creaB.getBrevetto());
 	}
 	
 	public Profilo getProfilo() {

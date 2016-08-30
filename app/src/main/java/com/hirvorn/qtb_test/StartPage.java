@@ -23,6 +23,7 @@ import com.hirvorn.qtb_test.CreaProfilo.Fragment_CreaProfilo;
 import com.hirvorn.qtb_test.Login.Login;
 import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.Settings.ReadPropertyValues;
+import com.hirvorn.qtb_test.Utente.Fragment_Profilo;
 import com.hirvorn.qtb_test.Utils.CustomViewPager;
 
 import java.io.IOException;
@@ -189,6 +190,7 @@ public class StartPage extends AppCompatActivity {
 
         if(!TextUtils.isEmpty(codice) && !TextUtils.isEmpty(data_rilascio) && !TextUtils.isEmpty(data_scadenza)){
             login.creaNuovoBrevetto(Principale.getController().getSessione().getCodiceUtente(), codice, data_rilascio, data_scadenza);
+            mPager.setCurrentItem(3);
         }
     }
 
@@ -208,6 +210,10 @@ public class StartPage extends AppCompatActivity {
                 case 0: return new Fragment_CreaProfilo();
 
                 case 1: return new Fragment_CreaBrevetto();
+
+                case 3: return Fragment_Profilo.nuovaIstanza(Principale.getController().getProfilo().getNome(),
+                                                            Principale.getController().getProfilo().getCognome(),
+                                                            Principale.getController().getBrevetto().getCodice());
 
                 default: return new Fragment_CreaBrevetto();
             }

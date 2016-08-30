@@ -2,7 +2,7 @@ package com.hirvorn.qtb_test.Utente;
 
 public class Brevetto {
 
-	private String codice;
+	private String codice = "000000";
 	private String data_rilascio;
 	private String data_scadenza;
 	
