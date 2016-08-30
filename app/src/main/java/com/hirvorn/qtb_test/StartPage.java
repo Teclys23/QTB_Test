@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hirvorn.qtb_test.Controller.Controller;
+import com.hirvorn.qtb_test.CreaBrevetto.Fragment_CreaBrevetto;
 import com.hirvorn.qtb_test.CreaProfilo.Fragment_CreaProfilo;
 import com.hirvorn.qtb_test.Login.Login;
 import com.hirvorn.qtb_test.Main.Principale;
@@ -152,7 +154,10 @@ public class StartPage extends AppCompatActivity {
 
         if(!TextUtils.isEmpty(nome) && !TextUtils.isEmpty(cognome) && !TextUtils.isEmpty(mail) && !TextUtils.isEmpty(telefono)){
             login.creaNuovoProfilo(nome, cognome, mail, telefono);
+            mPager.setCurrentItem(1, true);
         }
+
+
     }
 
     /**
@@ -178,13 +183,22 @@ public class StartPage extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return new Fragment_CreaProfilo();
+            Log.v(StartPage.LOG_TAG, "getItem Position: " + position);
+            switch (position){
+                case 0: return new Fragment_CreaProfilo();
+
+                case 1: return new Fragment_CreaBrevetto();
+
+                default: return new Fragment_CreaBrevetto();
+            }
         }
 
         @Override
         public int getCount() {
             return NUM_PAGES;
         }
+
+
     }
 
 }
