@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.hirvorn.qtb_test.CreaBrevetto.CreaBrevetto;
 import com.hirvorn.qtb_test.CreaProfilo.CreaProfilo;
+import com.hirvorn.qtb_test.Drone.Drone;
 import com.hirvorn.qtb_test.Eccezioni.LastSessionNotFoundException;
 import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.Settings.Configuration;
@@ -92,6 +93,11 @@ public class Login {
 		//Imposta il brevetto nel controllore
 		Principale.getController().setBrevetto(creaB.getBrevetto());
 	}
+
+    public void creaNuovoDrone(String data, String categoria, String marca, String apr, String spr, String numero_motori){
+        Drone drone = new Drone(data, categoria, marca, apr, spr, numero_motori, Principale.getController().getSessione().getCodiceUtente());
+        drone.salvaNuovoDrone();
+    }
 	
 	public Profilo getProfilo() {
 		return profilo;

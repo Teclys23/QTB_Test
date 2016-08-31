@@ -30,6 +30,7 @@ public class Profilo {
 		this.cognome = cognome;
 		this.mail = mail;
 		this.telefono = telefono;
+        droni_posseduti = new ArrayList<>();
 	}
 
 

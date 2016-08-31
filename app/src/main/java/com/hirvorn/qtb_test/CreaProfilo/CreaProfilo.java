@@ -18,7 +18,6 @@ import com.hirvorn.qtb_test.Utente.Profilo;
 public class CreaProfilo extends AppCompatActivity{
 
 	private Profilo profilo;
-	private Fragment fragment;
 	
 	
 	public CreaProfilo(){
@@ -44,6 +43,7 @@ public class CreaProfilo extends AppCompatActivity{
 		keys.add("surname");
 		keys.add("mail");
 		keys.add("telephone");
+        keys.add("drones");
 		
 		//creo l'elenco dei valori
 		ArrayList<String> values = new ArrayList<String>();
@@ -52,6 +52,7 @@ public class CreaProfilo extends AppCompatActivity{
 		values.add(this.profilo.getCognome());
 		values.add(this.profilo.getMail());
 		values.add(this.profilo.getTelefono());
+        values.add("#");
 		
 		writer.write(keys, values);
 	}

@@ -18,6 +18,21 @@
     <string name="crea_brevetto_data_scadenza">Data scadenza</string>
     <string name="crea_brevetto_btn_conferma">Conferma</string>
 
+    <!-- fragment_profilo -->
+    <string name="profilo_aggiungi_drone">Aggiungi drone:</string>
+
+    <!-- fragment_crea_drone -->
+    <string name="crea_drone_titolo">Crea nuova abilitazione</string>
+    <string name="crea_drone_data">Data:</string>
+    <string name="crea_drone_categoria">Categoria:</string>
+    <string name="crea_drone_marca">Marca:</string>
+    <string name="crea_drone_apr">APR:</string>
+    <string name="crea_drone_spr">SPR:</string>
+    <string name="crea_drone_numero_motori">Numero motori:</string>
+    <string name="crea_drone_btn_aggiungi_batteria">Aggiungi Batteria</string>
+    <string name="crea_drone_btn_conferma">Conferma</string>
+
+
 
 
 </resources>

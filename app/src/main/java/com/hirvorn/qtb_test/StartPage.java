@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.hirvorn.qtb_test.Controller.Controller;
 import com.hirvorn.qtb_test.CreaBrevetto.Fragment_CreaBrevetto;
+import com.hirvorn.qtb_test.CreaDrone.Fragment_CreaDrone;
 import com.hirvorn.qtb_test.CreaProfilo.Fragment_CreaProfilo;
 import com.hirvorn.qtb_test.Login.Login;
 import com.hirvorn.qtb_test.Main.Principale;
@@ -47,6 +48,14 @@ public class StartPage extends AppCompatActivity {
     private static EditText crea_brevetto_codice;
     private static EditText crea_brevetto_data_rilascio;
     private static EditText crea_brevetto_data_scadenza;
+
+    //Drone
+    private static EditText crea_drone_data;
+    private static EditText crea_drone_categoria;
+    private static EditText crea_drone_marca;
+    private static EditText crea_drone_apr;
+    private static EditText crea_drone_spr;
+    private static EditText crea_drone_numero_motori;
 
     /**
      * The number of pages (wizard steps) to show in this demo.
@@ -190,7 +199,67 @@ public class StartPage extends AppCompatActivity {
 
         if(!TextUtils.isEmpty(codice) && !TextUtils.isEmpty(data_rilascio) && !TextUtils.isEmpty(data_scadenza)){
             login.creaNuovoBrevetto(Principale.getController().getSessione().getCodiceUtente(), codice, data_rilascio, data_scadenza);
-            mPager.setCurrentItem(3);
+            mPager.setCurrentItem(3, true);
+        }
+    }
+
+    public void aggiungiDrone(View view){
+        mPager.setCurrentItem(2, true);
+    }
+
+    /**
+     * Crea un drone
+     * @param view
+     */
+    public void confermaCreaDrone(View view){
+        crea_drone_data = (EditText)findViewById(R.id.editText_crea_drone_data);
+        String data = crea_drone_data.getText().toString();
+
+        if(TextUtils.isEmpty(data)){
+            crea_drone_data.setError("Data mancante");
+        }
+
+        crea_drone_categoria = (EditText)findViewById(R.id.editText_crea_drone_categoria);
+        String categoria = crea_drone_categoria.getText().toString();
+
+        if(TextUtils.isEmpty(categoria)){
+            crea_drone_categoria.setError("Categoria mancante");
+        }
+
+        crea_drone_marca = (EditText)findViewById(R.id.editText_crea_drone_marca);
+        String marca = crea_drone_marca.getText().toString();
+
+        if(TextUtils.isEmpty(marca)){
+            crea_drone_marca.setError("Marca mancante");
+        }
+
+        crea_drone_apr = (EditText)findViewById(R.id.editText_crea_drone_apr);
+        String apr = crea_drone_apr.getText().toString();
+
+        if(TextUtils.isEmpty(apr)){
+            crea_drone_apr.setError("APR mancante");
+        }
+
+        crea_drone_spr = (EditText)findViewById(R.id.editText_crea_drone_spr);
+        String spr = crea_drone_spr.getText().toString();
+
+        if(TextUtils.isEmpty(spr)){
+            crea_drone_spr.setError("SPR mancante");
+        }
+
+        crea_drone_numero_motori = (EditText)findViewById(R.id.editText_crea_drone_numero_motori);
+        String numero_motori = crea_drone_numero_motori.getText().toString();
+
+        if(TextUtils.isEmpty(numero_motori)){
+            crea_drone_numero_motori.setError("Numero motori mancante");
+        }
+
+        if(!TextUtils.isEmpty(data) && !TextUtils.isEmpty(categoria) && !TextUtils.isEmpty(marca) && !TextUtils.isEmpty(apr) && !TextUtils.isEmpty(spr) && !TextUtils.isEmpty(numero_motori)){
+            //salva drone
+            Login login = new Login();
+            login.creaNuovoDrone(data, categoria, marca, apr, spr, numero_motori);
+
+            mPager.setCurrentItem(3, true);
         }
     }
 
@@ -210,6 +279,8 @@ public class StartPage extends AppCompatActivity {
                 case 0: return new Fragment_CreaProfilo();
 
                 case 1: return new Fragment_CreaBrevetto();
+
+                case 2: return new Fragment_CreaDrone();
 
                 case 3: return Fragment_Profilo.nuovaIstanza(Principale.getController().getProfilo().getNome(),
                                                             Principale.getController().getProfilo().getCognome(),

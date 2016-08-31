@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Utente.Fragment_Profilo">
 
 
     <LinearLayout
@@ -93,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Aggiungi drone:"
+            android:text="@string/profilo_aggiungi_drone"
             android:id="@+id/textView15" />
 
         <Button
@@ -101,6 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="aggiungi"
+            android:onClick="aggiungiDrone"
             android:id="@+id/button2" />
 
     </LinearLayout>
