@@ -85,7 +85,20 @@
         <Space
             android:layout_width="20px"
             android:layout_height="20px" />
+
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/profilo_droni_posseduti"
+        android:id="@+id/textView19"/>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/droneList" />
 
     <LinearLayout
         android:orientation="horizontal"

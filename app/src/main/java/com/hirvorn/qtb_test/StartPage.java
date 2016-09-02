@@ -259,7 +259,9 @@ public class StartPage extends AppCompatActivity {
             Login login = new Login();
             login.creaNuovoDrone(data, categoria, marca, apr, spr, numero_motori);
 
+            Fragment_Profilo.aggiungiCodiceDrone(apr + spr);
             mPager.setCurrentItem(3, true);
+
         }
     }
 

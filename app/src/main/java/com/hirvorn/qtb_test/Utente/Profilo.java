@@ -2,6 +2,7 @@ package com.hirvorn.qtb_test.Utente;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.hirvorn.qtb_test.Drone.Drone;
 import com.hirvorn.qtb_test.Main.Principale;
@@ -44,6 +45,45 @@ public class Profilo {
 		setCodice(Principale.getConfig().getLastCode() + "-" + subcode);
 		System.out.println("codice: " + getCodice());
 	}
+
+    public static Profilo getProfilo(String codiceUtente){
+
+        ReadPropertyValues reader = new ReadPropertyValues();
+
+        ArrayList<String> keys = new ArrayList<>();
+        keys.add("codice");
+        keys.add("nome");
+        keys.add("cognome");
+        keys.add("mail");
+        keys.add("telefono");
+
+        ArrayList<String> values = null;
+        try {
+            values = reader.getPropertyValues(codiceUtente + Principale.getConfig().getUserExtension(), keys, Principale.getController().getContext(), true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Profilo p = new Profilo(values.get(1), values.get(2), values.get(3), values.get(4));
+        p.setCodice(values.get(0));
+
+        return p;
+    }
+
+    /**
+     * Metodo per ottenere un ArrayList contenente i codici dei droni posseduti
+     * @return
+     */
+    public ArrayList<String> getDroniPosseduti(){
+
+        ReadPropertyValues reader = new ReadPropertyValues();
+
+        String droni = reader.getPropValue(this.getCodice() + Principale.getConfig().getUserExtension(), "drones");
+
+        ArrayList<String> droni_posseduti = new ArrayList<String>(Arrays.asList(droni.split("#")));
+
+        return droni_posseduti;
+    }
 	
 	public String getNome() {
 		return nome;
@@ -114,28 +154,6 @@ public class Profilo {
 		this.codice = codice;
 	}
 
-	public static Profilo getProfilo(String codiceUtente){
 
-		ReadPropertyValues reader = new ReadPropertyValues();
-
-		ArrayList<String> keys = new ArrayList<>();
-		keys.add("codice");
-		keys.add("nome");
-		keys.add("cognome");
-		keys.add("mail");
-		keys.add("telefono");
-
-		ArrayList<String> values = null;
-		try {
-			values = reader.getPropertyValues(codiceUtente + Principale.getConfig().getUserExtension(), keys, Principale.getController().getContext(), true);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		Profilo p = new Profilo(values.get(1), values.get(2), values.get(3), values.get(4));
-		p.setCodice(values.get(0));
-
-		return p;
-	}
 
 }
