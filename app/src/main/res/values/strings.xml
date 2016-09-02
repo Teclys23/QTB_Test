@@ -33,6 +33,11 @@
     <string name="crea_drone_btn_aggiungi_batteria">Aggiungi Batteria</string>
     <string name="crea_drone_btn_conferma">Conferma</string>
 
+    <!-- fragment_crea_batteria -->
+    <string name="crea_batteria_titolo">Crea nuova batteria</string>
+    <string name="crea_batteria_drone">Codice drone:</string>
+    <string name="crea_batteria_codice">Codice:</string>
+    <string name="crea_batteria_pulsante">Conferma</string>
 
 
 

@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hirvorn.qtb_test.Controller.Controller;
+import com.hirvorn.qtb_test.CreaBatteria.Fragment_CreaBatteria;
 import com.hirvorn.qtb_test.CreaBrevetto.Fragment_CreaBrevetto;
 import com.hirvorn.qtb_test.CreaDrone.Fragment_CreaDrone;
 import com.hirvorn.qtb_test.CreaProfilo.Fragment_CreaProfilo;
@@ -56,6 +57,10 @@ public class StartPage extends AppCompatActivity {
     private static EditText crea_drone_apr;
     private static EditText crea_drone_spr;
     private static EditText crea_drone_numero_motori;
+
+    //Batteria
+    private static EditText crea_batteria_drone;
+    private static EditText crea_batteria_codice;
 
     /**
      * The number of pages (wizard steps) to show in this demo.
@@ -265,6 +270,35 @@ public class StartPage extends AppCompatActivity {
         }
     }
 
+    public void creaBatteria(View view){
+        mPager.setCurrentItem(4, true);
+    }
+
+    public void confermaCreaBatteria(View view){
+
+        crea_batteria_drone = (EditText)findViewById(R.id.crea_batteria_drone);
+        String drone = crea_batteria_drone.getText().toString();
+
+        if(TextUtils.isEmpty(drone)){
+            crea_batteria_drone.setError("Drone mancante");
+        }
+
+        crea_batteria_codice = (EditText)findViewById(R.id.crea_batteria_codice);
+        String codice = crea_batteria_codice.getText().toString();
+
+        if(TextUtils.isEmpty(codice)){
+            crea_batteria_codice.setError("Codice mancante");
+        }
+
+        if(!TextUtils.isEmpty(codice) && !TextUtils.isEmpty(drone)){
+            Login login = new Login();
+            login.creaNuovaBatteria(drone, codice);
+
+            mPager.setCurrentItem(3, true);
+        }
+
+    }
+
     /**
      * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
      * sequence.
@@ -287,6 +321,8 @@ public class StartPage extends AppCompatActivity {
                 case 3: return Fragment_Profilo.nuovaIstanza(Principale.getController().getProfilo().getNome(),
                                                             Principale.getController().getProfilo().getCognome(),
                                                             Principale.getController().getBrevetto().getCodice());
+
+                case 4: return new Fragment_CreaBatteria();
 
                 default: return new Fragment_CreaBrevetto();
             }

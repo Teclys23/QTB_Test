@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import com.hirvorn.qtb_test.Batteria.Batteria;
 import com.hirvorn.qtb_test.CreaBrevetto.CreaBrevetto;
 import com.hirvorn.qtb_test.CreaProfilo.CreaProfilo;
 import com.hirvorn.qtb_test.Drone.Drone;
@@ -97,6 +98,12 @@ public class Login {
     public void creaNuovoDrone(String data, String categoria, String marca, String apr, String spr, String numero_motori){
         Drone drone = new Drone(data, categoria, marca, apr, spr, numero_motori, Principale.getController().getSessione().getCodiceUtente());
         drone.salvaNuovoDrone();
+    }
+
+    public void creaNuovaBatteria(String drone, String codice){
+        Batteria batteria = new Batteria(drone, codice);
+        batteria.salvaBatteria();
+
     }
 	
 	public Profilo getProfilo() {
