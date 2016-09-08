@@ -25,7 +25,6 @@ public class Drone {
     private String spr;
     private String numero_motori;
     private String proprietario;
-    private ArrayList<String> batterie;
 
     public Drone(String data, String categoria, String marca, String apr, String spr, String numero_motori, String proprietario){
         this.data = data;
@@ -35,7 +34,6 @@ public class Drone {
         this.spr = spr;
         this.numero_motori = numero_motori;
         this.proprietario = proprietario;
-        this.batterie = new ArrayList<>();
     }
 
     public void salvaNuovoDrone(){
@@ -54,7 +52,6 @@ public class Drone {
         keys.add("apr");
         keys.add("spr");
         keys.add("numero_motori");
-        keys.add("batterie");
 
         //creo elenco dei valori
         ArrayList<String> values = new ArrayList<>();
@@ -65,7 +62,6 @@ public class Drone {
         values.add(this.getApr());
         values.add(this.getSpr());
         values.add(this.getNumero_motori());
-        values.add("#");
 
         writer.write(keys, values);
 
@@ -176,7 +172,5 @@ public class Drone {
     public String getProprietario(){
         return this.proprietario;
     }
-
-    public String getBatterie(){ return this.batterie.toString(); }
 
 }

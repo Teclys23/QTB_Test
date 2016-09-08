@@ -100,10 +100,9 @@ public class Login {
         drone.salvaNuovoDrone();
     }
 
-    public void creaNuovaBatteria(String drone, String codice){
-        Batteria batteria = new Batteria(drone, codice);
+    public void creaNuovaBatteria(String nomeDrone, String codice){
+        Batteria batteria = new Batteria(nomeDrone, codice);
         batteria.salvaBatteria();
-
     }
 	
 	public Profilo getProfilo() {

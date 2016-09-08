@@ -25,7 +25,7 @@ public class Principale {
 	
 	//utils
 	public static final String CONFIG_FILE = "config.properties";
-	public static final String LASTSESSION_FILE = "lastsession.properties";
+	public static final String LASTSESSION_FILE = "lastsession";
 	private Context context;
 	private Sessione sessioneCorrente;
 	
@@ -45,15 +45,14 @@ public class Principale {
 		controller = new Controller(this.context);
 		
 		//Controllo sessione
-		String lastSessionFile = "lastsession.properties";
 		
 		Login login = new Login();
 
 
 		//lastSession = login.ultimaSessione(lastSessionFile);
-		Log.v(StartPage.LOG_TAG, login.ultimaSessione(lastSessionFile, this.context).getCodiceUtente());
+		Log.v(StartPage.LOG_TAG, login.ultimaSessione(LASTSESSION_FILE, this.context).getCodiceUtente());
 		Log.v(StartPage.LOG_TAG, "============================================================");
-		controller.setSessione(login.ultimaSessione(lastSessionFile, this.context));
+		controller.setSessione(login.ultimaSessione(LASTSESSION_FILE, this.context));
 		Log.v(StartPage.LOG_TAG, "controller - sessione: " + controller.getSessione());
 
 		//SOLO PER DEBUG ---------------------------------------------------------------------------

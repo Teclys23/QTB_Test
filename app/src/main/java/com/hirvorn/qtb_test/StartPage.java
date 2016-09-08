@@ -270,33 +270,30 @@ public class StartPage extends AppCompatActivity {
         }
     }
 
-    public void creaBatteria(View view){
+    public void aggiungiBatteria(View view){
         mPager.setCurrentItem(4, true);
     }
 
     public void confermaCreaBatteria(View view){
-
         crea_batteria_drone = (EditText)findViewById(R.id.crea_batteria_drone);
-        String drone = crea_batteria_drone.getText().toString();
+        String nomeDrone = crea_batteria_drone.getText().toString();
 
-        if(TextUtils.isEmpty(drone)){
+        if(TextUtils.isEmpty(nomeDrone)){
             crea_batteria_drone.setError("Drone mancante");
         }
 
         crea_batteria_codice = (EditText)findViewById(R.id.crea_batteria_codice);
-        String codice = crea_batteria_codice.getText().toString();
+        String codiceBatteria = crea_batteria_codice.getText().toString();
 
-        if(TextUtils.isEmpty(codice)){
+        if(TextUtils.isEmpty(codiceBatteria)){
             crea_batteria_codice.setError("Codice mancante");
         }
 
-        if(!TextUtils.isEmpty(codice) && !TextUtils.isEmpty(drone)){
+        if(!TextUtils.isEmpty(nomeDrone) && !TextUtils.isEmpty(codiceBatteria)){
             Login login = new Login();
-            login.creaNuovaBatteria(drone, codice);
-
+            login.creaNuovaBatteria(nomeDrone, codiceBatteria);
             mPager.setCurrentItem(3, true);
         }
-
     }
 
     /**

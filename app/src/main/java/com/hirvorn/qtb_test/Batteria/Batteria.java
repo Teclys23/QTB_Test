@@ -55,7 +55,7 @@ public class Batteria {
         try {
             batterie_presenti = reader.getPropertyValues(drone + Drone.DRONE_FILE_EXTENSION, ricerca_batterie, Principale.getController().getContext(), true);
 
-            if(!batterie_presenti.toString().equals(null)) {
+            if(batterie_presenti.get(0) != null) {
                 Log.v(StartPage.LOG_TAG, "Batterie presenti '" + batterie_presenti.get(0) + "'");
                 batterie_attuali.addAll(Arrays.asList(batterie_presenti.get(0).split("#")));
             }else{
