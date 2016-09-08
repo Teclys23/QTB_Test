@@ -1,6 +1,7 @@
 package com.hirvorn.qtb_test.Controller;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.IOException;
@@ -70,6 +71,26 @@ public class Controller {
         }
         else{
             return false;
+        }
+    }
+
+    public boolean isValidEmail(String email){
+        if (TextUtils.isEmpty(email)) {
+            return false;
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+        }
+    }
+
+    public boolean isValidPhone(String telefono){
+        if (TextUtils.isEmpty(telefono)) {
+            return false;
+        } else {
+            if (telefono.length() < 6 || telefono.length() > 13) {
+                return false;
+            } else {
+                return android.util.Patterns.PHONE.matcher(telefono).matches();
+            }
         }
     }
 

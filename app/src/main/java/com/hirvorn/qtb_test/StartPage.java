@@ -9,6 +9,7 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -108,7 +109,9 @@ public class StartPage extends AppCompatActivity {
 
 
         //Controllo sessione corrente
-        if(!Principale.getController().isValidSession()){
+        //if(!Principale.getController().isValidSession()){
+        //---------------------------------------------------------- SOLO PER DEBUG
+        if(Principale.getController().isValidSession()){
             Toast.makeText(this, "Non hai ancora un profilo!",Toast.LENGTH_SHORT).show();
             mPager.setCurrentItem(1);
             iniziaCreaProfilo();
@@ -141,6 +144,7 @@ public class StartPage extends AppCompatActivity {
     public void confermaCreaProfilo(View view){
         Login login = new Login();
 
+        // Nome
         crea_profilo_nome = (EditText)findViewById(R.id.editText_nome);
         String nome = crea_profilo_nome.getText().toString();
 
@@ -148,6 +152,11 @@ public class StartPage extends AppCompatActivity {
             crea_profilo_nome.setError("Nome mancante");
         }
 
+        if(nome.length() < 3){
+            crea_profilo_nome.setError("Il nome deve avere almeno tre caratteri");
+        }
+
+        // Cognome
         crea_profilo_cognome = (EditText)findViewById(R.id.editText_cognome);
         String cognome = crea_profilo_cognome.getText().toString();
 
@@ -155,6 +164,11 @@ public class StartPage extends AppCompatActivity {
             crea_profilo_cognome.setError("Cognome mancante");
         }
 
+        if(cognome.length() < 3){
+            crea_profilo_cognome.setError("Il cognome deve avere almeno tre caratteri");
+        }
+
+        // Mail
         crea_profilo_mail = (EditText)findViewById(R.id.editText_mail);
         String mail = crea_profilo_mail.getText().toString();
 
@@ -162,6 +176,12 @@ public class StartPage extends AppCompatActivity {
             crea_profilo_mail.setError("Mail mancante");
         }
 
+        if(!Principale.getController().isValidEmail(mail)){
+            crea_profilo_mail.setError("Inserire e-mail valida");
+            crea_profilo_mail.setText("");
+        }
+
+        // Telefono
         crea_profilo_telefono = (EditText)findViewById(R.id.editText_telefono);
         String telefono = crea_profilo_telefono.getText().toString();
 
@@ -169,7 +189,17 @@ public class StartPage extends AppCompatActivity {
             crea_profilo_telefono.setError("Telefono mancante");
         }
 
-        if(!TextUtils.isEmpty(nome) && !TextUtils.isEmpty(cognome) && !TextUtils.isEmpty(mail) && !TextUtils.isEmpty(telefono)){
+        if(!Principale.getController().isValidPhone(telefono)){
+            crea_profilo_telefono.setError("Numero di telefono non valido");
+            crea_profilo_telefono.setText("");
+        }
+
+        // Controllo completo
+        if(!TextUtils.isEmpty(nome) && (nome.length() >= 3)
+                && !TextUtils.isEmpty(cognome) && (cognome.length() >= 3)
+                && !TextUtils.isEmpty(mail) && Principale.getController().isValidEmail(mail)
+                && !TextUtils.isEmpty(telefono) && PhoneNumberUtils.isGlobalPhoneNumber(telefono)
+                ){
             login.creaNuovoProfilo(nome, cognome, mail, telefono);
             setSessioneCorrente(Principale.getController().getProfilo().getNome());
             mPager.setCurrentItem(2, true);

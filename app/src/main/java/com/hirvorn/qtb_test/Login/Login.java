@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import com.hirvorn.qtb_test.Batteria.Batteria;
 import com.hirvorn.qtb_test.CreaBrevetto.CreaBrevetto;
-import com.hirvorn.qtb_test.CreaProfilo.CreaProfilo;
 import com.hirvorn.qtb_test.Drone.Drone;
 import com.hirvorn.qtb_test.Eccezioni.LastSessionNotFoundException;
 import com.hirvorn.qtb_test.Main.Principale;

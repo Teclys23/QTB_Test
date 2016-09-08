@@ -4,6 +4,11 @@
 
     <string name="hello_main_fragment"></string>
 
+    <string name="generic_digits">aãâáàbcçdeéfghiíjklmnoõôóòpqrstuvwxyz AÃÂÁÀBCÇDEÉFGHIÍJKLMNOÕÔÓÒPQRSTUVWXYZ</string>
+    <string name="codice_fiscale_digits">ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
+    <string name="email_local_digits">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
+    <string name="email_server_digits">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-.</string>
+
     <!-- fragment_crea_profilo -->
     <string name="crea_profilo_titolo">Crea nuovo profilo</string>
     <string name="crea_profilo_nome">Nome:</string>
@@ -11,6 +16,10 @@
     <string name="crea_profilo_mail">Mail:</string>
     <string name="crea_profilo_telefono">Telefono:</string>
     <string name="crea_profilo_btn_conferma">Conferma</string>
+    <string name="crea_profilo_codice_fiscale">Codice Fiscale:</string>
+    <string name="crea_profilo_residenza">Residenza:</string>
+    <string name="crea_profilo_via">Via:</string>
+    <string name="crea_profilo_cap">C.A.P.:</string>
 
     <!-- fragment_crea_brevetto -->
     <string name="crea_brevetto_codice">Codice:</string>
