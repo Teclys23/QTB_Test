@@ -36,10 +36,18 @@ public class Principale {
 
 		//leggo il file di configurazione
 		Configuration configuration = new Configuration(CONFIG_FILE, this.context);
-		config = configuration.creaConfig(this.context);
 
-		//crea file lastsession.properties se non esistente
-        //creaLastSessionFile();
+        //crea file lastsession.properties se non esistente
+        if(!configuration.esisteLastSession()){
+            PropertiesWriter writer = new PropertiesWriter(Principale.LASTSESSION_FILE, this.context);
+            ArrayList<String> keys = new ArrayList();
+            keys.add("LastSession");
+            ArrayList<String> values = new ArrayList<>();
+            values.add("null");
+            writer.write(keys, values);
+        }
+
+		config = configuration.creaConfig(this.context);
 
 		//creo il controller
 		controller = new Controller(this.context);

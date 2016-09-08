@@ -7,6 +7,7 @@ import android.util.Log;
 import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.StartPage;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -123,4 +124,18 @@ public class Configuration {
 		
 		return configFile;
 	}
+
+    public boolean esisteLastSession(){
+
+        File file = new File("/data/data/com.hirvorn.qtb_test/shared_prefs/lastsession.xml");
+        if (file.exists()) {
+            Log.d("TAG", "SharedPreferences Name_of_your_preference : exist");
+            return true;
+        }
+        else {
+            Log.d("TAG", "Setup default preferences");
+            return false;
+        }
+
+    }
 }

@@ -23,6 +23,7 @@ import com.hirvorn.qtb_test.CreaBrevetto.Fragment_CreaBrevetto;
 import com.hirvorn.qtb_test.CreaDrone.Fragment_CreaDrone;
 import com.hirvorn.qtb_test.CreaProfilo.Fragment_CreaProfilo;
 import com.hirvorn.qtb_test.Login.Login;
+import com.hirvorn.qtb_test.Main.Fragment_Main;
 import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.Settings.ReadPropertyValues;
 import com.hirvorn.qtb_test.Utente.Fragment_Profilo;
@@ -109,6 +110,7 @@ public class StartPage extends AppCompatActivity {
         //Controllo sessione corrente
         if(!Principale.getController().isValidSession()){
             Toast.makeText(this, "Non hai ancora un profilo!",Toast.LENGTH_SHORT).show();
+            mPager.setCurrentItem(1);
             iniziaCreaProfilo();
 
         }
@@ -128,7 +130,7 @@ public class StartPage extends AppCompatActivity {
     }
 
     private void iniziaCreaProfilo(){
-        mPager.setCurrentItem(0);
+        mPager.setCurrentItem(1);
 
     }
 
@@ -170,7 +172,7 @@ public class StartPage extends AppCompatActivity {
         if(!TextUtils.isEmpty(nome) && !TextUtils.isEmpty(cognome) && !TextUtils.isEmpty(mail) && !TextUtils.isEmpty(telefono)){
             login.creaNuovoProfilo(nome, cognome, mail, telefono);
             setSessioneCorrente(Principale.getController().getProfilo().getNome());
-            mPager.setCurrentItem(1, true);
+            mPager.setCurrentItem(2, true);
         }
     }
 
@@ -205,12 +207,12 @@ public class StartPage extends AppCompatActivity {
 
         if(!TextUtils.isEmpty(codice) && !TextUtils.isEmpty(data_rilascio) && !TextUtils.isEmpty(data_scadenza)){
             login.creaNuovoBrevetto(Principale.getController().getSessione().getCodiceUtente(), codice, data_rilascio, data_scadenza);
-            mPager.setCurrentItem(3, true);
+            mPager.setCurrentItem(4, true);
         }
     }
 
     public void aggiungiDrone(View view){
-        mPager.setCurrentItem(2, true);
+        mPager.setCurrentItem(3, true);
     }
 
     /**
@@ -266,13 +268,13 @@ public class StartPage extends AppCompatActivity {
             login.creaNuovoDrone(data, categoria, marca, apr, spr, numero_motori);
 
             Fragment_Profilo.aggiungiCodiceDrone(apr + spr);
-            mPager.setCurrentItem(3, true);
+            mPager.setCurrentItem(4, true);
 
         }
     }
 
     public void aggiungiBatteria(View view){
-        mPager.setCurrentItem(4, true);
+        mPager.setCurrentItem(5, true);
     }
 
     public void confermaCreaBatteria(View view){
@@ -293,7 +295,7 @@ public class StartPage extends AppCompatActivity {
         if(!TextUtils.isEmpty(nomeDrone) && !TextUtils.isEmpty(codiceBatteria)){
             Login login = new Login();
             login.creaNuovaBatteria(nomeDrone, codiceBatteria);
-            mPager.setCurrentItem(3, true);
+            mPager.setCurrentItem(4, true);
         }
     }
 
@@ -310,17 +312,19 @@ public class StartPage extends AppCompatActivity {
         public Fragment getItem(int position) {
             Log.v(StartPage.LOG_TAG, "getItem Position: " + position);
             switch (position){
-                case 0: return new Fragment_CreaProfilo();
+                case 0: return new Fragment_Main();
 
-                case 1: return new Fragment_CreaBrevetto();
+                case 1: return new Fragment_CreaProfilo();
 
-                case 2: return new Fragment_CreaDrone();
+                case 2: return new Fragment_CreaBrevetto();
 
-                case 3: return Fragment_Profilo.nuovaIstanza(Principale.getController().getProfilo().getNome(),
+                case 3: return new Fragment_CreaDrone();
+
+                case 4: return Fragment_Profilo.nuovaIstanza(Principale.getController().getProfilo().getNome(),
                                                             Principale.getController().getProfilo().getCognome(),
                                                             Principale.getController().getBrevetto().getCodice());
 
-                case 4: return new Fragment_CreaBatteria();
+                case 5: return new Fragment_CreaBatteria();
 
                 default: return new Fragment_CreaBrevetto();
             }
