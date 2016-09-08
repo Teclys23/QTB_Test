@@ -39,7 +39,7 @@ public class Principale {
 		config = configuration.creaConfig(this.context);
 
 		//crea file lastsession.properties se non esistente
-        creaLastSessionFile();
+        //creaLastSessionFile();
 
 		//creo il controller
 		controller = new Controller(this.context);
@@ -50,17 +50,23 @@ public class Principale {
 
 
 		//lastSession = login.ultimaSessione(lastSessionFile);
-		Log.v(StartPage.LOG_TAG, login.ultimaSessione(LASTSESSION_FILE, this.context).getCodiceUtente());
+		Log.v(StartPage.LOG_TAG, "Ultima sessione: " + login.ultimaSessione(LASTSESSION_FILE, this.context).getCodiceUtente());
 		Log.v(StartPage.LOG_TAG, "============================================================");
-		controller.setSessione(login.ultimaSessione(LASTSESSION_FILE, this.context));
+        //se l'ultima sessione è diversa da null
+        if(!login.ultimaSessione(LASTSESSION_FILE, Principale.getController().getContext()).getCodiceUtente().equals("null")){
+            controller.setSessione(login.ultimaSessione(LASTSESSION_FILE, this.context));
+        }
+		//controller.setSessione(login.ultimaSessione(LASTSESSION_FILE, this.context));
+        Log.v(StartPage.LOG_TAG, "============================================================2");
 		Log.v(StartPage.LOG_TAG, "controller - sessione: " + controller.getSessione());
 
 		//SOLO PER DEBUG ---------------------------------------------------------------------------
-		controller.getSessione().setValidSession(false);
+		//controller.getSessione().setValidSession(false);
 		//------------------------------------------------------------------------------------------
 
 		//se esiste l'ultima sessione, la apre
-		if(controller.getSessione().isValidSession()){
+		//if(controller.getSessione().isValidSession()){
+        if(controller.isValidSession()){
 			//System.out.println("Sessione attiva: " + controller.getSessione().getCodiceUtente())
 			this.sessioneCorrente = controller.getSessione();
 			Log.v(StartPage.LOG_TAG, "Sessione valida: " + this.sessioneCorrente);

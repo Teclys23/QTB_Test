@@ -37,7 +37,7 @@ public class StartPage extends AppCompatActivity {
     public static final String LOG_TAG = "QTB_Test";
 
     //Componenti
-    private static TextView sessioneCorrente;
+    private static TextView tw_sessioneCorrente;
 
     //Profilo
     private static EditText crea_profilo_nome;
@@ -100,14 +100,14 @@ public class StartPage extends AppCompatActivity {
 
         Principale principale = new Principale(this);
 
-        sessioneCorrente = (TextView)findViewById(R.id.tw_sessioneCorrente);
+        tw_sessioneCorrente = (TextView)findViewById(R.id.tw_sessioneCorrente);
 
 
         ReadPropertyValues readPropertyValues = new ReadPropertyValues();
 
 
         //Controllo sessione corrente
-        if(!Principale.getController().getSessione().isValidSession()){
+        if(!Principale.getController().isValidSession()){
             Toast.makeText(this, "Non hai ancora un profilo!",Toast.LENGTH_SHORT).show();
             iniziaCreaProfilo();
 
@@ -115,16 +115,16 @@ public class StartPage extends AppCompatActivity {
         else {
             Log.v(StartPage.LOG_TAG, "ECCOCI " + Principale.getController().getSessione().getCodiceUtente());
             if (Principale.getController().getSessione().getCodiceUtente().equals("null")) {
-                sessioneCorrente.setText("Sessione corrente: null");
+                tw_sessioneCorrente.setText("Sessione corrente: null");
             } else {
 
-                sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "name"));
+                tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "name"));
             }
         }
     }
 
     public static void setSessioneCorrente(String text){
-        sessioneCorrente.setText(text);
+        tw_sessioneCorrente.setText(text);
     }
 
     private void iniziaCreaProfilo(){
@@ -169,6 +169,7 @@ public class StartPage extends AppCompatActivity {
 
         if(!TextUtils.isEmpty(nome) && !TextUtils.isEmpty(cognome) && !TextUtils.isEmpty(mail) && !TextUtils.isEmpty(telefono)){
             login.creaNuovoProfilo(nome, cognome, mail, telefono);
+            setSessioneCorrente(Principale.getController().getProfilo().getNome());
             mPager.setCurrentItem(1, true);
         }
     }

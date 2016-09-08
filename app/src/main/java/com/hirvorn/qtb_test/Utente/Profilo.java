@@ -1,12 +1,16 @@
 package com.hirvorn.qtb_test.Utente;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.hirvorn.qtb_test.Drone.Drone;
 import com.hirvorn.qtb_test.Main.Principale;
+import com.hirvorn.qtb_test.Settings.PropertiesWriter;
 import com.hirvorn.qtb_test.Settings.ReadPropertyValues;
+import com.hirvorn.qtb_test.StartPage;
 
 public class Profilo {
 	
@@ -32,6 +36,7 @@ public class Profilo {
 		this.mail = mail;
 		this.telefono = telefono;
         droni_posseduti = new ArrayList<>();
+
 	}
 
 
@@ -40,7 +45,8 @@ public class Profilo {
 	 */
 	//per configurare il profilo
 	public void configCodiceProfilo(){
-		String subcode = getNome().substring(SUB_BEGIN_INDEX, SUB_END_INDEX).toUpperCase() + "-" +
+        Log.v(StartPage.LOG_TAG, "CONFIG CODICE PROFILO" + this.getNome() + this.getCognome());
+        String subcode = getNome().substring(SUB_BEGIN_INDEX, SUB_END_INDEX).toUpperCase() + "-" +
 							getCognome().substring(SUB_BEGIN_INDEX, SUB_END_INDEX).toUpperCase();
 		setCodice(Principale.getConfig().getLastCode() + "-" + subcode);
 		System.out.println("codice: " + getCodice());
@@ -83,6 +89,29 @@ public class Profilo {
         ArrayList<String> droni_posseduti = new ArrayList<String>(Arrays.asList(droni.split("#")));
 
         return droni_posseduti;
+    }
+
+    public void salvaProfilo(){
+        PropertiesWriter writer = new PropertiesWriter(getCodice() + Principale.getConfig().getUserExtension(), Principale.getController().getContext());
+        //Creo l'elenco di chiavi
+        ArrayList<String> keys = new ArrayList<String>();
+        keys.add("code");
+        keys.add("name");
+        keys.add("surname");
+        keys.add("mail");
+        keys.add("telephone");
+        keys.add("drones");
+
+        //creo l'elenco dei valori
+        ArrayList<String> values = new ArrayList<String>();
+        values.add(getCodice());
+        values.add(getNome());
+        values.add(getCognome());
+        values.add(getMail());
+        values.add(getTelefono());
+        values.add("#");
+
+        writer.write(keys, values);
     }
 	
 	public String getNome() {

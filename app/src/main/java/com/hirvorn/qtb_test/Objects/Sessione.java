@@ -9,7 +9,7 @@ import com.hirvorn.qtb_test.Settings.PropertiesWriter;
 public class Sessione {
 
 	private String codiceUtente;
-	private boolean validSession;
+
 	
 	
 	/**
@@ -17,7 +17,6 @@ public class Sessione {
 	 */
 	public Sessione(String codiceUtente){
 		this.codiceUtente = codiceUtente;
-		this.setValidSession(true);
 	}
 	
 	
@@ -45,17 +44,4 @@ public class Sessione {
 		this.codiceUtente = sessione;
 	}
 
-	public boolean isValidSession() {
-		if(!getCodiceUtente().equals("null")){
-			return validSession;
-		}
-		else{
-			return false;
-		}
-
-	}
-
-	public void setValidSession(boolean validSession) {
-		this.validSession = validSession;
-	}
 }

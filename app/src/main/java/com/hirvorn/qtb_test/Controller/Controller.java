@@ -35,12 +35,14 @@ public class Controller {
 
 	public void setSessione(Sessione sessione) {
 		this.sessione = sessione;
-		this.profilo = Profilo.getProfilo(sessione.getCodiceUtente());
+
+		this.profilo = Profilo.getProfilo(this.sessione.getCodiceUtente());
+        Log.v(StartPage.LOG_TAG, "QUAQUAQUA");
 		
 		//scrive la nuova sessione sul file lastsession
 		//PropertiesWriter writer = new PropertiesWriter(Principale.getConfig().getResourcesPath() + Principale.getConfig().getLastsessionFile());
 
-		PropertiesWriter writer = new PropertiesWriter(Principale.getConfig().getLastsessionFile(), this.context);
+		PropertiesWriter writer = new PropertiesWriter(Principale.LASTSESSION_FILE, this.context);
 
 
 		//-----------------------------------------------------------------------
@@ -56,6 +58,20 @@ public class Controller {
 		writer.write(keys, values);
 
 	}
+
+    public boolean isValidSession(){
+        if(this.sessione != null){
+            if(!this.sessione.getCodiceUtente().equals("null")){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
 
 	public Context getContext(){
 		return this.context;

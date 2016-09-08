@@ -46,7 +46,7 @@ public class Login {
 		campiDaCercare.add("LastSession");
 
 		//creo oggetto Configuration e ottengo le chiavi
-		Configuration lastSession = new Configuration(lastSessionFile, this.context);
+		Configuration lastSession = new Configuration(Principale.LASTSESSION_FILE, this.context);
 		result = lastSession.ottieniProp(campiDaCercare, this.context);
 
 		Sessione sessione = null;
@@ -56,13 +56,11 @@ public class Login {
 			try {
 
 				sessione = new Sessione("LastSessionNotFoundException");
-				sessione.setValidSession(false);
 				throw new LastSessionNotFoundException();
 			} catch (LastSessionNotFoundException e) {
 				//e.printStackTrace();
 			}
 		}else{
-
 			sessione = new Sessione(result.get(0));
 		}
 		Log.v(StartPage.LOG_TAG, "Fine ultimaSessione()");
@@ -71,17 +69,17 @@ public class Login {
 	
 	//crea nuovo profilo
 	public void creaNuovoProfilo(String nome, String cognome, String mail, String telefono){
-		CreaProfilo creaProfilo = new CreaProfilo();
-		creaProfilo.init(nome, cognome, mail, telefono);
-		creaProfilo.salvaProfilo();
-		this.profilo = creaProfilo.getProfilo();
+
+		Profilo profilo = new Profilo(nome, cognome, mail, telefono);
+        profilo.configCodiceProfilo();
+		profilo.salvaProfilo();
+		this.profilo = profilo;
 		
 		//imposto il profilo come sessione attuale nel controller
 		//---------------
-		Log.v(StartPage.LOG_TAG, "QUAAAAAAAAAAAAAAAAAA");
-		Principale.getController().setSessione(new Sessione(this.getProfilo().getCodice()));
-		Principale.getController().setProfilo(this.getProfilo());
-		Log.v(StartPage.LOG_TAG, "QUAAAAAAAAAAAAAAAAAA 2");
+        Principale.getController().setSessione(new Sessione(profilo.getCodice()));
+		Principale.getController().setProfilo(profilo);
+
 		//---------------
 	}
 	
