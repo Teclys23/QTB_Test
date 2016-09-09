@@ -120,6 +120,10 @@ public class Profilo {
         keys.add("surname");
         keys.add("mail");
         keys.add("telephone");
+        keys.add("codiceFiscale");
+        keys.add("residence");
+        keys.add("street");
+        keys.add("cap");
         keys.add("drones");
 
         //creo l'elenco dei valori
@@ -129,6 +133,11 @@ public class Profilo {
         values.add(getCognome());
         values.add(getMail());
         values.add(getTelefono());
+        values.add(getCodiceFiscale());
+        values.add(getResidenza());
+        values.add(getVia());
+        values.add(getNumeroCivico());
+        values.add(getCap());
         values.add("#");
 
         writer.write(keys, values);
@@ -203,6 +212,25 @@ public class Profilo {
 		this.codice = codice;
 	}
 
+    public String getCodiceFiscale() {
+        return codiceFiscale;
+    }
+
+    public String getResidenza() {
+        return residenza;
+    }
+
+    public String getVia() {
+        return via;
+    }
+
+    public String getNumeroCivico() {
+        return numeroCivico;
+    }
+
+    public String getCap() {
+        return cap;
+    }
 
 
 }

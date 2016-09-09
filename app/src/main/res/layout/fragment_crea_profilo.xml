@@ -40,13 +40,12 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="@string/crea_profilo_nome"
-                        android:id="@+id/textView"/>
+                        android:id="@+id/textView2"/>
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textEmailAddress|textCapWords"
-                        android:digits="@string/generic_digits"
                         android:id="@+id/editText_nome"/>
                 </LinearLayout>
 
@@ -60,13 +59,12 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="@string/crea_profilo_cognome"
-                        android:id="@+id/textView2"/>
+                        android:id="@+id/textView"/>
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textEmailAddress|textCapWords"
-                        android:digits="@string/generic_digits"
                         android:id="@+id/editText_cognome"/>
                 </LinearLayout>
 
@@ -143,7 +141,7 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textEmailAddress"
+                        android:inputType="textEmailAddress|textCapWords"
                         android:id="@+id/editText_residenza"/>
                 </LinearLayout>
 
@@ -162,7 +160,7 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textEmailAddress"
+                        android:inputType="textEmailAddress|textCapWords"
                         android:id="@+id/editText_via"/>
                 </LinearLayout>
 

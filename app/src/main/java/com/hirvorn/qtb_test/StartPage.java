@@ -10,6 +10,8 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.PhoneNumberUtils;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -32,6 +34,8 @@ import com.hirvorn.qtb_test.Utils.CustomViewPager;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class StartPage extends AppCompatActivity {
@@ -162,6 +166,19 @@ public class StartPage extends AppCompatActivity {
             crea_profilo_nome.setError("Il nome deve avere almeno tre caratteri");
         }
 
+        String expression = "^[a-zA-Z]*$";
+
+        CharSequence inputStr = nome;
+        Pattern pattern = Pattern.compile(expression);
+        Matcher matcher = pattern.matcher(inputStr);
+        boolean nome_soloLettere = false;
+        if(matcher.matches()) {
+            nome_soloLettere = true;
+        }else{
+            crea_profilo_nome.setError("Il nome deve contenere solo lettere");
+            crea_profilo_nome.setText("");
+        }
+
         // Cognome
         crea_profilo_cognome = (EditText)findViewById(R.id.editText_cognome);
         String cognome = crea_profilo_cognome.getText().toString();
@@ -172,6 +189,17 @@ public class StartPage extends AppCompatActivity {
 
         if(cognome.length() < 3){
             crea_profilo_cognome.setError("Il cognome deve avere almeno tre caratteri");
+        }
+
+        inputStr = cognome;
+        pattern = Pattern.compile(expression);
+        matcher = pattern.matcher(inputStr);
+        boolean cognome_soloLettere = false;
+        if(matcher.matches()) {
+            cognome_soloLettere = true;
+        }else{
+            crea_profilo_cognome.setError("Il cognome deve contenere solo lettere");
+            crea_profilo_cognome.setText("");
         }
 
         // Mail
@@ -208,7 +236,7 @@ public class StartPage extends AppCompatActivity {
             crea_profilo_codice_fiscale.setError("Codice fiscale mancante");
         }
 
-        if(codiceFiscale.length() < 11 || codiceFiscale.length() > 11){
+        if(codiceFiscale.length() != 16){
             crea_profilo_codice_fiscale.setError("Il codice fiscale deve essere di 11 caratteri");
             crea_profilo_codice_fiscale.setText("");
         }
@@ -251,11 +279,11 @@ public class StartPage extends AppCompatActivity {
         }
 
         // Controllo completo
-        if(!TextUtils.isEmpty(nome) && (nome.length() >= 3)
-                && !TextUtils.isEmpty(cognome) && (cognome.length() >= 3)
+        if(!TextUtils.isEmpty(nome) && (nome.length() >= 3) && nome_soloLettere
+                && !TextUtils.isEmpty(cognome) && (cognome.length() >= 3) && cognome_soloLettere
                 && !TextUtils.isEmpty(mail) && Principale.getController().isValidEmail(mail)
                 && !TextUtils.isEmpty(telefono) && Principale.getController().isValidPhone(telefono)
-                && !TextUtils.isEmpty(codiceFiscale) && !(codiceFiscale.length() < 11) && !(codiceFiscale.length() > 11)
+                && !TextUtils.isEmpty(codiceFiscale) && (codiceFiscale.length() == 16)
                 && !TextUtils.isEmpty(residenza)
                 && !TextUtils.isEmpty(via)
                 && !TextUtils.isEmpty(numeroCivico)
