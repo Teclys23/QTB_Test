@@ -64,16 +64,17 @@ public class Principale {
         if(!login.ultimaSessione(LASTSESSION_FILE, Principale.getController().getContext()).getCodiceUtente().equals("null")){
             controller.setSessione(login.ultimaSessione(LASTSESSION_FILE, this.context));
         }
+        else{
+            controller.setSessione(new Sessione("null"));
+        }
 		//controller.setSessione(login.ultimaSessione(LASTSESSION_FILE, this.context));
         Log.v(StartPage.LOG_TAG, "============================================================2");
 		Log.v(StartPage.LOG_TAG, "controller - sessione: " + controller.getSessione());
 
-		//SOLO PER DEBUG ---------------------------------------------------------------------------
-		//controller.getSessione().setValidSession(false);
-		//------------------------------------------------------------------------------------------
 
 		//se esiste l'ultima sessione, la apre
 		//if(controller.getSessione().isValidSession()){
+
         if(controller.isValidSession()){
 			//System.out.println("Sessione attiva: " + controller.getSessione().getCodiceUtente())
 			this.sessioneCorrente = controller.getSessione();
@@ -82,17 +83,16 @@ public class Principale {
 		}//altrimenti..
 		else{
 			Log.v(StartPage.LOG_TAG, "Sessione non valida. Avvio creazione profilo.");
+
 /*
 			login.creaNuovoProfilo();
 			login.creaNuovoBrevetto();
 
 			this.sessioneCorrente = controller.getSessione();
+
 */
-			Log.v(StartPage.LOG_TAG, "OMG CI SIAMO");
 		}
 
-		
-		
 
 	}
 

@@ -15,11 +15,19 @@ import com.hirvorn.qtb_test.StartPage;
 public class Profilo {
 	
 	private String codice;
-	private String nome;
+
+    private String nome;
 	private String cognome;
 	private String mail;
 	private String telefono;
+    private String codiceFiscale;
+    private String residenza;
+    private String via;
+    private String numeroCivico;
+    private String cap;
+
 	private Brevetto brevetto;
+
 	private ArrayList<Drone> droni_posseduti;
 	
 	//utils
@@ -30,11 +38,18 @@ public class Profilo {
 	/**
 	 * Costruttori
 	 */
-	public Profilo(String nome, String cognome, String mail, String telefono){
+	public Profilo(String nome, String cognome, String mail, String telefono, String codiceFiscale, String residenza, String via, String numeroCivico, String cap){
 		this.nome = nome;
 		this.cognome = cognome;
 		this.mail = mail;
 		this.telefono = telefono;
+        this.codiceFiscale = codiceFiscale;
+        this.residenza = residenza;
+        this.via = via;
+        this.numeroCivico = numeroCivico;
+        this.cap = cap;
+
+
         droni_posseduti = new ArrayList<>();
 
 	}
@@ -62,6 +77,11 @@ public class Profilo {
         keys.add("cognome");
         keys.add("mail");
         keys.add("telefono");
+        keys.add("codiceFiscale");
+        keys.add("residenza");
+        keys.add("via");
+        keys.add("numeroCivico");
+        keys.add("cap");
 
         ArrayList<String> values = null;
         try {
@@ -70,7 +90,7 @@ public class Profilo {
             e.printStackTrace();
         }
 
-        Profilo p = new Profilo(values.get(1), values.get(2), values.get(3), values.get(4));
+        Profilo p = new Profilo(values.get(1), values.get(2), values.get(3), values.get(4), values.get(5), values.get(6), values.get(7), values.get(8), values.get(9));
         p.setCodice(values.get(0));
 
         return p;

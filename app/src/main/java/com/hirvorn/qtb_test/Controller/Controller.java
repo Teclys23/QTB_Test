@@ -38,7 +38,6 @@ public class Controller {
 		this.sessione = sessione;
 
 		this.profilo = Profilo.getProfilo(this.sessione.getCodiceUtente());
-        Log.v(StartPage.LOG_TAG, "QUAQUAQUA");
 		
 		//scrive la nuova sessione sul file lastsession
 		//PropertiesWriter writer = new PropertiesWriter(Principale.getConfig().getResourcesPath() + Principale.getConfig().getLastsessionFile());

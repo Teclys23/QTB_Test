@@ -67,9 +67,9 @@ public class Login {
 	}
 	
 	//crea nuovo profilo
-	public void creaNuovoProfilo(String nome, String cognome, String mail, String telefono){
+	public void creaNuovoProfilo(String nome, String cognome, String mail, String telefono, String codiceFiscale, String residenza, String via, String numeroCivico, String cap){
 
-		Profilo profilo = new Profilo(nome, cognome, mail, telefono);
+		Profilo profilo = new Profilo(nome, cognome, mail, telefono, codiceFiscale, residenza, via, numeroCivico, cap);
         profilo.configCodiceProfilo();
 		profilo.salvaProfilo();
 		this.profilo = profilo;

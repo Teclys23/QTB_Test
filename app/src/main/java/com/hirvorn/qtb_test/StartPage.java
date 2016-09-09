@@ -46,6 +46,11 @@ public class StartPage extends AppCompatActivity {
     private static EditText crea_profilo_cognome;
     private static EditText crea_profilo_mail;
     private static EditText crea_profilo_telefono;
+    private static EditText crea_profilo_codice_fiscale;
+    private static EditText crea_profilo_residenza;
+    private static EditText crea_profilo_via;
+    private static EditText crea_profilo_cap;
+    private static EditText crea_profilo_numero_civico;
 
     //Brevetto
     private static EditText crea_brevetto_codice;
@@ -101,6 +106,7 @@ public class StartPage extends AppCompatActivity {
     public void init(){
 
         Principale principale = new Principale(this);
+
 
         tw_sessioneCorrente = (TextView)findViewById(R.id.tw_sessioneCorrente);
 
@@ -194,13 +200,68 @@ public class StartPage extends AppCompatActivity {
             crea_profilo_telefono.setText("");
         }
 
+        // Codice Fiscale
+        crea_profilo_codice_fiscale = (EditText)findViewById(R.id.editText_codice_fiscale);
+        String codiceFiscale = crea_profilo_codice_fiscale.getText().toString();
+
+        if(TextUtils.isEmpty(codiceFiscale)){
+            crea_profilo_codice_fiscale.setError("Codice fiscale mancante");
+        }
+
+        if(codiceFiscale.length() < 11 || codiceFiscale.length() > 11){
+            crea_profilo_codice_fiscale.setError("Il codice fiscale deve essere di 11 caratteri");
+            crea_profilo_codice_fiscale.setText("");
+        }
+
+        // Residenza
+        crea_profilo_residenza = (EditText)findViewById(R.id.editText_residenza);
+        String residenza = crea_profilo_residenza.getText().toString();
+
+        if(TextUtils.isEmpty(residenza)){
+            crea_profilo_residenza.setError("Residenza mancante");
+        }
+
+        // Via
+        crea_profilo_via = (EditText)findViewById(R.id.editText_via);
+        String via = crea_profilo_via.getText().toString();
+
+        if(TextUtils.isEmpty(via)){
+            crea_profilo_via.setError("Via mancante");
+        }
+
+        // Numero civico
+        crea_profilo_numero_civico = (EditText)findViewById(R.id.editText_numero_civico);
+        String numeroCivico = crea_profilo_numero_civico.getText().toString();
+
+        if(TextUtils.isEmpty(numeroCivico)){
+            crea_profilo_numero_civico.setError("Nunmero civico mancante");
+        }
+
+        // CAP
+        crea_profilo_cap = (EditText)findViewById(R.id.editText_cap);
+        String cap = crea_profilo_cap.getText().toString();
+
+        if(TextUtils.isEmpty(cap)){
+            crea_profilo_cap.setError("C.A.P. mancante");
+        }
+
+        if(cap.length() != 5){
+            crea_profilo_cap.setError("Inserire C.A.P. valido");
+            crea_profilo_cap.setText("");
+        }
+
         // Controllo completo
         if(!TextUtils.isEmpty(nome) && (nome.length() >= 3)
                 && !TextUtils.isEmpty(cognome) && (cognome.length() >= 3)
                 && !TextUtils.isEmpty(mail) && Principale.getController().isValidEmail(mail)
-                && !TextUtils.isEmpty(telefono) && PhoneNumberUtils.isGlobalPhoneNumber(telefono)
+                && !TextUtils.isEmpty(telefono) && Principale.getController().isValidPhone(telefono)
+                && !TextUtils.isEmpty(codiceFiscale) && !(codiceFiscale.length() < 11) && !(codiceFiscale.length() > 11)
+                && !TextUtils.isEmpty(residenza)
+                && !TextUtils.isEmpty(via)
+                && !TextUtils.isEmpty(numeroCivico)
+                && !TextUtils.isEmpty(cap) && (cap.length() == 5)
                 ){
-            login.creaNuovoProfilo(nome, cognome, mail, telefono);
+            login.creaNuovoProfilo(nome, cognome, mail, telefono, codiceFiscale, residenza, via, numeroCivico, cap);
             setSessioneCorrente(Principale.getController().getProfilo().getNome());
             mPager.setCurrentItem(2, true);
         }
