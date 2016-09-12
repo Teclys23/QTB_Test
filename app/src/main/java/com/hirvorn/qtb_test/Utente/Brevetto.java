@@ -1,11 +1,19 @@
 package com.hirvorn.qtb_test.Utente;
 
+import com.hirvorn.qtb_test.Main.Principale;
+import com.hirvorn.qtb_test.Settings.PropertiesWriter;
+
+import java.util.ArrayList;
+
 public class Brevetto {
+
+    public static final String BREVETTO_EXT = ".brev";
 
 	private String codice = "000000";
 	private String data_rilascio;
 	private String data_scadenza;
-	
+
+    private String brev_teoria;
 	
 	/**
 	 * Costruttori
@@ -15,6 +23,24 @@ public class Brevetto {
 		this.setData_rilascio(data_rilascio);
 		this.setData_scadenza(data_scadenza);
 	}
+
+    public static void creaBrevettoVuoto(String codiceUtente){
+        PropertiesWriter writer = new PropertiesWriter(codiceUtente + BREVETTO_EXT, Principale.getController().getContext());
+
+        ArrayList<String> keys = new ArrayList<>();
+        keys.add("brevetto_teoria");
+        keys.add("brevetto_pratica");
+        keys.add("brevetto_visita_medica");
+
+        ArrayList<String> values = new ArrayList<>();
+        values.add("#");
+        values.add("#");
+        values.add("#");
+
+        writer.write(keys, values);
+    }
+
+
 	
 	
 	/**

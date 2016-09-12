@@ -20,8 +20,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hirvorn.qtb_test.Brevetto.BrevettoTeoria;
 import com.hirvorn.qtb_test.Controller.Controller;
 import com.hirvorn.qtb_test.CreaBatteria.Fragment_CreaBatteria;
+import com.hirvorn.qtb_test.CreaBrevetto.BrevettoPratica;
+import com.hirvorn.qtb_test.CreaBrevetto.BrevettoVisitaMedica;
+import com.hirvorn.qtb_test.CreaBrevetto.Fragment_Brevetto_Main;
+import com.hirvorn.qtb_test.CreaBrevetto.Fragment_Brevetto_Pratica;
+import com.hirvorn.qtb_test.CreaBrevetto.Fragment_Brevetto_Teoria;
+import com.hirvorn.qtb_test.CreaBrevetto.Fragment_Brevetto_Visita_Medica;
 import com.hirvorn.qtb_test.CreaBrevetto.Fragment_CreaBrevetto;
 import com.hirvorn.qtb_test.CreaDrone.Fragment_CreaDrone;
 import com.hirvorn.qtb_test.CreaProfilo.Fragment_CreaProfilo;
@@ -61,6 +68,21 @@ public class StartPage extends AppCompatActivity {
     private static EditText crea_brevetto_data_rilascio;
     private static EditText crea_brevetto_data_scadenza;
 
+    // Brevetto Teoria
+    private static EditText brevetto_teoria_luogo;
+    private static EditText brevetto_teoria_data;
+    private static EditText brevetto_teoria_numero;
+
+    // Brevetto Pratica
+    private static EditText brevetto_pratica_luogo;
+    private static EditText brevetto_pratica_data;
+    private static EditText brevetto_pratica_numero;
+
+    //Brevetto Visita Medica
+    private static EditText brevetto_visita_medica_luogo;
+    private static EditText brevetto_visita_medica_data;
+    private static EditText brevetto_visita_medica_scadenza;
+
     //Drone
     private static EditText crea_drone_data;
     private static EditText crea_drone_categoria;
@@ -76,7 +98,7 @@ public class StartPage extends AppCompatActivity {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 5;
+    private static final int NUM_PAGES = 8;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -330,6 +352,125 @@ public class StartPage extends AppCompatActivity {
         }
     }
 
+    /**
+     * Brevetto teoria
+     * @param view
+     */
+    public void inserisciBrevettoTeoria(View view){
+        mPager.setCurrentItem(3, true);
+    }
+
+    public void confermaBrevettoTeoria(View view){
+        brevetto_teoria_luogo = (EditText)findViewById(R.id.editText_brevetto_teoria_luogo);
+        String luogo = brevetto_teoria_luogo.getText().toString();
+
+        if(TextUtils.isEmpty(luogo)){
+            brevetto_teoria_luogo.setError("Luogo mancante");
+        }
+
+        brevetto_teoria_data = (EditText)findViewById(R.id.editText_brevetto_teoria_data);
+        String data = brevetto_teoria_data.getText().toString();
+
+        if(TextUtils.isEmpty(data)){
+            brevetto_teoria_data.setError("Data mancante");
+        }
+
+        brevetto_teoria_numero = (EditText)findViewById(R.id.editText_brevetto_teoria_numero);
+        String numero = brevetto_teoria_numero.getText().toString();
+
+        if(TextUtils.isEmpty(numero)){
+            brevetto_teoria_numero.setError("Numero mancante");
+        }
+
+        if(!TextUtils.isEmpty(luogo)
+                && !TextUtils.isEmpty(data)
+                && !TextUtils.isEmpty(numero)){
+
+            BrevettoTeoria teoria = new BrevettoTeoria(Principale.getController().getSessione().getCodiceUtente(), luogo, data, numero);
+            teoria.salvaBrevettoTeoria();
+
+            mPager.setCurrentItem(2, true);
+        }
+    }
+
+    public void inserisciBrevettoPratica(View view){
+        mPager.setCurrentItem(4, true);
+    }
+
+    public void confermaBrevettoPratica(View view){
+        brevetto_pratica_luogo = (EditText)findViewById(R.id.editText_brevetto_pratica_luogo);
+        String luogo = brevetto_pratica_luogo.getText().toString();
+
+        if(TextUtils.isEmpty(luogo)){
+            brevetto_pratica_luogo.setError("Luogo mancante");
+        }
+
+        brevetto_pratica_data = (EditText)findViewById(R.id.editText_brevetto_pratica_data);
+        String data = brevetto_pratica_data.getText().toString();
+
+        if(TextUtils.isEmpty(data)){
+            brevetto_pratica_data.setError("Data mancante");
+        }
+
+        brevetto_pratica_numero = (EditText)findViewById(R.id.editText_brevetto_pratica_numero);
+        String numero = brevetto_pratica_numero.getText().toString();
+
+        if(TextUtils.isEmpty(numero)){
+            brevetto_pratica_numero.setError("Numero mancante");
+        }
+
+        if(!TextUtils.isEmpty(luogo)
+                && !TextUtils.isEmpty(data)
+                && !TextUtils.isEmpty(numero)){
+
+            BrevettoPratica teoria = new BrevettoPratica(Principale.getController().getSessione().getCodiceUtente(), luogo, data, numero);
+            teoria.salvaBrevettoPratica();
+
+            mPager.setCurrentItem(2, true);
+        }
+    }
+
+    public void inserisciBrevettoVisitaMedica(View view){
+        mPager.setCurrentItem(5, true);
+    }
+
+    public void confermaBrevettoVisitaMedica(View view){
+        brevetto_visita_medica_luogo = (EditText)findViewById(R.id.editText_brevetto_visita_medica_luogo);
+        String luogo = brevetto_visita_medica_luogo.getText().toString();
+
+        if(TextUtils.isEmpty(luogo)){
+            brevetto_visita_medica_luogo.setError("Luogo mancante");
+        }
+
+        brevetto_visita_medica_data = (EditText)findViewById(R.id.editText_brevetto_visita_medica_data);
+        String data = brevetto_visita_medica_data.getText().toString();
+
+        if(TextUtils.isEmpty(data)){
+            brevetto_visita_medica_data.setError("Data mancante");
+        }
+
+        brevetto_visita_medica_scadenza = (EditText)findViewById(R.id.editText_brevetto_visita_medica_scadenza);
+        String scadenza = brevetto_visita_medica_scadenza.getText().toString();
+
+        if(TextUtils.isEmpty(scadenza)){
+            brevetto_visita_medica_scadenza.setError("Numero mancante");
+        }
+
+        if(!TextUtils.isEmpty(luogo)
+                && !TextUtils.isEmpty(data)
+                && !TextUtils.isEmpty(scadenza)){
+
+            BrevettoVisitaMedica teoria = new BrevettoVisitaMedica(Principale.getController().getSessione().getCodiceUtente(), luogo, data, scadenza);
+            teoria.salvaBrevettoVisitaMedica();
+
+            mPager.setCurrentItem(2, true);
+        }
+    }
+
+    public void tornaABrevettoMain(View view){
+        mPager.setCurrentItem(2, true);
+    }
+
     public void aggiungiDrone(View view){
         mPager.setCurrentItem(3, true);
     }
@@ -435,15 +576,21 @@ public class StartPage extends AppCompatActivity {
 
                 case 1: return new Fragment_CreaProfilo();
 
-                case 2: return new Fragment_CreaBrevetto();
+                case 2: return new Fragment_Brevetto_Main();
 
-                case 3: return new Fragment_CreaDrone();
+                case 3: return new Fragment_Brevetto_Teoria();
 
-                case 4: return Fragment_Profilo.nuovaIstanza(Principale.getController().getProfilo().getNome(),
+                case 4: return new Fragment_Brevetto_Pratica();
+
+                case 5: return new Fragment_Brevetto_Visita_Medica();
+
+                case 6: return new Fragment_CreaDrone();
+
+                case 7: return Fragment_Profilo.nuovaIstanza(Principale.getController().getProfilo().getNome(),
                                                             Principale.getController().getProfilo().getCognome(),
                                                             Principale.getController().getBrevetto().getCodice());
 
-                case 5: return new Fragment_CreaBatteria();
+                case 8: return new Fragment_CreaBatteria();
 
                 default: return new Fragment_CreaBrevetto();
             }

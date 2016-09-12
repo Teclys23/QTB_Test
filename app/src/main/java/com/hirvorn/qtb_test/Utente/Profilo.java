@@ -141,6 +141,9 @@ public class Profilo {
         values.add("#");
 
         writer.write(keys, values);
+
+        // Crea brevetto vuoto
+        Brevetto.creaBrevettoVuoto(getCodice());
     }
 	
 	public String getNome() {

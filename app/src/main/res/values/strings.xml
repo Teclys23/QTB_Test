@@ -28,6 +28,43 @@
     <string name="crea_brevetto_data_scadenza">Data scadenza</string>
     <string name="crea_brevetto_btn_conferma">Conferma</string>
 
+    <!-- fragment_brevetto_main -->
+    <string name="brevetto_main_titolo">Nuovo brevetto</string>
+    <string name="brevetto_main_intro">intro intro intro intro</string>
+    <string name="brevetto_main_teoria">Attestato teoria:</string>
+    <string name="brevetto_main_pratica">Attestato pratica:</string>
+    <string name="brevetto_main_visita_medica">Certificato medico</string>
+    <string name="brevetto_main_enac">Numero brevetto enac:</string>
+    <string name="brevetto_main_inserisci">Inserisci</string>
+    <string name="brevetto_main_conferma">Conferma</string>
+
+    <!-- fragment_brevetto_teoria -->
+    <string name="brevetto_teoria_titolo">Attestato Teoria</string>
+    <string name="brevetto_teoria_intro">intro intro intro</string>
+    <string name="brevetto_teoria_luogo">Luogo:</string>
+    <string name="brevetto_teoria_data">Data:</string>
+    <string name="brevetto_teoria_numero">Numero:</string>
+    <string name="brevetto_teoria_conferma">Conferma</string>
+    <string name="brevetto_teoria_annulla">Annulla</string>
+
+    <!-- fragment_brevetto_pratica -->
+    <string name="brevetto_pratica_titolo">Attestato Pratica</string>
+    <string name="brevetto_pratica_intro">intro intro intro</string>
+    <string name="brevetto_pratica_luogo">Luogo:</string>
+    <string name="brevetto_pratica_data">Data:</string>
+    <string name="brevetto_pratica_numero">Numero:</string>
+    <string name="brevetto_pratica_conferma">Conferma</string>
+    <string name="brevetto_pratica_annulla">Annulla</string>
+
+    <!-- fragment_brevetto_visita_medica -->
+    <string name="brevetto_visita_medica_titolo">Certificato Visita Medica</string>
+    <string name="brevetto_visita_medica_intro">intro intro intro intro</string>
+    <string name="brevetto_visita_medica_luogo">Luogo:</string>
+    <string name="brevetto_visita_medica_data">Data:</string>
+    <string name="brevetto_visita_medica_scadenza">Scadenza:</string>
+    <string name="brevetto_visita_medica_conferma">Conferma</string>
+    <string name="brevetto_visita_medica_annulla">Annulla</string>
+
     <!-- fragment_profilo -->
     <string name="profilo_aggiungi_drone">Aggiungi drone:</string>
     <string name="profilo_droni_posseduti">Droni posseduti:</string>
