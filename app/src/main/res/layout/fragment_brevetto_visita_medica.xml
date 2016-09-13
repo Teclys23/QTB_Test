@@ -56,13 +56,18 @@
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"/>
 
-        <EditText
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText_brevetto_visita_medica_data"
-            android:layout_centerVertical="true"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/brevetto_visita_medica_campo_data"
+            android:id="@+id/textView_dataView_visita_medica_data"
+            android:focusable="false"
+            android:onClick="settaDataVisitaMedicaData"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/textView34"/>
+            android:layout_toEndOf="@+id/textView34"
+            android:clickable="true"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -78,13 +83,18 @@
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"/>
 
-        <EditText
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText_brevetto_visita_medica_scadenza"
-            android:layout_centerVertical="true"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/brevetto_visita_medica_campo_scadenza"
+            android:id="@+id/textView_dataView_visita_medica_scadenza"
+            android:focusable="false"
+            android:onClick="settaDataVisitaMedicaScadenza"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/textView33"/>
+            android:layout_toEndOf="@+id/textView33"
+            android:clickable="true"/>
     </RelativeLayout>
 
     <RelativeLayout

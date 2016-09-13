@@ -1,39 +1,38 @@
-package com.hirvorn.qtb_test.CreaBrevetto;
+package com.hirvorn.qtb_test.Brevetto;
 
 import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.Settings.PropertiesWriter;
 import com.hirvorn.qtb_test.Settings.ReadPropertyValues;
-import com.hirvorn.qtb_test.Utente.Brevetto;
 
 import java.util.ArrayList;
 
 /**
  * Created by laboratorio on 12/09/2016.
  */
-public class BrevettoVisitaMedica {
+public class BrevettoPratica {
 
     private String codiceUtente;
     private String luogo;
     private String data;
-    private String scadenza;
+    private String numero;
 
-    public BrevettoVisitaMedica(String codiceUtente, String luogo, String data, String scadenza){
+    public BrevettoPratica(String codiceUtente, String luogo, String data, String numero){
         this.codiceUtente = codiceUtente;
         this.luogo = luogo;
         this.data = data;
-        this.scadenza = scadenza;
+        this.numero = numero;
     }
 
-    public void salvaBrevettoVisitaMedica(){
+    public void salvaBrevettoPratica(){
 
         ReadPropertyValues reader = new ReadPropertyValues();
 
-        // Salvo la teoria e pratica
+        // Salvo la teoria e la visita medica
         String brevetto_teoria_old = reader.getPropValue(this.codiceUtente + Brevetto.BREVETTO_EXT, "brevetto_teoria");
-        String brevetto_pratica_old = reader.getPropValue(this.codiceUtente + Brevetto.BREVETTO_EXT, "brevetto_pratica");
+        String visita_medica_old = reader.getPropValue(this.codiceUtente + Brevetto.BREVETTO_EXT, "brevetto_visita_medica");
 
-        // Creo stringa teoria
-        String brevetto_visita_medica = this.luogo + "#" + this.data + "#" + scadenza + "#";
+        // Creo stringa pratica
+        String brevetto_pratica = this.luogo + "#" + this.data + "#" + numero + "#";
 
         // Salvo il tutto
         PropertiesWriter writer = new PropertiesWriter(this.codiceUtente + Brevetto.BREVETTO_EXT, Principale.getController().getContext());
@@ -44,11 +43,9 @@ public class BrevettoVisitaMedica {
 
         ArrayList<String> values = new ArrayList<>();
         values.add(brevetto_teoria_old);
-        values.add(brevetto_pratica_old);
-        values.add(brevetto_visita_medica);
+        values.add(brevetto_pratica);
+        values.add(visita_medica_old);
 
-
-        System.out.println("OMG VALUES " + values.toString());
         writer.write(keys, values);
 
     }

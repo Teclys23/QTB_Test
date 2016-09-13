@@ -2,16 +2,13 @@ package com.hirvorn.qtb_test.Controller;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.Settings.PropertiesWriter;
 import com.hirvorn.qtb_test.Objects.Sessione;
-import com.hirvorn.qtb_test.StartPage;
-import com.hirvorn.qtb_test.Utente.Brevetto;
+import com.hirvorn.qtb_test.Brevetto.Brevetto;
 import com.hirvorn.qtb_test.Utente.Profilo;
 
 public class Controller {

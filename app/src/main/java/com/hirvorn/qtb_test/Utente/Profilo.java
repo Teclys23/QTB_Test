@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.hirvorn.qtb_test.Brevetto.Brevetto;
 import com.hirvorn.qtb_test.Drone.Drone;
 import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.Settings.PropertiesWriter;

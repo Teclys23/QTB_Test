@@ -150,6 +150,7 @@
             android:layout_height="wrap_content"
             android:text="@string/brevetto_main_conferma"
             android:id="@+id/button_brevetto_main_conferma"
+            android:onClick="confermaBrevettoCompleto"
             android:layout_gravity="center_horizontal"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"/>

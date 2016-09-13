@@ -43,6 +43,7 @@
     <string name="brevetto_teoria_intro">intro intro intro</string>
     <string name="brevetto_teoria_luogo">Luogo:</string>
     <string name="brevetto_teoria_data">Data:</string>
+    <string name="brevetto_teoria_campo_data">Premi qui per inserire</string>
     <string name="brevetto_teoria_numero">Numero:</string>
     <string name="brevetto_teoria_conferma">Conferma</string>
     <string name="brevetto_teoria_annulla">Annulla</string>
@@ -52,6 +53,7 @@
     <string name="brevetto_pratica_intro">intro intro intro</string>
     <string name="brevetto_pratica_luogo">Luogo:</string>
     <string name="brevetto_pratica_data">Data:</string>
+    <string name="brevetto_pratica_campo_data">Premi qui per inserire</string>
     <string name="brevetto_pratica_numero">Numero:</string>
     <string name="brevetto_pratica_conferma">Conferma</string>
     <string name="brevetto_pratica_annulla">Annulla</string>
@@ -61,7 +63,9 @@
     <string name="brevetto_visita_medica_intro">intro intro intro intro</string>
     <string name="brevetto_visita_medica_luogo">Luogo:</string>
     <string name="brevetto_visita_medica_data">Data:</string>
+    <string name="brevetto_visita_medica_campo_data">Premi qui per inserire</string>
     <string name="brevetto_visita_medica_scadenza">Scadenza:</string>
+    <string name="brevetto_visita_medica_campo_scadenza">Premi qui per inserire</string>
     <string name="brevetto_visita_medica_conferma">Conferma</string>
     <string name="brevetto_visita_medica_annulla">Annulla</string>
 

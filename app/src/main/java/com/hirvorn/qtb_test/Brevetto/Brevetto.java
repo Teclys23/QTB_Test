@@ -1,4 +1,4 @@
-package com.hirvorn.qtb_test.Utente;
+package com.hirvorn.qtb_test.Brevetto;
 
 import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.Settings.PropertiesWriter;
@@ -24,15 +24,19 @@ public class Brevetto {
 		this.setData_scadenza(data_scadenza);
 	}
 
+    public Brevetto(){}
+
     public static void creaBrevettoVuoto(String codiceUtente){
         PropertiesWriter writer = new PropertiesWriter(codiceUtente + BREVETTO_EXT, Principale.getController().getContext());
 
         ArrayList<String> keys = new ArrayList<>();
+        keys.add("enac");
         keys.add("brevetto_teoria");
         keys.add("brevetto_pratica");
         keys.add("brevetto_visita_medica");
 
         ArrayList<String> values = new ArrayList<>();
+        values.add("null");
         values.add("#");
         values.add("#");
         values.add("#");
@@ -40,7 +44,16 @@ public class Brevetto {
         writer.write(keys, values);
     }
 
+    public void salvaEnac(String enac){
+        PropertiesWriter writer = new PropertiesWriter(Principale.getController().getSessione().getCodiceUtente() + BREVETTO_EXT, Principale.getController().getContext());
+        ArrayList<String> keys = new ArrayList<>();
+        ArrayList<String> values = new ArrayList<>();
 
+        keys.add("enac");
+        values.add(enac);
+
+        writer.write(keys, values);
+    }
 	
 	
 	/**

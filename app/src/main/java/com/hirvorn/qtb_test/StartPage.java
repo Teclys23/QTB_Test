@@ -1,30 +1,24 @@
 package com.hirvorn.qtb_test;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.PhoneNumberUtils;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hirvorn.qtb_test.Brevetto.BrevettoTeoria;
-import com.hirvorn.qtb_test.Controller.Controller;
 import com.hirvorn.qtb_test.CreaBatteria.Fragment_CreaBatteria;
-import com.hirvorn.qtb_test.CreaBrevetto.BrevettoPratica;
-import com.hirvorn.qtb_test.CreaBrevetto.BrevettoVisitaMedica;
+import com.hirvorn.qtb_test.Brevetto.BrevettoPratica;
+import com.hirvorn.qtb_test.Brevetto.BrevettoVisitaMedica;
+import com.hirvorn.qtb_test.CreaBrevetto.DatePickerFragment;
 import com.hirvorn.qtb_test.CreaBrevetto.Fragment_Brevetto_Main;
 import com.hirvorn.qtb_test.CreaBrevetto.Fragment_Brevetto_Pratica;
 import com.hirvorn.qtb_test.CreaBrevetto.Fragment_Brevetto_Teoria;
@@ -36,11 +30,10 @@ import com.hirvorn.qtb_test.Login.Login;
 import com.hirvorn.qtb_test.Main.Fragment_Main;
 import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.Settings.ReadPropertyValues;
+import com.hirvorn.qtb_test.Brevetto.Brevetto;
 import com.hirvorn.qtb_test.Utente.Fragment_Profilo;
 import com.hirvorn.qtb_test.Utils.CustomViewPager;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -68,20 +61,23 @@ public class StartPage extends AppCompatActivity {
     private static EditText crea_brevetto_data_rilascio;
     private static EditText crea_brevetto_data_scadenza;
 
+    // Brevetto Main
+    private static EditText brevetto_main_enac;
+
     // Brevetto Teoria
     private static EditText brevetto_teoria_luogo;
-    private static EditText brevetto_teoria_data;
+    private static TextView brevetto_teoria_data;
     private static EditText brevetto_teoria_numero;
 
     // Brevetto Pratica
     private static EditText brevetto_pratica_luogo;
-    private static EditText brevetto_pratica_data;
+    private static TextView brevetto_pratica_data;
     private static EditText brevetto_pratica_numero;
 
     //Brevetto Visita Medica
     private static EditText brevetto_visita_medica_luogo;
-    private static EditText brevetto_visita_medica_data;
-    private static EditText brevetto_visita_medica_scadenza;
+    private static TextView brevetto_visita_medica_data;
+    private static TextView brevetto_visita_medica_scadenza;
 
     //Drone
     private static EditText crea_drone_data;
@@ -321,6 +317,7 @@ public class StartPage extends AppCompatActivity {
      * Creazione di un nuovo brevetto
      * @param view
      */
+    /*
     public void confermaBrevetto(View view){
 
         Login login = new Login();
@@ -350,7 +347,7 @@ public class StartPage extends AppCompatActivity {
             login.creaNuovoBrevetto(Principale.getController().getSessione().getCodiceUtente(), codice, data_rilascio, data_scadenza);
             mPager.setCurrentItem(4, true);
         }
-    }
+    }*/
 
     /**
      * Brevetto teoria
@@ -368,7 +365,7 @@ public class StartPage extends AppCompatActivity {
             brevetto_teoria_luogo.setError("Luogo mancante");
         }
 
-        brevetto_teoria_data = (EditText)findViewById(R.id.editText_brevetto_teoria_data);
+        brevetto_teoria_data = (TextView)findViewById(R.id.textView_dataView);
         String data = brevetto_teoria_data.getText().toString();
 
         if(TextUtils.isEmpty(data)){
@@ -405,7 +402,7 @@ public class StartPage extends AppCompatActivity {
             brevetto_pratica_luogo.setError("Luogo mancante");
         }
 
-        brevetto_pratica_data = (EditText)findViewById(R.id.editText_brevetto_pratica_data);
+        brevetto_pratica_data = (TextView) findViewById(R.id.textView_dataView_pratica);
         String data = brevetto_pratica_data.getText().toString();
 
         if(TextUtils.isEmpty(data)){
@@ -442,14 +439,14 @@ public class StartPage extends AppCompatActivity {
             brevetto_visita_medica_luogo.setError("Luogo mancante");
         }
 
-        brevetto_visita_medica_data = (EditText)findViewById(R.id.editText_brevetto_visita_medica_data);
+        brevetto_visita_medica_data = (TextView)findViewById(R.id.textView_dataView_visita_medica_data);
         String data = brevetto_visita_medica_data.getText().toString();
 
         if(TextUtils.isEmpty(data)){
             brevetto_visita_medica_data.setError("Data mancante");
         }
 
-        brevetto_visita_medica_scadenza = (EditText)findViewById(R.id.editText_brevetto_visita_medica_scadenza);
+        brevetto_visita_medica_scadenza = (TextView) findViewById(R.id.textView_dataView_visita_medica_scadenza);
         String scadenza = brevetto_visita_medica_scadenza.getText().toString();
 
         if(TextUtils.isEmpty(scadenza)){
@@ -469,6 +466,30 @@ public class StartPage extends AppCompatActivity {
 
     public void tornaABrevettoMain(View view){
         mPager.setCurrentItem(2, true);
+    }
+
+    public void confermaBrevettoCompleto(View view){
+
+        ReadPropertyValues reader = new ReadPropertyValues();
+
+        // Salvo la pratica, la teoria e la visita medica
+        String brevetto_pratica = reader.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Brevetto.BREVETTO_EXT, "brevetto_pratica");
+        String visita_medica = reader.getPropValue(Principale.getController().getSessione().getCodiceUtente()  + Brevetto.BREVETTO_EXT, "brevetto_visita_medica");
+        String brevetto_teoria = reader.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Brevetto.BREVETTO_EXT, "brevetto_teoria");
+
+        brevetto_main_enac = (EditText)findViewById(R.id.editText_codice_enac);
+        String enac = brevetto_main_enac.getText().toString();
+
+        if(TextUtils.isEmpty(enac)){
+            brevetto_main_enac.setError("Codice mancante");
+        }
+        Log.v(StartPage.LOG_TAG, "OMG OMG " + enac);
+        if(!brevetto_teoria.equals("#") && !brevetto_pratica.equals("#") && !visita_medica.equals("#")
+                && !TextUtils.isEmpty(enac)){
+            Log.v(StartPage.LOG_TAG, "OMG OMG " + enac);
+            Brevetto brevetto = new Brevetto();
+            brevetto.salvaEnac(enac);
+        }
     }
 
     public void aggiungiDrone(View view){
@@ -559,6 +580,30 @@ public class StartPage extends AppCompatActivity {
         }
     }
 
+    public void settaData(View view, int risorsa){
+        Bundle bundle = new Bundle();
+        bundle.putInt("textView", risorsa);
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.setArguments(bundle);
+        newFragment.show(getSupportFragmentManager(),"Date Picker");
+    }
+
+    public void settaDataTeoria(View view){
+        settaData(view, R.id.textView_dataView);
+    }
+
+    public void settaDataPratica(View view){
+        settaData(view, R.id.textView_dataView_pratica);
+    }
+
+    public void settaDataVisitaMedicaData(View view){
+        settaData(view, R.id.textView_dataView_visita_medica_data);
+    }
+
+    public void settaDataVisitaMedicaScadenza(View view){
+        settaData(view, R.id.textView_dataView_visita_medica_scadenza);
+    }
+
     /**
      * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
      * sequence.
@@ -600,7 +645,6 @@ public class StartPage extends AppCompatActivity {
         public int getCount() {
             return NUM_PAGES;
         }
-
 
     }
 

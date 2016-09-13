@@ -3,11 +3,8 @@ package com.hirvorn.qtb_test.Brevetto;
 import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.Settings.PropertiesWriter;
 import com.hirvorn.qtb_test.Settings.ReadPropertyValues;
-import com.hirvorn.qtb_test.Utente.Brevetto;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by laboratorio on 12/09/2016.

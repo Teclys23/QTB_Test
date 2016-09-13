@@ -121,7 +121,7 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textCapCharacters|textEmailAddress"
+                        android:inputType="textEmailAddress|textCapCharacters"
                         android:digits="@string/codice_fiscale_digits"
                         android:id="@+id/editText_codice_fiscale"/>
                 </LinearLayout>
