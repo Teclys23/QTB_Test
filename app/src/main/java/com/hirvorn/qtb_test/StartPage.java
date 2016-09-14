@@ -92,6 +92,12 @@ public class StartPage extends AppCompatActivity {
     private static EditText crea_batteria_codice;
 
     /**
+     * Controlli
+     */
+    private boolean sessioneValida;
+    private boolean brevettoValido;
+
+    /**
      * The number of pages (wizard steps) to show in this demo.
      */
     private static final int NUM_PAGES = 8;
@@ -126,19 +132,48 @@ public class StartPage extends AppCompatActivity {
     }
 
     public void init(){
+        setSessioneValida(false);
+        setBrevettoValido(false);
 
         Principale principale = new Principale(this);
 
-
         tw_sessioneCorrente = (TextView)findViewById(R.id.tw_sessioneCorrente);
-
-
-        ReadPropertyValues readPropertyValues = new ReadPropertyValues();
-
 
         //Controllo sessione corrente
         //if(!Principale.getController().isValidSession()){
         //---------------------------------------------------------- SOLO PER DEBUG
+        if(!Principale.getController().isValidSession()){
+            Toast.makeText(this, "Non hai ancora un profilo!",Toast.LENGTH_SHORT).show();
+            mPager.setCurrentItem(1);
+            iniziaCreaProfilo();
+        }
+        else{
+            setSessioneValida(true);
+        }
+/*
+        Log.v(StartPage.LOG_TAG, "QUA QUA");
+        if(sessioneValida && !Principale.getController().isValidBrevetto()){
+            tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "name"));
+            Toast.makeText(this, "Non hai ancora settato il brevetto!", Toast.LENGTH_SHORT).show();
+            Log.v(StartPage.LOG_TAG, "QUA QUA 2");
+            mPager.setCurrentItem(2, true);
+        }
+        else{
+            Log.v(StartPage.LOG_TAG, "QUA QUA 3");
+            tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "name"));
+            setBrevettoValido(true);
+        }
+
+        if(getSessioneValida() && getBrevettoValido()){
+            Log.v(StartPage.LOG_TAG, "ECCOCI " + Principale.getController().getSessione().getCodiceUtente());
+            if (Principale.getController().getSessione().getCodiceUtente().equals("null")) {
+                tw_sessioneCorrente.setText("Sessione corrente: null");
+            } else {
+                Log.v(StartPage.LOG_TAG, "CE SIAMOOOOOOOOOOOOOOOOOOOOOOO");
+                //tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "name"));
+            }
+        }*/
+        /*
         if(Principale.getController().isValidSession()){
             Toast.makeText(this, "Non hai ancora un profilo!",Toast.LENGTH_SHORT).show();
             mPager.setCurrentItem(1);
@@ -153,12 +188,31 @@ public class StartPage extends AppCompatActivity {
 
                 tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "name"));
             }
-        }
+        }*/
     }
+
+    /**
+     * Metodi
+     *
+     */
+
+    // Getter e Setter
 
     public static void setSessioneCorrente(String text){
         tw_sessioneCorrente.setText(text);
     }
+
+    private void setSessioneValida(boolean valida){ this.sessioneValida = valida; }
+
+    private boolean getSessioneValida(){ return this.sessioneValida; }
+
+    private void setBrevettoValido(boolean valido){ this.brevettoValido = valido; }
+
+    private boolean getBrevettoValido(){ return this.brevettoValido; }
+
+    //----------------------------------------------------------------------------------------------
+
+    // Crea Profilo
 
     private void iniziaCreaProfilo(){
         mPager.setCurrentItem(1);
@@ -309,8 +363,28 @@ public class StartPage extends AppCompatActivity {
                 ){
             login.creaNuovoProfilo(nome, cognome, mail, telefono, codiceFiscale, residenza, via, numeroCivico, cap);
             setSessioneCorrente(Principale.getController().getProfilo().getNome());
+            setSessioneValida(true);
+            continuaDopoProfilo();
+            //mPager.setCurrentItem(2, true);
+        }
+    }
+
+    private void continuaDopoProfilo(){
+        Log.v(StartPage.LOG_TAG, "QUA QUA");
+        ReadPropertyValues readPropertyValues = new ReadPropertyValues();
+
+        if(sessioneValida && !Principale.getController().isValidBrevetto()){
+            tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "name"));
+            Toast.makeText(this, "Non hai ancora settato il brevetto!", Toast.LENGTH_SHORT).show();
+            Log.v(StartPage.LOG_TAG, "QUA QUA 2");
             mPager.setCurrentItem(2, true);
         }
+        else{
+            Log.v(StartPage.LOG_TAG, "QUA QUA 3");
+            tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "name"));
+            setBrevettoValido(true);
+        }
+
     }
 
     /**
@@ -484,13 +558,41 @@ public class StartPage extends AppCompatActivity {
             brevetto_main_enac.setError("Codice mancante");
         }
         Log.v(StartPage.LOG_TAG, "OMG OMG " + enac);
+
+        if(brevetto_teoria.equals("#")){
+            Toast.makeText(this, "Brevetto Teoria mancante!", Toast.LENGTH_SHORT).show();
+        }
+
+        if(brevetto_pratica.equals("#")){
+            Toast.makeText(this, "Brevetto Pratica mancante!", Toast.LENGTH_SHORT).show();
+        }
+
+        if(visita_medica.equals("#")){
+            Toast.makeText(this, "Visita Medica mancante!", Toast.LENGTH_SHORT).show();
+        }
+
         if(!brevetto_teoria.equals("#") && !brevetto_pratica.equals("#") && !visita_medica.equals("#")
                 && !TextUtils.isEmpty(enac)){
-            Log.v(StartPage.LOG_TAG, "OMG OMG " + enac);
             Brevetto brevetto = new Brevetto();
             brevetto.salvaEnac(enac);
+            setBrevettoValido(true);
+            continuaDopoBrevetto();
         }
     }
+
+    private void continuaDopoBrevetto(){
+        if(getSessioneValida() && getBrevettoValido()){
+            Log.v(StartPage.LOG_TAG, "ECCOCI " + Principale.getController().getSessione().getCodiceUtente());
+            if (Principale.getController().getSessione().getCodiceUtente().equals("null")) {
+                tw_sessioneCorrente.setText("Sessione corrente: null");
+            } else {
+                Log.v(StartPage.LOG_TAG, "CE SIAMOOOOOOOOOOOOOOOOOOOOOOO");
+                //tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "name"));
+            }
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
 
     public void aggiungiDrone(View view){
         mPager.setCurrentItem(3, true);

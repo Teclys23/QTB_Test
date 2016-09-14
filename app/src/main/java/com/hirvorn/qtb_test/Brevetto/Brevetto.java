@@ -42,6 +42,14 @@ public class Brevetto {
         values.add("#");
 
         writer.write(keys, values);
+
+        // Salva brevetto nel profilo
+        writer = new PropertiesWriter(codiceUtente + Principale.getConfig().getUserExtension(), Principale.getController().getContext());
+        keys.clear();
+        values.clear();
+        keys.add("brevetto");
+        values.add(codiceUtente + BREVETTO_EXT);
+        writer.write(keys,values);
     }
 
     public void salvaEnac(String enac){

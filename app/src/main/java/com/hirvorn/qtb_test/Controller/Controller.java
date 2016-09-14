@@ -9,6 +9,7 @@ import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.Settings.PropertiesWriter;
 import com.hirvorn.qtb_test.Objects.Sessione;
 import com.hirvorn.qtb_test.Brevetto.Brevetto;
+import com.hirvorn.qtb_test.Settings.ReadPropertyValues;
 import com.hirvorn.qtb_test.Utente.Profilo;
 
 public class Controller {
@@ -66,6 +67,19 @@ public class Controller {
             }
         }
         else{
+            return false;
+        }
+    }
+
+    public boolean isValidBrevetto(){
+        ReadPropertyValues reader = new ReadPropertyValues();
+        if(!(reader.getPropValue(getSessione().getCodiceUtente() + Brevetto.BREVETTO_EXT, "brevetto_teoria")).equals("#")
+            && !(reader.getPropValue(getSessione().getCodiceUtente() + Brevetto.BREVETTO_EXT, "brevetto_pratica")).equals("#")
+                && !(reader.getPropValue(getSessione().getCodiceUtente() + Brevetto.BREVETTO_EXT, "brevetto_visita_medica")).equals("#")
+                ){
+            return true;
+        }
+        else {
             return false;
         }
     }

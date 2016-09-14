@@ -37,6 +37,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editText_brevetto_visita_medica_luogo"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/textView32"/>

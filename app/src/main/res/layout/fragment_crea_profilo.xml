@@ -122,6 +122,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textEmailAddress|textCapCharacters"
+                        android:singleLine="true"
                         android:digits="@string/codice_fiscale_digits"
                         android:id="@+id/editText_codice_fiscale"/>
                 </LinearLayout>
@@ -199,6 +200,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
+                        android:imeOptions="actionDone"
                         android:id="@+id/editText_cap"/>
                 </LinearLayout>
 
