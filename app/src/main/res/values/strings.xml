@@ -75,7 +75,6 @@
 
     <!-- fragment_crea_drone -->
     <string name="crea_drone_titolo">Crea nuova abilitazione</string>
-    <string name="crea_drone_data">Data:</string>
     <string name="crea_drone_categoria">Categoria:</string>
     <string name="crea_drone_marca">Marca:</string>
     <string name="crea_drone_apr">APR:</string>
@@ -83,6 +82,24 @@
     <string name="crea_drone_numero_motori">Numero motori:</string>
     <string name="crea_drone_btn_aggiungi_batteria">Aggiungi Batteria</string>
     <string name="crea_drone_btn_conferma">Conferma</string>
+
+    <string-array name="drone_categorie">
+        <item>minore 2</item>
+        <item>maggiore 2</item>
+        <item>maggiore 5</item>
+    </string-array>
+
+    <string-array name="drone_marca_modello">
+        <item>marca 1 - modello 1</item>
+        <item>marca 2 - modello 2</item>
+        <item>marca 3 - modello 3</item>
+    </string-array>
+
+    <string-array name="drone_numero_motori">
+        <item>4</item>
+        <item>6</item>
+        <item>8</item>
+    </string-array>
 
     <!-- fragment_crea_batteria -->
     <string name="crea_batteria_titolo">Crea batteria</string>

@@ -40,7 +40,7 @@ public class Fragment_Profilo extends Fragment {
         tw_cognome.setText(getArguments().getString("cognome"));
 
         tw_brevetto = (TextView)view.findViewById(R.id.tw_profilo_brevetto);
-        tw_brevetto.setText(getArguments().getString("brevetto"));
+        tw_brevetto.setText(Principale.getController().getBrevetto().getEnac());
 
         listView_Droni = (ListView)view.findViewById(R.id.droneList);
         droni_posseduti = Principale.getController().getProfilo().getDroniPosseduti();

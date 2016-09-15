@@ -17,6 +17,8 @@ import java.util.List;
 public class Drone {
 
     public static final String DRONE_FILE_EXTENSION = ".drone";
+    public static final int TOT_ORE_CONTROLLO_INTERNO = 60;
+    public static final int TOT_ORE_CONTROLLO_ESTERNO = 30;
 
     private String data;
     private String categoria;
@@ -26,8 +28,7 @@ public class Drone {
     private String numero_motori;
     private String proprietario;
 
-    public Drone(String data, String categoria, String marca, String apr, String spr, String numero_motori, String proprietario){
-        this.data = data;
+    public Drone(String categoria, String marca, String apr, String spr, String numero_motori, String proprietario){
         this.categoria = categoria;
         this.marca = marca;
         this.apr = apr;
@@ -38,7 +39,7 @@ public class Drone {
 
     public void salvaNuovoDrone(){
 
-        PropertiesWriter writer = new PropertiesWriter(this.getApr() + this.getSpr() + DRONE_FILE_EXTENSION, Principale.getController().getContext());
+        PropertiesWriter writer = new PropertiesWriter(this.getApr() + DRONE_FILE_EXTENSION, Principale.getController().getContext());
 
         /**
          * Crea il file.drone
@@ -46,7 +47,6 @@ public class Drone {
         //creo elenco delle chiavi
         ArrayList<String> keys = new ArrayList<>();
 
-        keys.add("data");
         keys.add("categoria");
         keys.add("marca");
         keys.add("apr");
@@ -56,7 +56,6 @@ public class Drone {
         //creo elenco dei valori
         ArrayList<String> values = new ArrayList<>();
 
-        values.add(this.getData());
         values.add(this.getCategoria());
         values.add(this.getMarca());
         values.add(this.getApr());

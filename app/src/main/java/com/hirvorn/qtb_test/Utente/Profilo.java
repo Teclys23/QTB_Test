@@ -55,6 +55,24 @@ public class Profilo {
 
 	}
 
+    public Profilo(String codice, String nome, String cognome, String mail, String telefono, String codiceFiscale, String residenza, String via, String numeroCivico, String cap, String droni){
+        this.codice = codice;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.mail = mail;
+        this.telefono = telefono;
+        this.codiceFiscale = codiceFiscale;
+        this.residenza = residenza;
+        this.via = via;
+        this.numeroCivico = numeroCivico;
+        this.cap = cap;
+
+        ArrayList<String> droni_posseduti_nomi = new ArrayList<>(Arrays.asList(droni.split("#")));
+
+        Log.v(StartPage.LOG_TAG, "DRONI PROFILO " + droni_posseduti_nomi.toString());
+
+    }
+
 
 	/**
 	 * Metodi
@@ -105,7 +123,7 @@ public class Profilo {
 
         ReadPropertyValues reader = new ReadPropertyValues();
 
-        String droni = reader.getPropValue(this.getCodice() + Principale.getConfig().getUserExtension(), "drones");
+        String droni = reader.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "drones");
 
         ArrayList<String> droni_posseduti = new ArrayList<String>(Arrays.asList(droni.split("#")));
 
@@ -116,14 +134,15 @@ public class Profilo {
         PropertiesWriter writer = new PropertiesWriter(getCodice() + Principale.getConfig().getUserExtension(), Principale.getController().getContext());
         //Creo l'elenco di chiavi
         ArrayList<String> keys = new ArrayList<String>();
-        keys.add("code");
-        keys.add("name");
-        keys.add("surname");
+        keys.add("codice");
+        keys.add("nome");
+        keys.add("cognome");
         keys.add("mail");
-        keys.add("telephone");
+        keys.add("telefono");
         keys.add("codiceFiscale");
-        keys.add("residence");
-        keys.add("street");
+        keys.add("residenza");
+        keys.add("via");
+        keys.add("codiceCivico");
         keys.add("cap");
         keys.add("drones");
 
@@ -236,5 +255,7 @@ public class Profilo {
         return cap;
     }
 
-
+    public String toString(){
+        return "Profilo:\n\n" + this.codice + "\n" + this.nome + "\n" + this.cognome + "\n" + this.mail + "\n" + this.telefono + "\n" + this.codiceFiscale + "\n" + this.residenza + "\n" + this.via + "\n" + this.numeroCivico + "\n" + this.cap + "\n" + this.droni_posseduti;
+    }
 }

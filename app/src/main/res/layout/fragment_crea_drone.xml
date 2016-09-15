@@ -6,7 +6,8 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:weightSum="1">
 
         <TextView
             android:layout_width="wrap_content"
@@ -25,31 +26,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/crea_drone_data"
-                android:id="@+id/textView12" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/editText_crea_drone_data" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/crea_drone_categoria"
                 android:id="@+id/textView16" />
 
-            <EditText
+            <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText_crea_drone_categoria" />
+                android:id="@+id/spinner_categorie"
+                android:spinnerMode="dropdown"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -64,10 +49,12 @@
                 android:text="@string/crea_drone_marca"
                 android:id="@+id/textView14" />
 
-            <EditText
+            <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText_crea_drone_marca" />
+                android:id="@+id/spinner_marca_modello"
+                android:spinnerMode="dropdown"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -109,36 +96,70 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
 
-            <TextView
+            <Button
+                style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/crea_drone_numero_motori"
-                android:id="@+id/textView20" />
+                android:text="aggiungi spr"
+                android:onClick="aggiungiSpr"
+                android:id="@+id/button_spr"/>
+        </LinearLayout>
 
-            <EditText
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:layout_weight="0.61">
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="110dp"
+                android:id="@+id/listView_spr"
+                android:layout_above="@+id/layout_numero_motori"
+                android:layout_weight="1"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText_crea_drone_numero_motori" />
+                android:id="@+id/layout_numero_motori">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/crea_drone_numero_motori"
+                    android:id="@+id/textView20" />
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinner_numero_motori"/>
+
+            </LinearLayout>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/crea_drone_btn_aggiungi_batteria"
+                android:onClick="aggiungiBatteria"
+                android:id="@+id/button3" />
+
         </LinearLayout>
 
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/crea_drone_btn_aggiungi_batteria"
-            android:onClick="aggiungiBatteria"
-            android:id="@+id/button3" />
-    </LinearLayout>
+            android:text="@string/crea_drone_btn_conferma"
+            android:id="@+id/crea_drone_btn_conferma"
+            android:onClick="confermaCreaDrone"
+            android:layout_gravity="center_horizontal|bottom" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/crea_drone_btn_conferma"
-        android:id="@+id/crea_drone_btn_conferma"
-        android:onClick="confermaCreaDrone"
-        android:layout_gravity="center_horizontal|bottom" />
+    </LinearLayout>
 
 </FrameLayout>

@@ -13,7 +13,10 @@ public class Brevetto {
 	private String data_rilascio;
 	private String data_scadenza;
 
-    private String brev_teoria;
+    private String teoria;
+    private String pratica;
+    private String visita_medica;
+    private String enac;
 	
 	/**
 	 * Costruttori
@@ -23,6 +26,13 @@ public class Brevetto {
 		this.setData_rilascio(data_rilascio);
 		this.setData_scadenza(data_scadenza);
 	}
+
+    public Brevetto(String teoria, String pratica, String visita_medica, String enac){
+        this.teoria = teoria;
+        this.pratica = pratica;
+        this.visita_medica = visita_medica;
+        this.enac = enac;
+    }
 
     public Brevetto(){}
 
@@ -71,6 +81,7 @@ public class Brevetto {
 		return codice;
 	}
 
+    public String getEnac(){ return this.enac; }
 
 	public void setCodice(String codice) {
 		this.codice = codice;

@@ -92,8 +92,8 @@ public class Login {
 		Principale.getController().setBrevetto(creaB.getBrevetto());
 	}
 
-    public void creaNuovoDrone(String data, String categoria, String marca, String apr, String spr, String numero_motori){
-        Drone drone = new Drone(data, categoria, marca, apr, spr, numero_motori, Principale.getController().getSessione().getCodiceUtente());
+    public void creaNuovoDrone(String categoria, String marca, String apr, String spr, String numero_motori){
+        Drone drone = new Drone(categoria, marca, apr, spr, numero_motori, Principale.getController().getSessione().getCodiceUtente());
         drone.salvaNuovoDrone();
     }
 

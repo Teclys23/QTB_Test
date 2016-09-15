@@ -11,10 +11,13 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hirvorn.qtb_test.Brevetto.BrevettoTeoria;
+import com.hirvorn.qtb_test.Controller.Controller;
 import com.hirvorn.qtb_test.CreaBatteria.Fragment_CreaBatteria;
 import com.hirvorn.qtb_test.Brevetto.BrevettoPratica;
 import com.hirvorn.qtb_test.Brevetto.BrevettoVisitaMedica;
@@ -32,8 +35,11 @@ import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.Settings.ReadPropertyValues;
 import com.hirvorn.qtb_test.Brevetto.Brevetto;
 import com.hirvorn.qtb_test.Utente.Fragment_Profilo;
+import com.hirvorn.qtb_test.Utente.Profilo;
 import com.hirvorn.qtb_test.Utils.CustomViewPager;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,11 +62,6 @@ public class StartPage extends AppCompatActivity {
     private static EditText crea_profilo_cap;
     private static EditText crea_profilo_numero_civico;
 
-    //Brevetto
-    private static EditText crea_brevetto_codice;
-    private static EditText crea_brevetto_data_rilascio;
-    private static EditText crea_brevetto_data_scadenza;
-
     // Brevetto Main
     private static EditText brevetto_main_enac;
 
@@ -80,12 +81,12 @@ public class StartPage extends AppCompatActivity {
     private static TextView brevetto_visita_medica_scadenza;
 
     //Drone
-    private static EditText crea_drone_data;
-    private static EditText crea_drone_categoria;
-    private static EditText crea_drone_marca;
+    private static Spinner crea_drone_categoria;
+    private static Spinner crea_drone_marca_modello;
     private static EditText crea_drone_apr;
-    private static EditText crea_drone_spr;
-    private static EditText crea_drone_numero_motori;
+    private static EditText crea_drone_spr_text;
+    private static ListView crea_drone_spr;
+    private static Spinner crea_drone_numero_motori;
 
     //Batteria
     private static EditText crea_batteria_drone;
@@ -148,47 +149,11 @@ public class StartPage extends AppCompatActivity {
             iniziaCreaProfilo();
         }
         else{
+            caricaProfilo();
             setSessioneValida(true);
-        }
-/*
-        Log.v(StartPage.LOG_TAG, "QUA QUA");
-        if(sessioneValida && !Principale.getController().isValidBrevetto()){
-            tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "name"));
-            Toast.makeText(this, "Non hai ancora settato il brevetto!", Toast.LENGTH_SHORT).show();
-            Log.v(StartPage.LOG_TAG, "QUA QUA 2");
-            mPager.setCurrentItem(2, true);
-        }
-        else{
-            Log.v(StartPage.LOG_TAG, "QUA QUA 3");
-            tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "name"));
-            setBrevettoValido(true);
+            continuaDopoProfilo();
         }
 
-        if(getSessioneValida() && getBrevettoValido()){
-            Log.v(StartPage.LOG_TAG, "ECCOCI " + Principale.getController().getSessione().getCodiceUtente());
-            if (Principale.getController().getSessione().getCodiceUtente().equals("null")) {
-                tw_sessioneCorrente.setText("Sessione corrente: null");
-            } else {
-                Log.v(StartPage.LOG_TAG, "CE SIAMOOOOOOOOOOOOOOOOOOOOOOO");
-                //tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "name"));
-            }
-        }*/
-        /*
-        if(Principale.getController().isValidSession()){
-            Toast.makeText(this, "Non hai ancora un profilo!",Toast.LENGTH_SHORT).show();
-            mPager.setCurrentItem(1);
-            iniziaCreaProfilo();
-
-        }
-        else {
-            Log.v(StartPage.LOG_TAG, "ECCOCI " + Principale.getController().getSessione().getCodiceUtente());
-            if (Principale.getController().getSessione().getCodiceUtente().equals("null")) {
-                tw_sessioneCorrente.setText("Sessione corrente: null");
-            } else {
-
-                tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "name"));
-            }
-        }*/
     }
 
     /**
@@ -369,59 +334,56 @@ public class StartPage extends AppCompatActivity {
         }
     }
 
-    private void continuaDopoProfilo(){
-        Log.v(StartPage.LOG_TAG, "QUA QUA");
-        ReadPropertyValues readPropertyValues = new ReadPropertyValues();
+    private void caricaProfilo(){
+        ReadPropertyValues reader = new ReadPropertyValues();
+        ArrayList<String> keys = new ArrayList<>();
+        keys.add("codice");
+        keys.add("nome");
+        keys.add("cognome");
+        keys.add("mail");
+        keys.add("telefono");
+        keys.add("codiceFiscale");
+        keys.add("residenza");
+        keys.add("via");
+        keys.add("codiceCivico");
+        keys.add("cap");
+        keys.add("drones");
 
-        if(sessioneValida && !Principale.getController().isValidBrevetto()){
-            tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "name"));
-            Toast.makeText(this, "Non hai ancora settato il brevetto!", Toast.LENGTH_SHORT).show();
-            Log.v(StartPage.LOG_TAG, "QUA QUA 2");
-            mPager.setCurrentItem(2, true);
+        ArrayList<String> values = new ArrayList<>();
+        try {
+            values = reader.getPropertyValues(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), keys, Principale.getController().getContext(), true);
+
+            Profilo profilo = new Profilo(values.get(0), values.get(1), values.get(2), values.get(3), values.get(4), values.get(5), values.get(6), values.get(7), values.get(8), values.get(9), values.get(10));
+            Principale.getController().setProfilo(profilo);
+            Log.v(StartPage.LOG_TAG, "Profilo settato nel controller.");
+            System.out.println(profilo.toString());
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        else{
-            Log.v(StartPage.LOG_TAG, "QUA QUA 3");
-            tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "name"));
-            setBrevettoValido(true);
-        }
+
 
     }
 
-    /**
-     * Creazione di un nuovo brevetto
-     * @param view
-     */
-    /*
-    public void confermaBrevetto(View view){
+    private void continuaDopoProfilo(){
 
-        Login login = new Login();
+        ReadPropertyValues readPropertyValues = new ReadPropertyValues();
 
-        crea_brevetto_codice = (EditText)findViewById(R.id.editText_codice);
-        String codice = crea_brevetto_codice.getText().toString();
+        if(sessioneValida && !Principale.getController().isValidBrevetto()){
+            tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "nome"));
+            Toast.makeText(this, "Non hai ancora settato il brevetto!", Toast.LENGTH_SHORT).show();
 
-        if(TextUtils.isEmpty(codice)){
-            crea_brevetto_codice.setError("Codice mancante");
+            mPager.setCurrentItem(2, true);
+        }
+        else{
+
+            tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "nome"));
+            caricaBrevetto();
+            setBrevettoValido(true);
+            mPager.setCurrentItem(6, true);
         }
 
-        crea_brevetto_data_rilascio = (EditText)findViewById(R.id.editText_data_rilascio);
-        String data_rilascio = crea_brevetto_data_rilascio.getText().toString();
-
-        if(TextUtils.isEmpty(data_rilascio)){
-            crea_brevetto_data_rilascio.setError("Data rilascio mancante");
-        }
-
-        crea_brevetto_data_scadenza = (EditText)findViewById(R.id.editText_data_scadenza);
-        String data_scadenza = crea_brevetto_data_scadenza.getText().toString();
-
-        if(TextUtils.isEmpty(data_scadenza)){
-            crea_brevetto_data_scadenza.setError("Data scadenza mancancete");
-        }
-
-        if(!TextUtils.isEmpty(codice) && !TextUtils.isEmpty(data_rilascio) && !TextUtils.isEmpty(data_scadenza)){
-            login.creaNuovoBrevetto(Principale.getController().getSessione().getCodiceUtente(), codice, data_rilascio, data_scadenza);
-            mPager.setCurrentItem(4, true);
-        }
-    }*/
+    }
 
     /**
      * Brevetto teoria
@@ -557,7 +519,6 @@ public class StartPage extends AppCompatActivity {
         if(TextUtils.isEmpty(enac)){
             brevetto_main_enac.setError("Codice mancante");
         }
-        Log.v(StartPage.LOG_TAG, "OMG OMG " + enac);
 
         if(brevetto_teoria.equals("#")){
             Toast.makeText(this, "Brevetto Teoria mancante!", Toast.LENGTH_SHORT).show();
@@ -576,7 +537,28 @@ public class StartPage extends AppCompatActivity {
             Brevetto brevetto = new Brevetto();
             brevetto.salvaEnac(enac);
             setBrevettoValido(true);
+            Principale.getController().setBrevetto(brevetto);
             continuaDopoBrevetto();
+        }
+    }
+
+    private void caricaBrevetto(){
+        ReadPropertyValues reader = new ReadPropertyValues();
+        ArrayList<String> keys = new ArrayList<>();
+        keys.add("brevetto_teoria");
+        keys.add("brevetto_pratica");
+        keys.add("brevetto_visita_medica");
+        keys.add("enac");
+
+        ArrayList<String> values = new ArrayList<>();
+
+        try {
+            values = reader.getPropertyValues(Principale.getController().getSessione().getCodiceUtente() + Brevetto.BREVETTO_EXT, keys, Principale.getController().getContext(), true);
+
+            Brevetto brevetto = new Brevetto(values.get(0), values.get(1), values.get(2), values.get(3));
+            Principale.getController().setBrevetto(brevetto);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -586,7 +568,7 @@ public class StartPage extends AppCompatActivity {
             if (Principale.getController().getSessione().getCodiceUtente().equals("null")) {
                 tw_sessioneCorrente.setText("Sessione corrente: null");
             } else {
-                Log.v(StartPage.LOG_TAG, "CE SIAMOOOOOOOOOOOOOOOOOOOOOOO");
+                mPager.setCurrentItem(6);
                 //tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "name"));
             }
         }
@@ -595,7 +577,7 @@ public class StartPage extends AppCompatActivity {
     //----------------------------------------------------------------------------------------------
 
     public void aggiungiDrone(View view){
-        mPager.setCurrentItem(3, true);
+        mPager.setCurrentItem(7, true);
     }
 
     /**
@@ -603,26 +585,20 @@ public class StartPage extends AppCompatActivity {
      * @param view
      */
     public void confermaCreaDrone(View view){
-        crea_drone_data = (EditText)findViewById(R.id.editText_crea_drone_data);
-        String data = crea_drone_data.getText().toString();
 
-        if(TextUtils.isEmpty(data)){
-            crea_drone_data.setError("Data mancante");
-        }
-
-        crea_drone_categoria = (EditText)findViewById(R.id.editText_crea_drone_categoria);
-        String categoria = crea_drone_categoria.getText().toString();
-
+        crea_drone_categoria = (Spinner) findViewById(R.id.spinner_categorie);
+        String categoria = crea_drone_categoria.getSelectedItem().toString();
+/*
         if(TextUtils.isEmpty(categoria)){
-            crea_drone_categoria.setError("Categoria mancante");
-        }
+            crea_drone_categoria;
+        }*/
 
-        crea_drone_marca = (EditText)findViewById(R.id.editText_crea_drone_marca);
-        String marca = crea_drone_marca.getText().toString();
-
+        crea_drone_marca_modello = (Spinner)findViewById(R.id.spinner_marca_modello);
+        String marca = crea_drone_marca_modello.getSelectedItem().toString();
+/*
         if(TextUtils.isEmpty(marca)){
             crea_drone_marca.setError("Marca mancante");
-        }
+        }*/
 
         crea_drone_apr = (EditText)findViewById(R.id.editText_crea_drone_apr);
         String apr = crea_drone_apr.getText().toString();
@@ -631,28 +607,58 @@ public class StartPage extends AppCompatActivity {
             crea_drone_apr.setError("APR mancante");
         }
 
-        crea_drone_spr = (EditText)findViewById(R.id.editText_crea_drone_spr);
-        String spr = crea_drone_spr.getText().toString();
-
-        if(TextUtils.isEmpty(spr)){
-            crea_drone_spr.setError("SPR mancante");
+        if(apr.length() < 6 || apr.length() > 12){
+            crea_drone_apr.setError("L'APR deve essere compreso tra i 6 e 12 caratteri");
+            crea_drone_apr.setText("");
         }
 
-        crea_drone_numero_motori = (EditText)findViewById(R.id.editText_crea_drone_numero_motori);
-        String numero_motori = crea_drone_numero_motori.getText().toString();
+        crea_drone_spr = (ListView) findViewById(R.id.listView_spr);
+        StringBuilder lista_spr = new StringBuilder();
+        int i = 0;
+        for(i = 0; i < crea_drone_spr.getCount(); i++){
+            lista_spr.append(crea_drone_spr.getItemAtPosition(i));
+            lista_spr.append("#");
+        }
 
+        boolean sprValidi = false;
+        if(i > 0){
+            sprValidi = true;
+        }
+        else{
+            Toast.makeText(Principale.getController().getContext(), "Ogni APR deve avere almeno un SPR", Toast.LENGTH_SHORT).show();
+        }
+
+        crea_drone_numero_motori = (Spinner)findViewById(R.id.spinner_numero_motori);
+        String numero_motori = crea_drone_numero_motori.getSelectedItem().toString();
+/*
         if(TextUtils.isEmpty(numero_motori)){
             crea_drone_numero_motori.setError("Numero motori mancante");
-        }
+        }*/
 
-        if(!TextUtils.isEmpty(data) && !TextUtils.isEmpty(categoria) && !TextUtils.isEmpty(marca) && !TextUtils.isEmpty(apr) && !TextUtils.isEmpty(spr) && !TextUtils.isEmpty(numero_motori)){
+        if(!TextUtils.isEmpty(categoria)
+                && !TextUtils.isEmpty(marca)
+                && !TextUtils.isEmpty(apr) && !(apr.length() < 6) && !(apr.length() > 12)
+                && !TextUtils.isEmpty(lista_spr) && sprValidi
+                && !TextUtils.isEmpty(numero_motori)){
             //salva drone
             Login login = new Login();
-            login.creaNuovoDrone(data, categoria, marca, apr, spr, numero_motori);
+            login.creaNuovoDrone(categoria, marca, apr, lista_spr.toString(), numero_motori);
 
-            Fragment_Profilo.aggiungiCodiceDrone(apr + spr);
-            mPager.setCurrentItem(4, true);
+            Fragment_Profilo.aggiungiCodiceDrone(apr);
+            mPager.setCurrentItem(7, true);
 
+        }
+    }
+
+    public void aggiungiSpr(View view){
+        crea_drone_spr_text = (EditText)findViewById(R.id.editText_crea_drone_spr);
+        String spr = crea_drone_spr_text.getText().toString();
+
+        if(!TextUtils.isEmpty(spr)){
+            Fragment_CreaDrone.addItem(spr);
+            crea_drone_spr_text.setText("");
+        }else{
+            crea_drone_spr_text.setError("SPR mancante");
         }
     }
 
@@ -731,11 +737,11 @@ public class StartPage extends AppCompatActivity {
 
                 case 5: return new Fragment_Brevetto_Visita_Medica();
 
-                case 6: return new Fragment_CreaDrone();
+                case 6: return Fragment_Profilo.nuovaIstanza(Principale.getController().getProfilo().getNome(),
+                        Principale.getController().getProfilo().getCognome(),
+                        "000000");
 
-                case 7: return Fragment_Profilo.nuovaIstanza(Principale.getController().getProfilo().getNome(),
-                                                            Principale.getController().getProfilo().getCognome(),
-                                                            Principale.getController().getBrevetto().getCodice());
+                case 7: return new Fragment_CreaDrone();
 
                 case 8: return new Fragment_CreaBatteria();
 
