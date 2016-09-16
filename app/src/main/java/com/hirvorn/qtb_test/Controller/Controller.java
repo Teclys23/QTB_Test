@@ -19,13 +19,14 @@ public class Controller {
 	private String confiFileName = "config.properties";
 	private Profilo profilo;
 	private Brevetto brevetto;
-	
+	private String drone_attuale;
 	
 	
 	public Controller(Context context){
 		this.sessione = null;
 		this.context = context;
 		this.profilo = null;
+        this.drone_attuale = null;
 	}
 
 	public Sessione getSessione() {
@@ -127,5 +128,13 @@ public class Controller {
 	public Brevetto getBrevetto(){
 		return this.brevetto;
 	}
+
+    public void setDroneAttuale(String drone_attuale){
+        this.drone_attuale = drone_attuale;
+    }
+
+    public String getDroneAttuale(){
+        return this.drone_attuale;
+    }
 	
 }

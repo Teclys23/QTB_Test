@@ -96,11 +96,6 @@ public class Login {
         Drone drone = new Drone(categoria, marca, apr, spr, numero_motori, Principale.getController().getSessione().getCodiceUtente());
         drone.salvaNuovoDrone();
     }
-
-    public void creaNuovaBatteria(String nomeDrone, String codice){
-        Batteria batteria = new Batteria(nomeDrone, codice);
-        batteria.salvaBatteria();
-    }
 	
 	public Profilo getProfilo() {
 		return profilo;

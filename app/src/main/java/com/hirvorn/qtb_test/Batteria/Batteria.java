@@ -20,24 +20,21 @@ public class Batteria {
 
     public static final String BATTERIA_FILE_EXTENSION = ".batt";
 
-    private String drone;
     private String codice;
 
-    public Batteria(String drone, String codice){
-        this.drone = drone;
+    public Batteria(String codice){
         this.codice = codice;
     }
 
-    public void salvaBatteria(){
+    public void salvaBatteria(String drone){
 
-        PropertiesWriter writer = new PropertiesWriter(codice + BATTERIA_FILE_EXTENSION, Principale.getController().getContext());
+       PropertiesWriter writer = new PropertiesWriter(codice + BATTERIA_FILE_EXTENSION, Principale.getController().getContext());
+
 
         ArrayList<String> keys = new ArrayList<>();
-        keys.add("drone");
         keys.add("codice");
 
         ArrayList<String> values = new ArrayList<>();
-        values.add(drone);
         values.add(codice);
 
         writer.write(keys, values);
@@ -53,7 +50,7 @@ public class Batteria {
         ArrayList<String> batterie_presenti = null;
         ArrayList<String> batterie_attuali = new ArrayList<>();
         try {
-            batterie_presenti = reader.getPropertyValues(drone + Drone.DRONE_FILE_EXTENSION, ricerca_batterie, Principale.getController().getContext(), true);
+            batterie_presenti = reader.getPropertyValues(Principale.getController().getDroneAttuale() + Drone.DRONE_FILE_EXTENSION, ricerca_batterie, Principale.getController().getContext(), true);
 
             if(batterie_presenti.get(0) != null) {
                 Log.v(StartPage.LOG_TAG, "Batterie presenti '" + batterie_presenti.get(0) + "'");

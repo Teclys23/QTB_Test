@@ -102,10 +102,21 @@
     </string-array>
 
     <!-- fragment_crea_batteria -->
-    <string name="crea_batteria_titolo">Crea batteria</string>
-    <string name="crea_batteria_drone">Drone:</string>
-    <string name="crea_batteria_codice">Codice:</string>
-    <string name="crea_batteria_pulsante">Conferma</string>
+    <string name="batteria_titolo">Crea batteria</string>
+    <string name="batteria_drone">Drone:</string>
+    <string name="batteria_codice">Numero batteria:</string>
+    <string name="batteria_numero_celle">Numero celle:</string>
+    <string name="batteria_amperaggio">Amperaggio (mAh):</string>
+    <string name="batteria_moltiplicatore_scarica">Moltiplicatore scarica:</string>
+    <string name="batteria_moltiplicatore_carica">Moltiplicatore carica:</string>
+    <string name="batteria_valore_batteria_carica">Valore batteria carica (volt):</string>
+    <string name="batteria_valore_batteria_scarica">Valore batteria scarica (volt):</string>
+    <string name="batteria_valore_batteria_storage">Valore batteria in storage (volt):</string>
+    <string name="batteria_cella">Cella:</string>
+    <string name="batteria_valore_tensione_batteria_carica">Valore tensione a batteria carica:</string>
+    <string name="batteria_valore_percentuale_efficienza">Valore in percentuale di efficienza:</string>
+    <string name="batteria_inserisci_celle">Inserisci celle</string>
+    <string name="batteria_pulsante">Conferma</string>
 
 
 

@@ -6,16 +6,22 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hirvorn.qtb_test.Batteria.Batteria;
 import com.hirvorn.qtb_test.Brevetto.BrevettoTeoria;
 import com.hirvorn.qtb_test.Controller.Controller;
 import com.hirvorn.qtb_test.CreaBatteria.Fragment_CreaBatteria;
@@ -89,8 +95,18 @@ public class StartPage extends AppCompatActivity {
     private static Spinner crea_drone_numero_motori;
 
     //Batteria
-    private static EditText crea_batteria_drone;
     private static EditText crea_batteria_codice;
+    private static LinearLayout layout_batteria;
+    private ArrayList<EditText> celle;
+    private static EditText crea_batteria_numero_celle;
+    private static EditText crea_batteria_amperaggio;
+    private static EditText crea_batteria_moltiplicatore_scarica;
+    private static EditText crea_batteria_moltiplicatore_carica;
+    private static EditText crea_batteria_valore_batteria_carica;
+    private static EditText crea_batteria_valore_batteria_scarica;
+    private static EditText crea_batteria_valore_batteria_storage;
+    private static EditText crea_batteria_valore_tensione_batteria_carica;
+    private static EditText crea_batteria_valore_percentuale_efficienza;
 
     /**
      * Controlli
@@ -101,7 +117,7 @@ public class StartPage extends AppCompatActivity {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 8;
+    private static final int NUM_PAGES = 9;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -569,6 +585,8 @@ public class StartPage extends AppCompatActivity {
                 tw_sessioneCorrente.setText("Sessione corrente: null");
             } else {
                 mPager.setCurrentItem(6);
+                // ---------------------------------------?????
+                Fragment_Profilo.aggiornaBrevetto();
                 //tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "name"));
             }
         }
@@ -662,17 +680,31 @@ public class StartPage extends AppCompatActivity {
         }
     }
 
+    //----------------------------------------------------------------------------------------------
+
+    // Batteria
+
     public void aggiungiBatteria(View view){
-        mPager.setCurrentItem(5, true);
+        crea_drone_apr = (EditText)findViewById(R.id.editText_crea_drone_apr);
+        String string = crea_drone_apr.getText().toString();
+
+        if(!TextUtils.isEmpty(string)){
+            Principale.getController().setDroneAttuale(string);
+
+            if(!Principale.getController().getDroneAttuale().equals("")){
+                Log.v(StartPage.LOG_TAG, "Drone qua: " + Principale.getController().getDroneAttuale());
+                mPager.setCurrentItem(8, true);
+            }
+
+        }else{
+            //Principale.getController().setDroneAttuale("");
+        }
+
+
     }
 
     public void confermaCreaBatteria(View view){
-        crea_batteria_drone = (EditText)findViewById(R.id.crea_batteria_drone);
-        String nomeDrone = crea_batteria_drone.getText().toString();
 
-        if(TextUtils.isEmpty(nomeDrone)){
-            crea_batteria_drone.setError("Drone mancante");
-        }
 
         crea_batteria_codice = (EditText)findViewById(R.id.crea_batteria_codice);
         String codiceBatteria = crea_batteria_codice.getText().toString();
@@ -681,12 +713,131 @@ public class StartPage extends AppCompatActivity {
             crea_batteria_codice.setError("Codice mancante");
         }
 
-        if(!TextUtils.isEmpty(nomeDrone) && !TextUtils.isEmpty(codiceBatteria)){
-            Login login = new Login();
-            login.creaNuovaBatteria(nomeDrone, codiceBatteria);
-            mPager.setCurrentItem(4, true);
+        crea_batteria_numero_celle = (EditText)findViewById(R.id.editText_numero_celle);
+        String numero_celle = crea_batteria_numero_celle.getText().toString();
+
+        if(TextUtils.isEmpty(numero_celle)){
+            crea_batteria_numero_celle.setError("Numero celle mancante");
+        }
+
+        crea_batteria_amperaggio = (EditText)findViewById(R.id.editText_amperaggio);
+        String amperaggio = crea_batteria_amperaggio.getText().toString();
+
+        if(TextUtils.isEmpty(amperaggio)){
+            crea_batteria_amperaggio.setError("Amperaggio mancante");
+        }
+
+        crea_batteria_moltiplicatore_scarica = (EditText)findViewById(R.id.editText_moltiplicatore_scarica);
+        String moltiplicatore_scarica = crea_batteria_moltiplicatore_scarica.getText().toString();
+
+        if(TextUtils.isEmpty(moltiplicatore_scarica)){
+            crea_batteria_moltiplicatore_scarica.setError("Moltiplicatore scarica mancante");
+        }
+
+        crea_batteria_moltiplicatore_carica = (EditText)findViewById(R.id.editText_moltiplicatore_carica);
+        String moltiplicatore_carica = crea_batteria_moltiplicatore_carica.getText().toString();
+
+        if(TextUtils.isEmpty(moltiplicatore_carica)){
+            crea_batteria_moltiplicatore_carica.setError("Moltiplicatore carica mancante");
+        }
+
+        crea_batteria_valore_batteria_carica = (EditText)findViewById(R.id.editText_valore_batteria_carica);
+        String valore_batteria_carica = crea_batteria_valore_batteria_carica.getText().toString();
+
+        if(TextUtils.isEmpty(valore_batteria_carica)){
+            crea_batteria_valore_batteria_carica.setError("Valore batteria carica mancante");
+        }
+
+        crea_batteria_valore_batteria_scarica = (EditText)findViewById(R.id.editText_valore_batteria_scarica);
+        String valore_batteria_scarica = crea_batteria_valore_batteria_scarica.getText().toString();
+
+        if(TextUtils.isEmpty(valore_batteria_scarica)){
+            crea_batteria_valore_batteria_scarica.setError("Valore batteria scarica mancante");
+        }
+
+        crea_batteria_valore_tensione_batteria_carica = (EditText)findViewById(R.id.editText_valore_tensione_carica);
+        String valore_tensione_carica = crea_batteria_valore_tensione_batteria_carica.getText().toString();
+
+        if(TextUtils.isEmpty(valore_tensione_carica)){
+            crea_batteria_valore_tensione_batteria_carica.setError("Valore tensione batteria carica mancante");
+        }
+
+        crea_batteria_valore_percentuale_efficienza = (EditText)findViewById(R.id.editText_valore_percentuale_efficienza);
+        String valore_percentuale_efficienza = crea_batteria_valore_percentuale_efficienza.getText().toString();
+
+        if(TextUtils.isEmpty(valore_percentuale_efficienza)){
+            crea_batteria_valore_percentuale_efficienza.setError("Valore percentuale efficienza mancante");
+        }
+
+        StringBuilder lettura_celle = new StringBuilder();
+        boolean celleSettate = true;
+        for(int i = 0; i < Integer.parseInt(numero_celle); i++){
+            if(TextUtils.isEmpty(celle.get(i).getText().toString())){
+                celle.get(i).setError("Valore lettura mancante");
+                celleSettate = false;
+            }
+        }
+
+        if(celleSettate){
+            for(int i = 0; i < Integer.parseInt(numero_celle); i++){
+                lettura_celle.append(celle.get(0).getText().toString());
+                lettura_celle.append("#");
+            }
+        }
+
+        //CONTROLLI DA FAREEEEEEEEEEEEEEEEEEE
+        if(!TextUtils.isEmpty(codiceBatteria)){
+            Batteria batteria = new Batteria(codiceBatteria);
+            Log.v(StartPage.LOG_TAG, "Drone attuale: " + Principale.getController().getDroneAttuale());
+            batteria.salvaBatteria(Principale.getController().getDroneAttuale());
+
+            mPager.setCurrentItem(7, true);
         }
     }
+
+    public void mostraCelle(View view){
+        celle = new ArrayList<>();
+        String num_celle = ((EditText)findViewById(R.id.editText_numero_celle)).getText().toString();
+        layout_batteria = (LinearLayout)findViewById(R.id.linearLayout_batteria);
+
+        Button button_celle = (Button)findViewById(R.id.button_inserisci_celle);
+        button_celle.setEnabled(false);
+
+
+        if(!TextUtils.isEmpty(num_celle)) {
+            int numero_celle = Integer.parseInt(num_celle);
+
+            for (int i = 0; i < numero_celle; i++){
+                LinearLayout linearLayout = new LinearLayout(Principale.getController().getContext());
+                linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+                linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewPager.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                TextView textView = new TextView(Principale.getController().getContext());
+                textView.setText("Cella " + (i+1));
+
+                EditText editText = new EditText(Principale.getController().getContext());
+                editText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                linearLayout.addView(textView);
+                linearLayout.addView(editText);
+
+                celle.add(editText);
+
+                layout_batteria.addView(linearLayout);
+
+                final ScrollView scrollView = (ScrollView)findViewById(R.id.scrollView2);
+                scrollView.post(new Runnable() {
+                    public void run() {
+                        scrollView.fullScroll(View.FOCUS_DOWN);
+                    }
+                });
+
+            }
+
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
 
     public void settaData(View view, int risorsa){
         Bundle bundle = new Bundle();

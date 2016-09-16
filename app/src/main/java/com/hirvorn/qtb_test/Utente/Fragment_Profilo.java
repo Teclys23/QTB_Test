@@ -24,7 +24,7 @@ public class Fragment_Profilo extends Fragment {
 
     private TextView tw_nome;
     private TextView tw_cognome;
-    private TextView tw_brevetto;
+    private static TextView tw_brevetto;
     private ListView listView_Droni;
     private static ArrayList<String> droni_posseduti = new ArrayList<>();
     private static ArrayAdapter<String> adapter;
@@ -40,7 +40,11 @@ public class Fragment_Profilo extends Fragment {
         tw_cognome.setText(getArguments().getString("cognome"));
 
         tw_brevetto = (TextView)view.findViewById(R.id.tw_profilo_brevetto);
-        tw_brevetto.setText(Principale.getController().getBrevetto().getEnac());
+        if(Principale.getController().getBrevetto() == null){
+            tw_brevetto.setText("null");
+        }else {
+            tw_brevetto.setText(Principale.getController().getBrevetto().getEnac());
+        }
 
         listView_Droni = (ListView)view.findViewById(R.id.droneList);
         droni_posseduti = Principale.getController().getProfilo().getDroniPosseduti();
@@ -75,5 +79,9 @@ public class Fragment_Profilo extends Fragment {
     public static void aggiungiCodiceDrone(String codiceDrone){
         droni_posseduti.add(codiceDrone);
         adapter.notifyDataSetChanged();
+    }
+
+    public static void aggiornaBrevetto(){
+        tw_brevetto.setText(Principale.getController().getBrevetto().getEnac());
     }
 }
