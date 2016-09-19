@@ -28,7 +28,9 @@ public class Batteria {
 
     public void salvaBatteria(String drone){
 
-       PropertiesWriter writer = new PropertiesWriter(codice + BATTERIA_FILE_EXTENSION, Principale.getController().getContext());
+        Log.v(StartPage.LOG_TAG, "DRONE : " + drone);
+
+       PropertiesWriter writer = new PropertiesWriter(drone + "_" + codice + BATTERIA_FILE_EXTENSION, Principale.getController().getContext());
 
 
         ArrayList<String> keys = new ArrayList<>();

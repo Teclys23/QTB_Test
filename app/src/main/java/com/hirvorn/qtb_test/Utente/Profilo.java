@@ -165,6 +165,11 @@ public class Profilo {
         // Crea brevetto vuoto
         Brevetto.creaBrevettoVuoto(getCodice());
     }
+
+    public String haDroniPosseduti(){
+        ReadPropertyValues reader = new ReadPropertyValues();
+        return reader.getPropValue(this.getCodice() + Principale.getConfig().getUserExtension(), "drones");
+    }
 	
 	public String getNome() {
 		return nome;

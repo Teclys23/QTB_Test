@@ -41,7 +41,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="number|numberDecimal"
                     android:id="@+id/crea_batteria_codice"/>
 
             </LinearLayout>
@@ -61,7 +61,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="number|numberDecimal"
                     android:id="@+id/editText_numero_celle"/>
             </LinearLayout>
 
@@ -80,7 +80,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="number|numberDecimal"
                     android:id="@+id/editText_amperaggio"/>
             </LinearLayout>
 
@@ -99,7 +99,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="number|numberDecimal"
                     android:id="@+id/editText_moltiplicatore_scarica"/>
             </LinearLayout>
 
@@ -118,7 +118,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="number|numberDecimal"
                     android:id="@+id/editText_moltiplicatore_carica"/>
             </LinearLayout>
 
@@ -137,7 +137,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="number|numberDecimal"
                     android:id="@+id/editText_valore_batteria_carica"/>
             </LinearLayout>
 
@@ -156,7 +156,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="number|numberDecimal"
                     android:id="@+id/editText_valore_batteria_scarica"/>
             </LinearLayout>
 
@@ -175,7 +175,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="number|numberDecimal"
                     android:id="@+id/editTextvalore_batteria_storage"/>
 
             </LinearLayout>
@@ -195,7 +195,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="number|numberDecimal"
                     android:id="@+id/editText_valore_tensione_carica"/>
             </LinearLayout>
 
@@ -214,7 +214,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="number|numberDecimal"
                     android:id="@+id/editText_valore_percentuale_efficienza"/>
             </LinearLayout>
 

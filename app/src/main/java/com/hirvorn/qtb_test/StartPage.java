@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -46,6 +47,7 @@ import com.hirvorn.qtb_test.Utils.CustomViewPager;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -118,6 +120,7 @@ public class StartPage extends AppCompatActivity {
      * The number of pages (wizard steps) to show in this demo.
      */
     private static final int NUM_PAGES = 9;
+    private static final int NUM_PAGES_APP = 2;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -396,7 +399,8 @@ public class StartPage extends AppCompatActivity {
             tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "nome"));
             caricaBrevetto();
             setBrevettoValido(true);
-            mPager.setCurrentItem(6, true);
+            //mPager.setCurrentItem(6, true);
+            continuaDopoBrevetto();
         }
 
     }
@@ -581,13 +585,22 @@ public class StartPage extends AppCompatActivity {
     private void continuaDopoBrevetto(){
         if(getSessioneValida() && getBrevettoValido()){
             Log.v(StartPage.LOG_TAG, "ECCOCI " + Principale.getController().getSessione().getCodiceUtente());
+
             if (Principale.getController().getSessione().getCodiceUtente().equals("null")) {
                 tw_sessioneCorrente.setText("Sessione corrente: null");
             } else {
-                mPager.setCurrentItem(6);
-                // ---------------------------------------?????
-                Fragment_Profilo.aggiornaBrevetto();
-                //tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "name"));
+                
+                String droni = Principale.getController().getProfilo().haDroniPosseduti();
+                ArrayList<String> elenco_droni = new ArrayList<>(Arrays.asList(droni.split("#")));
+
+
+                if(elenco_droni != null && !elenco_droni.isEmpty()){
+                    mPagerAdapter = new SreenSlidePagerAdapterMain(getSupportFragmentManager());
+                    mPager.setCurrentItem(0, true);
+                }else{
+                    mPager.setCurrentItem(6);
+                    Fragment_Profilo.aggiornaBrevetto();
+                }
             }
         }
     }
@@ -814,6 +827,7 @@ public class StartPage extends AppCompatActivity {
 
                 TextView textView = new TextView(Principale.getController().getContext());
                 textView.setText("Cella " + (i+1));
+                textView.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
                 EditText editText = new EditText(Principale.getController().getContext());
                 editText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -834,6 +848,22 @@ public class StartPage extends AppCompatActivity {
 
             }
 
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+
+    // Profilo
+
+    public void confermaProfilo(View view){
+        String elenco_droni = Principale.getController().getProfilo().haDroniPosseduti();
+
+        ArrayList<String> elenco = new ArrayList<>(Arrays.asList(elenco_droni.split("#")));
+
+        if(elenco == null || elenco.isEmpty()){
+            Toast.makeText(Principale.getController().getContext(), "Non hai ancora aggiunto un drone!", Toast.LENGTH_LONG);
+        }else{
+            //continua
         }
     }
 
@@ -903,6 +933,28 @@ public class StartPage extends AppCompatActivity {
         @Override
         public int getCount() {
             return NUM_PAGES;
+        }
+
+    }
+
+    private class SreenSlidePagerAdapterMain extends FragmentStatePagerAdapter{
+        public SreenSlidePagerAdapterMain (FragmentManager fm){ super(fm); }
+
+        @Override
+        public Fragment getItem(int position){
+            switch (position) {
+                case 0:
+                    return new Fragment_Main();
+
+
+                default:
+                    return new Fragment_Main();
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_PAGES_APP;
         }
 
     }
