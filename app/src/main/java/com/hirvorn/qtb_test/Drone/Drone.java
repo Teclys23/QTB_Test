@@ -91,7 +91,7 @@ public class Drone {
         boolean droneTrovato = false;
         int index = 0;
         while(!droneTrovato && index < droni_posseduti.size()){
-            if(droni_posseduti.get(index).equals(this.getApr()+this.getSpr())){
+            if(droni_posseduti.get(index).equals(this.getApr())){
                 droneTrovato = true;
             }else{
                 index++;

@@ -10,13 +10,29 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
-        android:id="@+id/textView24"
+        android:id="@+id/textView_nome_profilo"
         android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/main_seleziona_drone"
+        android:id="@+id/textView24"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="40dp"
+        android:paddingBottom="10dp"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_droni"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button4"
+        android:text="@string/main_inizia_compilazione"
+        android:onClick="creaLibrettoDiVoloUno"
+        android:id="@+id/button"
         android:layout_gravity="center_horizontal"/>
 </LinearLayout>

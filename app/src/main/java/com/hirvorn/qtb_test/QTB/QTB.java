@@ -5,7 +5,9 @@ import java.util.Date;
 import com.hirvorn.qtb_test.Drone.Drone;
 
 public class QTB {
-	
+
+    private static final int CICLI_BATTERIA_MAX = 6;
+
 	private int num_volo;
 	private Date data_volo;
 	private Date ora_TO;
@@ -13,7 +15,10 @@ public class QTB {
 	private int cod_sistema;
 	private int cod_batteria;
 	private int tipo_operazione;
+    private int codice_batteria;
+    private int cicli_batteria;
 	private int durata_volo;
+    private int prograssivo_ore_volo;
 	
 	private Drone drone;
 	//da analizzare

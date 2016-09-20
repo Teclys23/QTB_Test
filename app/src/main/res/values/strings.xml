@@ -119,7 +119,19 @@
     <string name="batteria_inserisci_celle">Inserisci celle</string>
     <string name="batteria_pulsante">Conferma</string>
 
+    <!-- fragment_main -->
+    <string name="main_seleziona_drone">Seleziona il drone utilizzato:</string>
+    <string name="main_inizia_compilazione">Inizia compilazione QTB</string>
 
+    <!-- fragment_logbook_uno -->
+    <string name="loogbook_uno_titolo">Libretto di Volo</string>
+    <string name="logbook_uno_data">Data:</string>
+    <string name="logbook_uno_volume_di_volo">Volume di volo:</string>
+    <string name="logbook_uno_luogo">Luogo:</string>
+    <string name="logbook_uno_inserisci_gps">Inserisci coordinate GPS</string>
+    <string name="logbook_uno_meteo">Meteo:</string>
+    <string name="logbook_uno_vento">Vento:</string>
+    <string name="logbook_uno_conferma">Conferma</string>
 
 
 </resources>

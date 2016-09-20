@@ -1,10 +1,22 @@
 package com.hirvorn.qtb_test;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.location.LocationProvider;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +48,8 @@ import com.hirvorn.qtb_test.CreaBrevetto.Fragment_Brevetto_Visita_Medica;
 import com.hirvorn.qtb_test.CreaBrevetto.Fragment_CreaBrevetto;
 import com.hirvorn.qtb_test.CreaDrone.Fragment_CreaDrone;
 import com.hirvorn.qtb_test.CreaProfilo.Fragment_CreaProfilo;
+import com.hirvorn.qtb_test.GPS.GPSTracker;
+import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Uno;
 import com.hirvorn.qtb_test.Login.Login;
 import com.hirvorn.qtb_test.Main.Fragment_Main;
 import com.hirvorn.qtb_test.Main.Principale;
@@ -48,8 +62,12 @@ import com.hirvorn.qtb_test.Utils.CustomViewPager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static java.security.AccessController.getContext;
 
 
 public class StartPage extends AppCompatActivity {
@@ -116,6 +134,8 @@ public class StartPage extends AppCompatActivity {
     private boolean sessioneValida;
     private boolean brevettoValido;
 
+    private GPSTracker gps;
+
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
@@ -151,23 +171,22 @@ public class StartPage extends AppCompatActivity {
         init();
     }
 
-    public void init(){
+    public void init() {
         setSessioneValida(false);
         setBrevettoValido(false);
 
         Principale principale = new Principale(this);
 
-        tw_sessioneCorrente = (TextView)findViewById(R.id.tw_sessioneCorrente);
+        tw_sessioneCorrente = (TextView) findViewById(R.id.tw_sessioneCorrente);
 
         //Controllo sessione corrente
         //if(!Principale.getController().isValidSession()){
         //---------------------------------------------------------- SOLO PER DEBUG
-        if(!Principale.getController().isValidSession()){
-            Toast.makeText(this, "Non hai ancora un profilo!",Toast.LENGTH_SHORT).show();
-            mPager.setCurrentItem(1);
+        if (!Principale.getController().isValidSession()) {
+            Toast.makeText(this, "Non hai ancora un profilo!", Toast.LENGTH_SHORT).show();
+            mPager.setCurrentItem(0);
             iniziaCreaProfilo();
-        }
-        else{
+        } else {
             caricaProfilo();
             setSessioneValida(true);
             continuaDopoProfilo();
@@ -181,25 +200,32 @@ public class StartPage extends AppCompatActivity {
      */
 
     // Getter e Setter
-
-    public static void setSessioneCorrente(String text){
+    public static void setSessioneCorrente(String text) {
         tw_sessioneCorrente.setText(text);
     }
 
-    private void setSessioneValida(boolean valida){ this.sessioneValida = valida; }
+    private void setSessioneValida(boolean valida) {
+        this.sessioneValida = valida;
+    }
 
-    private boolean getSessioneValida(){ return this.sessioneValida; }
+    private boolean getSessioneValida() {
+        return this.sessioneValida;
+    }
 
-    private void setBrevettoValido(boolean valido){ this.brevettoValido = valido; }
+    private void setBrevettoValido(boolean valido) {
+        this.brevettoValido = valido;
+    }
 
-    private boolean getBrevettoValido(){ return this.brevettoValido; }
+    private boolean getBrevettoValido() {
+        return this.brevettoValido;
+    }
 
     //----------------------------------------------------------------------------------------------
 
     // Crea Profilo
 
-    private void iniziaCreaProfilo(){
-        mPager.setCurrentItem(1);
+    private void iniziaCreaProfilo() {
+        mPager.setCurrentItem(0);
 
     }
 
@@ -207,18 +233,18 @@ public class StartPage extends AppCompatActivity {
      * Creazione di un nuovo profilo
      * @param view
      */
-    public void confermaCreaProfilo(View view){
+    public void confermaCreaProfilo(View view) {
         Login login = new Login();
 
         // Nome
-        crea_profilo_nome = (EditText)findViewById(R.id.editText_nome);
+        crea_profilo_nome = (EditText) findViewById(R.id.editText_nome);
         String nome = crea_profilo_nome.getText().toString();
 
-        if(TextUtils.isEmpty(nome)){
+        if (TextUtils.isEmpty(nome)) {
             crea_profilo_nome.setError("Nome mancante");
         }
 
-        if(nome.length() < 3){
+        if (nome.length() < 3) {
             crea_profilo_nome.setError("Il nome deve avere almeno tre caratteri");
         }
 
@@ -228,22 +254,22 @@ public class StartPage extends AppCompatActivity {
         Pattern pattern = Pattern.compile(expression);
         Matcher matcher = pattern.matcher(inputStr);
         boolean nome_soloLettere = false;
-        if(matcher.matches()) {
+        if (matcher.matches()) {
             nome_soloLettere = true;
-        }else{
+        } else {
             crea_profilo_nome.setError("Il nome deve contenere solo lettere");
             crea_profilo_nome.setText("");
         }
 
         // Cognome
-        crea_profilo_cognome = (EditText)findViewById(R.id.editText_cognome);
+        crea_profilo_cognome = (EditText) findViewById(R.id.editText_cognome);
         String cognome = crea_profilo_cognome.getText().toString();
 
-        if(TextUtils.isEmpty(cognome)){
+        if (TextUtils.isEmpty(cognome)) {
             crea_profilo_cognome.setError("Cognome mancante");
         }
 
-        if(cognome.length() < 3){
+        if (cognome.length() < 3) {
             crea_profilo_cognome.setError("Il cognome deve avere almeno tre caratteri");
         }
 
@@ -251,91 +277,91 @@ public class StartPage extends AppCompatActivity {
         pattern = Pattern.compile(expression);
         matcher = pattern.matcher(inputStr);
         boolean cognome_soloLettere = false;
-        if(matcher.matches()) {
+        if (matcher.matches()) {
             cognome_soloLettere = true;
-        }else{
+        } else {
             crea_profilo_cognome.setError("Il cognome deve contenere solo lettere");
             crea_profilo_cognome.setText("");
         }
 
         // Mail
-        crea_profilo_mail = (EditText)findViewById(R.id.editText_mail);
+        crea_profilo_mail = (EditText) findViewById(R.id.editText_mail);
         String mail = crea_profilo_mail.getText().toString();
 
-        if(TextUtils.isEmpty(mail)){
+        if (TextUtils.isEmpty(mail)) {
             crea_profilo_mail.setError("Mail mancante");
         }
 
-        if(!Principale.getController().isValidEmail(mail)){
+        if (!Principale.getController().isValidEmail(mail)) {
             crea_profilo_mail.setError("Inserire e-mail valida");
             crea_profilo_mail.setText("");
         }
 
         // Telefono
-        crea_profilo_telefono = (EditText)findViewById(R.id.editText_telefono);
+        crea_profilo_telefono = (EditText) findViewById(R.id.editText_telefono);
         String telefono = crea_profilo_telefono.getText().toString();
 
-        if(TextUtils.isEmpty(telefono)){
+        if (TextUtils.isEmpty(telefono)) {
             crea_profilo_telefono.setError("Telefono mancante");
         }
 
-        if(!Principale.getController().isValidPhone(telefono)){
+        if (!Principale.getController().isValidPhone(telefono)) {
             crea_profilo_telefono.setError("Numero di telefono non valido");
             crea_profilo_telefono.setText("");
         }
 
         // Codice Fiscale
-        crea_profilo_codice_fiscale = (EditText)findViewById(R.id.editText_codice_fiscale);
+        crea_profilo_codice_fiscale = (EditText) findViewById(R.id.editText_codice_fiscale);
         String codiceFiscale = crea_profilo_codice_fiscale.getText().toString();
 
-        if(TextUtils.isEmpty(codiceFiscale)){
+        if (TextUtils.isEmpty(codiceFiscale)) {
             crea_profilo_codice_fiscale.setError("Codice fiscale mancante");
         }
 
-        if(codiceFiscale.length() != 16){
+        if (codiceFiscale.length() != 16) {
             crea_profilo_codice_fiscale.setError("Il codice fiscale deve essere di 11 caratteri");
             crea_profilo_codice_fiscale.setText("");
         }
 
         // Residenza
-        crea_profilo_residenza = (EditText)findViewById(R.id.editText_residenza);
+        crea_profilo_residenza = (EditText) findViewById(R.id.editText_residenza);
         String residenza = crea_profilo_residenza.getText().toString();
 
-        if(TextUtils.isEmpty(residenza)){
+        if (TextUtils.isEmpty(residenza)) {
             crea_profilo_residenza.setError("Residenza mancante");
         }
 
         // Via
-        crea_profilo_via = (EditText)findViewById(R.id.editText_via);
+        crea_profilo_via = (EditText) findViewById(R.id.editText_via);
         String via = crea_profilo_via.getText().toString();
 
-        if(TextUtils.isEmpty(via)){
+        if (TextUtils.isEmpty(via)) {
             crea_profilo_via.setError("Via mancante");
         }
 
         // Numero civico
-        crea_profilo_numero_civico = (EditText)findViewById(R.id.editText_numero_civico);
+        crea_profilo_numero_civico = (EditText) findViewById(R.id.editText_numero_civico);
         String numeroCivico = crea_profilo_numero_civico.getText().toString();
 
-        if(TextUtils.isEmpty(numeroCivico)){
+        if (TextUtils.isEmpty(numeroCivico)) {
             crea_profilo_numero_civico.setError("Nunmero civico mancante");
         }
 
         // CAP
-        crea_profilo_cap = (EditText)findViewById(R.id.editText_cap);
+        crea_profilo_cap = (EditText) findViewById(R.id.editText_cap);
         String cap = crea_profilo_cap.getText().toString();
 
-        if(TextUtils.isEmpty(cap)){
+        if (TextUtils.isEmpty(cap)) {
             crea_profilo_cap.setError("C.A.P. mancante");
         }
 
-        if(cap.length() != 5){
+        if (cap.length() != 5) {
             crea_profilo_cap.setError("Inserire C.A.P. valido");
             crea_profilo_cap.setText("");
         }
 
         // Controllo completo
-        if(!TextUtils.isEmpty(nome) && (nome.length() >= 3) && nome_soloLettere
+        if (!TextUtils.isEmpty(nome) && (nome.length() >= 3) && nome_soloLettere
                 && !TextUtils.isEmpty(cognome) && (cognome.length() >= 3) && cognome_soloLettere
                 && !TextUtils.isEmpty(mail) && Principale.getController().isValidEmail(mail)
                 && !TextUtils.isEmpty(telefono) && Principale.getController().isValidPhone(telefono)
@@ -344,7 +370,7 @@ public class StartPage extends AppCompatActivity {
                 && !TextUtils.isEmpty(via)
                 && !TextUtils.isEmpty(numeroCivico)
                 && !TextUtils.isEmpty(cap) && (cap.length() == 5)
-                ){
+                ) {
             login.creaNuovoProfilo(nome, cognome, mail, telefono, codiceFiscale, residenza, via, numeroCivico, cap);
             setSessioneCorrente(Principale.getController().getProfilo().getNome());
             setSessioneValida(true);
@@ -353,7 +379,7 @@ public class StartPage extends AppCompatActivity {
         }
     }
 
-    private void caricaProfilo(){
+    private void caricaProfilo() {
         ReadPropertyValues reader = new ReadPropertyValues();
         ArrayList<String> keys = new ArrayList<>();
         keys.add("codice");
@@ -384,17 +410,16 @@ public class StartPage extends AppCompatActivity {
 
     }
 
-    private void continuaDopoProfilo(){
+    private void continuaDopoProfilo() {
 
         ReadPropertyValues readPropertyValues = new ReadPropertyValues();
 
-        if(sessioneValida && !Principale.getController().isValidBrevetto()){
+        if (sessioneValida && !Principale.getController().isValidBrevetto()) {
             tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "nome"));
             Toast.makeText(this, "Non hai ancora settato il brevetto!", Toast.LENGTH_SHORT).show();
 
-            mPager.setCurrentItem(2, true);
-        }
-        else{
+            mPager.setCurrentItem(1, true);
+        } else {
 
             tw_sessioneCorrente.setText(readPropertyValues.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), "nome"));
             caricaBrevetto();
@@ -409,151 +434,151 @@ public class StartPage extends AppCompatActivity {
      * Brevetto teoria
      * @param view
      */
-    public void inserisciBrevettoTeoria(View view){
-        mPager.setCurrentItem(3, true);
+    public void inserisciBrevettoTeoria(View view) {
+        mPager.setCurrentItem(2, true);
     }
 
-    public void confermaBrevettoTeoria(View view){
-        brevetto_teoria_luogo = (EditText)findViewById(R.id.editText_brevetto_teoria_luogo);
+    public void confermaBrevettoTeoria(View view) {
+        brevetto_teoria_luogo = (EditText) findViewById(R.id.editText_brevetto_teoria_luogo);
         String luogo = brevetto_teoria_luogo.getText().toString();
 
-        if(TextUtils.isEmpty(luogo)){
+        if (TextUtils.isEmpty(luogo)) {
             brevetto_teoria_luogo.setError("Luogo mancante");
         }
 
-        brevetto_teoria_data = (TextView)findViewById(R.id.textView_dataView);
+        brevetto_teoria_data = (TextView) findViewById(R.id.textView_dataView);
         String data = brevetto_teoria_data.getText().toString();
 
-        if(TextUtils.isEmpty(data)){
+        if (TextUtils.isEmpty(data)) {
             brevetto_teoria_data.setError("Data mancante");
         }
 
-        brevetto_teoria_numero = (EditText)findViewById(R.id.editText_brevetto_teoria_numero);
+        brevetto_teoria_numero = (EditText) findViewById(R.id.editText_brevetto_teoria_numero);
         String numero = brevetto_teoria_numero.getText().toString();
 
-        if(TextUtils.isEmpty(numero)){
+        if (TextUtils.isEmpty(numero)) {
             brevetto_teoria_numero.setError("Numero mancante");
         }
 
-        if(!TextUtils.isEmpty(luogo)
+        if (!TextUtils.isEmpty(luogo)
                 && !TextUtils.isEmpty(data)
-                && !TextUtils.isEmpty(numero)){
+                && !TextUtils.isEmpty(numero)) {
 
             BrevettoTeoria teoria = new BrevettoTeoria(Principale.getController().getSessione().getCodiceUtente(), luogo, data, numero);
             teoria.salvaBrevettoTeoria();
 
-            mPager.setCurrentItem(2, true);
+            mPager.setCurrentItem(1, true);
         }
     }
 
-    public void inserisciBrevettoPratica(View view){
-        mPager.setCurrentItem(4, true);
+    public void inserisciBrevettoPratica(View view) {
+        mPager.setCurrentItem(3, true);
     }
 
-    public void confermaBrevettoPratica(View view){
-        brevetto_pratica_luogo = (EditText)findViewById(R.id.editText_brevetto_pratica_luogo);
+    public void confermaBrevettoPratica(View view) {
+        brevetto_pratica_luogo = (EditText) findViewById(R.id.editText_brevetto_pratica_luogo);
         String luogo = brevetto_pratica_luogo.getText().toString();
 
-        if(TextUtils.isEmpty(luogo)){
+        if (TextUtils.isEmpty(luogo)) {
             brevetto_pratica_luogo.setError("Luogo mancante");
         }
 
         brevetto_pratica_data = (TextView) findViewById(R.id.textView_dataView_pratica);
         String data = brevetto_pratica_data.getText().toString();
 
-        if(TextUtils.isEmpty(data)){
+        if (TextUtils.isEmpty(data)) {
             brevetto_pratica_data.setError("Data mancante");
         }
 
-        brevetto_pratica_numero = (EditText)findViewById(R.id.editText_brevetto_pratica_numero);
+        brevetto_pratica_numero = (EditText) findViewById(R.id.editText_brevetto_pratica_numero);
         String numero = brevetto_pratica_numero.getText().toString();
 
-        if(TextUtils.isEmpty(numero)){
+        if (TextUtils.isEmpty(numero)) {
             brevetto_pratica_numero.setError("Numero mancante");
         }
 
-        if(!TextUtils.isEmpty(luogo)
+        if (!TextUtils.isEmpty(luogo)
                 && !TextUtils.isEmpty(data)
-                && !TextUtils.isEmpty(numero)){
+                && !TextUtils.isEmpty(numero)) {
 
             BrevettoPratica teoria = new BrevettoPratica(Principale.getController().getSessione().getCodiceUtente(), luogo, data, numero);
             teoria.salvaBrevettoPratica();
 
-            mPager.setCurrentItem(2, true);
+            mPager.setCurrentItem(1, true);
         }
     }
 
-    public void inserisciBrevettoVisitaMedica(View view){
-        mPager.setCurrentItem(5, true);
+    public void inserisciBrevettoVisitaMedica(View view) {
+        mPager.setCurrentItem(4, true);
     }
 
-    public void confermaBrevettoVisitaMedica(View view){
-        brevetto_visita_medica_luogo = (EditText)findViewById(R.id.editText_brevetto_visita_medica_luogo);
+    public void confermaBrevettoVisitaMedica(View view) {
+        brevetto_visita_medica_luogo = (EditText) findViewById(R.id.editText_brevetto_visita_medica_luogo);
         String luogo = brevetto_visita_medica_luogo.getText().toString();
 
-        if(TextUtils.isEmpty(luogo)){
+        if (TextUtils.isEmpty(luogo)) {
             brevetto_visita_medica_luogo.setError("Luogo mancante");
         }
 
-        brevetto_visita_medica_data = (TextView)findViewById(R.id.textView_dataView_visita_medica_data);
+        brevetto_visita_medica_data = (TextView) findViewById(R.id.textView_dataView_visita_medica_data);
         String data = brevetto_visita_medica_data.getText().toString();
 
-        if(TextUtils.isEmpty(data)){
+        if (TextUtils.isEmpty(data)) {
             brevetto_visita_medica_data.setError("Data mancante");
         }
 
         brevetto_visita_medica_scadenza = (TextView) findViewById(R.id.textView_dataView_visita_medica_scadenza);
         String scadenza = brevetto_visita_medica_scadenza.getText().toString();
 
-        if(TextUtils.isEmpty(scadenza)){
+        if (TextUtils.isEmpty(scadenza)) {
             brevetto_visita_medica_scadenza.setError("Numero mancante");
         }
 
-        if(!TextUtils.isEmpty(luogo)
+        if (!TextUtils.isEmpty(luogo)
                 && !TextUtils.isEmpty(data)
-                && !TextUtils.isEmpty(scadenza)){
+                && !TextUtils.isEmpty(scadenza)) {
 
             BrevettoVisitaMedica teoria = new BrevettoVisitaMedica(Principale.getController().getSessione().getCodiceUtente(), luogo, data, scadenza);
             teoria.salvaBrevettoVisitaMedica();
 
-            mPager.setCurrentItem(2, true);
+            mPager.setCurrentItem(1, true);
         }
     }
 
-    public void tornaABrevettoMain(View view){
-        mPager.setCurrentItem(2, true);
+    public void tornaABrevettoMain(View view) {
+        mPager.setCurrentItem(1, true);
     }
 
-    public void confermaBrevettoCompleto(View view){
+    public void confermaBrevettoCompleto(View view) {
 
         ReadPropertyValues reader = new ReadPropertyValues();
 
         // Salvo la pratica, la teoria e la visita medica
         String brevetto_pratica = reader.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Brevetto.BREVETTO_EXT, "brevetto_pratica");
-        String visita_medica = reader.getPropValue(Principale.getController().getSessione().getCodiceUtente()  + Brevetto.BREVETTO_EXT, "brevetto_visita_medica");
+        String visita_medica = reader.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Brevetto.BREVETTO_EXT, "brevetto_visita_medica");
         String brevetto_teoria = reader.getPropValue(Principale.getController().getSessione().getCodiceUtente() + Brevetto.BREVETTO_EXT, "brevetto_teoria");
 
-        brevetto_main_enac = (EditText)findViewById(R.id.editText_codice_enac);
+        brevetto_main_enac = (EditText) findViewById(R.id.editText_codice_enac);
         String enac = brevetto_main_enac.getText().toString();
 
-        if(TextUtils.isEmpty(enac)){
+        if (TextUtils.isEmpty(enac)) {
             brevetto_main_enac.setError("Codice mancante");
         }
 
-        if(brevetto_teoria.equals("#")){
+        if (brevetto_teoria.equals("#")) {
             Toast.makeText(this, "Brevetto Teoria mancante!", Toast.LENGTH_SHORT).show();
         }
 
-        if(brevetto_pratica.equals("#")){
+        if (brevetto_pratica.equals("#")) {
             Toast.makeText(this, "Brevetto Pratica mancante!", Toast.LENGTH_SHORT).show();
         }
 
-        if(visita_medica.equals("#")){
+        if (visita_medica.equals("#")) {
             Toast.makeText(this, "Visita Medica mancante!", Toast.LENGTH_SHORT).show();
         }
 
-        if(!brevetto_teoria.equals("#") && !brevetto_pratica.equals("#") && !visita_medica.equals("#")
-                && !TextUtils.isEmpty(enac)){
+        if (!brevetto_teoria.equals("#") && !brevetto_pratica.equals("#") && !visita_medica.equals("#")
+                && !TextUtils.isEmpty(enac)) {
             Brevetto brevetto = new Brevetto();
             brevetto.salvaEnac(enac);
             setBrevettoValido(true);
@@ -562,7 +587,7 @@ public class StartPage extends AppCompatActivity {
         }
     }
 
-    private void caricaBrevetto(){
+    private void caricaBrevetto() {
         ReadPropertyValues reader = new ReadPropertyValues();
         ArrayList<String> keys = new ArrayList<>();
         keys.add("brevetto_teoria");
@@ -582,23 +607,24 @@ public class StartPage extends AppCompatActivity {
         }
     }
 
-    private void continuaDopoBrevetto(){
-        if(getSessioneValida() && getBrevettoValido()){
+    private void continuaDopoBrevetto() {
+        if (getSessioneValida() && getBrevettoValido()) {
             Log.v(StartPage.LOG_TAG, "ECCOCI " + Principale.getController().getSessione().getCodiceUtente());
 
             if (Principale.getController().getSessione().getCodiceUtente().equals("null")) {
                 tw_sessioneCorrente.setText("Sessione corrente: null");
             } else {
-                
+
                 String droni = Principale.getController().getProfilo().haDroniPosseduti();
                 ArrayList<String> elenco_droni = new ArrayList<>(Arrays.asList(droni.split("#")));
 
 
-                if(elenco_droni != null && !elenco_droni.isEmpty()){
+                if (elenco_droni != null && !elenco_droni.isEmpty()) {
                     mPagerAdapter = new SreenSlidePagerAdapterMain(getSupportFragmentManager());
+                    mPager.setAdapter(mPagerAdapter);
                     mPager.setCurrentItem(0, true);
-                }else{
-                    mPager.setCurrentItem(6);
+                } else {
+                    mPager.setCurrentItem(5);
                     Fragment_Profilo.aggiornaBrevetto();
                 }
             }
@@ -607,15 +633,15 @@ public class StartPage extends AppCompatActivity {
 
     //----------------------------------------------------------------------------------------------
 
-    public void aggiungiDrone(View view){
-        mPager.setCurrentItem(7, true);
+    public void aggiungiDrone(View view) {
+        mPager.setCurrentItem(6, true);
     }
 
     /**
      * Crea un drone
      * @param view
      */
-    public void confermaCreaDrone(View view){
+    public void confermaCreaDrone(View view) {
 
         crea_drone_categoria = (Spinner) findViewById(R.id.spinner_categorie);
         String categoria = crea_drone_categoria.getSelectedItem().toString();
@@ -624,21 +650,21 @@ public class StartPage extends AppCompatActivity {
             crea_drone_categoria;
         }*/
 
-        crea_drone_marca_modello = (Spinner)findViewById(R.id.spinner_marca_modello);
+        crea_drone_marca_modello = (Spinner) findViewById(R.id.spinner_marca_modello);
         String marca = crea_drone_marca_modello.getSelectedItem().toString();
 /*
         if(TextUtils.isEmpty(marca)){
             crea_drone_marca.setError("Marca mancante");
         }*/
 
-        crea_drone_apr = (EditText)findViewById(R.id.editText_crea_drone_apr);
+        crea_drone_apr = (EditText) findViewById(R.id.editText_crea_drone_apr);
         String apr = crea_drone_apr.getText().toString();
 
-        if(TextUtils.isEmpty(apr)){
+        if (TextUtils.isEmpty(apr)) {
             crea_drone_apr.setError("APR mancante");
         }
 
-        if(apr.length() < 6 || apr.length() > 12){
+        if (apr.length() < 6 || apr.length() > 12) {
             crea_drone_apr.setError("L'APR deve essere compreso tra i 6 e 12 caratteri");
             crea_drone_apr.setText("");
         }
@@ -646,49 +672,48 @@ public class StartPage extends AppCompatActivity {
         crea_drone_spr = (ListView) findViewById(R.id.listView_spr);
         StringBuilder lista_spr = new StringBuilder();
         int i = 0;
-        for(i = 0; i < crea_drone_spr.getCount(); i++){
+        for (i = 0; i < crea_drone_spr.getCount(); i++) {
             lista_spr.append(crea_drone_spr.getItemAtPosition(i));
             lista_spr.append("#");
         }
 
         boolean sprValidi = false;
-        if(i > 0){
+        if (i > 0) {
             sprValidi = true;
-        }
-        else{
+        } else {
             Toast.makeText(Principale.getController().getContext(), "Ogni APR deve avere almeno un SPR", Toast.LENGTH_SHORT).show();
         }
 
-        crea_drone_numero_motori = (Spinner)findViewById(R.id.spinner_numero_motori);
+        crea_drone_numero_motori = (Spinner) findViewById(R.id.spinner_numero_motori);
         String numero_motori = crea_drone_numero_motori.getSelectedItem().toString();
 /*
         if(TextUtils.isEmpty(numero_motori)){
             crea_drone_numero_motori.setError("Numero motori mancante");
         }*/
 
-        if(!TextUtils.isEmpty(categoria)
+        if (!TextUtils.isEmpty(categoria)
                 && !TextUtils.isEmpty(marca)
                 && !TextUtils.isEmpty(apr) && !(apr.length() < 6) && !(apr.length() > 12)
                 && !TextUtils.isEmpty(lista_spr) && sprValidi
-                && !TextUtils.isEmpty(numero_motori)){
+                && !TextUtils.isEmpty(numero_motori)) {
             //salva drone
             Login login = new Login();
             login.creaNuovoDrone(categoria, marca, apr, lista_spr.toString(), numero_motori);
 
             Fragment_Profilo.aggiungiCodiceDrone(apr);
-            mPager.setCurrentItem(7, true);
+            mPager.setCurrentItem(6, true);
 
         }
     }
 
-    public void aggiungiSpr(View view){
-        crea_drone_spr_text = (EditText)findViewById(R.id.editText_crea_drone_spr);
+    public void aggiungiSpr(View view) {
+        crea_drone_spr_text = (EditText) findViewById(R.id.editText_crea_drone_spr);
         String spr = crea_drone_spr_text.getText().toString();
 
-        if(!TextUtils.isEmpty(spr)){
+        if (!TextUtils.isEmpty(spr)) {
             Fragment_CreaDrone.addItem(spr);
             crea_drone_spr_text.setText("");
-        }else{
+        } else {
             crea_drone_spr_text.setError("SPR mancante");
         }
     }
@@ -697,136 +722,136 @@ public class StartPage extends AppCompatActivity {
 
     // Batteria
 
-    public void aggiungiBatteria(View view){
-        crea_drone_apr = (EditText)findViewById(R.id.editText_crea_drone_apr);
+    public void aggiungiBatteria(View view) {
+        crea_drone_apr = (EditText) findViewById(R.id.editText_crea_drone_apr);
         String string = crea_drone_apr.getText().toString();
 
-        if(!TextUtils.isEmpty(string)){
+        if (!TextUtils.isEmpty(string)) {
             Principale.getController().setDroneAttuale(string);
 
-            if(!Principale.getController().getDroneAttuale().equals("")){
+            if (!Principale.getController().getDroneAttuale().equals("")) {
                 Log.v(StartPage.LOG_TAG, "Drone qua: " + Principale.getController().getDroneAttuale());
-                mPager.setCurrentItem(8, true);
+                mPager.setCurrentItem(7, true);
             }
 
-        }else{
+        } else {
             //Principale.getController().setDroneAttuale("");
         }
 
 
     }
 
-    public void confermaCreaBatteria(View view){
+    public void confermaCreaBatteria(View view) {
 
 
-        crea_batteria_codice = (EditText)findViewById(R.id.crea_batteria_codice);
+        crea_batteria_codice = (EditText) findViewById(R.id.crea_batteria_codice);
         String codiceBatteria = crea_batteria_codice.getText().toString();
 
-        if(TextUtils.isEmpty(codiceBatteria)){
+        if (TextUtils.isEmpty(codiceBatteria)) {
             crea_batteria_codice.setError("Codice mancante");
         }
 
-        crea_batteria_numero_celle = (EditText)findViewById(R.id.editText_numero_celle);
+        crea_batteria_numero_celle = (EditText) findViewById(R.id.editText_numero_celle);
         String numero_celle = crea_batteria_numero_celle.getText().toString();
 
-        if(TextUtils.isEmpty(numero_celle)){
+        if (TextUtils.isEmpty(numero_celle)) {
             crea_batteria_numero_celle.setError("Numero celle mancante");
         }
 
-        crea_batteria_amperaggio = (EditText)findViewById(R.id.editText_amperaggio);
+        crea_batteria_amperaggio = (EditText) findViewById(R.id.editText_amperaggio);
         String amperaggio = crea_batteria_amperaggio.getText().toString();
 
-        if(TextUtils.isEmpty(amperaggio)){
+        if (TextUtils.isEmpty(amperaggio)) {
             crea_batteria_amperaggio.setError("Amperaggio mancante");
         }
 
-        crea_batteria_moltiplicatore_scarica = (EditText)findViewById(R.id.editText_moltiplicatore_scarica);
+        crea_batteria_moltiplicatore_scarica = (EditText) findViewById(R.id.editText_moltiplicatore_scarica);
         String moltiplicatore_scarica = crea_batteria_moltiplicatore_scarica.getText().toString();
 
-        if(TextUtils.isEmpty(moltiplicatore_scarica)){
+        if (TextUtils.isEmpty(moltiplicatore_scarica)) {
             crea_batteria_moltiplicatore_scarica.setError("Moltiplicatore scarica mancante");
         }
 
-        crea_batteria_moltiplicatore_carica = (EditText)findViewById(R.id.editText_moltiplicatore_carica);
+        crea_batteria_moltiplicatore_carica = (EditText) findViewById(R.id.editText_moltiplicatore_carica);
         String moltiplicatore_carica = crea_batteria_moltiplicatore_carica.getText().toString();
 
-        if(TextUtils.isEmpty(moltiplicatore_carica)){
+        if (TextUtils.isEmpty(moltiplicatore_carica)) {
             crea_batteria_moltiplicatore_carica.setError("Moltiplicatore carica mancante");
         }
 
-        crea_batteria_valore_batteria_carica = (EditText)findViewById(R.id.editText_valore_batteria_carica);
+        crea_batteria_valore_batteria_carica = (EditText) findViewById(R.id.editText_valore_batteria_carica);
         String valore_batteria_carica = crea_batteria_valore_batteria_carica.getText().toString();
 
-        if(TextUtils.isEmpty(valore_batteria_carica)){
+        if (TextUtils.isEmpty(valore_batteria_carica)) {
             crea_batteria_valore_batteria_carica.setError("Valore batteria carica mancante");
         }
 
-        crea_batteria_valore_batteria_scarica = (EditText)findViewById(R.id.editText_valore_batteria_scarica);
+        crea_batteria_valore_batteria_scarica = (EditText) findViewById(R.id.editText_valore_batteria_scarica);
         String valore_batteria_scarica = crea_batteria_valore_batteria_scarica.getText().toString();
 
-        if(TextUtils.isEmpty(valore_batteria_scarica)){
+        if (TextUtils.isEmpty(valore_batteria_scarica)) {
             crea_batteria_valore_batteria_scarica.setError("Valore batteria scarica mancante");
         }
 
-        crea_batteria_valore_tensione_batteria_carica = (EditText)findViewById(R.id.editText_valore_tensione_carica);
+        crea_batteria_valore_tensione_batteria_carica = (EditText) findViewById(R.id.editText_valore_tensione_carica);
         String valore_tensione_carica = crea_batteria_valore_tensione_batteria_carica.getText().toString();
 
-        if(TextUtils.isEmpty(valore_tensione_carica)){
+        if (TextUtils.isEmpty(valore_tensione_carica)) {
             crea_batteria_valore_tensione_batteria_carica.setError("Valore tensione batteria carica mancante");
         }
 
-        crea_batteria_valore_percentuale_efficienza = (EditText)findViewById(R.id.editText_valore_percentuale_efficienza);
+        crea_batteria_valore_percentuale_efficienza = (EditText) findViewById(R.id.editText_valore_percentuale_efficienza);
         String valore_percentuale_efficienza = crea_batteria_valore_percentuale_efficienza.getText().toString();
 
-        if(TextUtils.isEmpty(valore_percentuale_efficienza)){
+        if (TextUtils.isEmpty(valore_percentuale_efficienza)) {
             crea_batteria_valore_percentuale_efficienza.setError("Valore percentuale efficienza mancante");
         }
 
         StringBuilder lettura_celle = new StringBuilder();
         boolean celleSettate = true;
-        for(int i = 0; i < Integer.parseInt(numero_celle); i++){
-            if(TextUtils.isEmpty(celle.get(i).getText().toString())){
+        for (int i = 0; i < Integer.parseInt(numero_celle); i++) {
+            if (TextUtils.isEmpty(celle.get(i).getText().toString())) {
                 celle.get(i).setError("Valore lettura mancante");
                 celleSettate = false;
             }
         }
 
-        if(celleSettate){
-            for(int i = 0; i < Integer.parseInt(numero_celle); i++){
+        if (celleSettate) {
+            for (int i = 0; i < Integer.parseInt(numero_celle); i++) {
                 lettura_celle.append(celle.get(0).getText().toString());
                 lettura_celle.append("#");
             }
         }
 
         //CONTROLLI DA FAREEEEEEEEEEEEEEEEEEE
-        if(!TextUtils.isEmpty(codiceBatteria)){
+        if (!TextUtils.isEmpty(codiceBatteria)) {
             Batteria batteria = new Batteria(codiceBatteria);
             Log.v(StartPage.LOG_TAG, "Drone attuale: " + Principale.getController().getDroneAttuale());
             batteria.salvaBatteria(Principale.getController().getDroneAttuale());
 
-            mPager.setCurrentItem(7, true);
+            mPager.setCurrentItem(6, true);
         }
     }
 
-    public void mostraCelle(View view){
+    public void mostraCelle(View view) {
         celle = new ArrayList<>();
-        String num_celle = ((EditText)findViewById(R.id.editText_numero_celle)).getText().toString();
-        layout_batteria = (LinearLayout)findViewById(R.id.linearLayout_batteria);
+        String num_celle = ((EditText) findViewById(R.id.editText_numero_celle)).getText().toString();
+        layout_batteria = (LinearLayout) findViewById(R.id.linearLayout_batteria);
 
-        Button button_celle = (Button)findViewById(R.id.button_inserisci_celle);
+        Button button_celle = (Button) findViewById(R.id.button_inserisci_celle);
         button_celle.setEnabled(false);
 
 
-        if(!TextUtils.isEmpty(num_celle)) {
+        if (!TextUtils.isEmpty(num_celle)) {
             int numero_celle = Integer.parseInt(num_celle);
 
-            for (int i = 0; i < numero_celle; i++){
+            for (int i = 0; i < numero_celle; i++) {
                 LinearLayout linearLayout = new LinearLayout(Principale.getController().getContext());
                 linearLayout.setOrientation(LinearLayout.HORIZONTAL);
                 linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewPager.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
                 TextView textView = new TextView(Principale.getController().getContext());
-                textView.setText("Cella " + (i+1));
+                textView.setText("Cella " + (i + 1));
                 textView.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
                 EditText editText = new EditText(Principale.getController().getContext());
@@ -839,7 +864,7 @@ public class StartPage extends AppCompatActivity {
 
                 layout_batteria.addView(linearLayout);
 
-                final ScrollView scrollView = (ScrollView)findViewById(R.id.scrollView2);
+                final ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView2);
                 scrollView.post(new Runnable() {
                     public void run() {
                         scrollView.fullScroll(View.FOCUS_DOWN);
@@ -855,42 +880,46 @@ public class StartPage extends AppCompatActivity {
 
     // Profilo
 
-    public void confermaProfilo(View view){
+    public void confermaProfilo(View view) {
         String elenco_droni = Principale.getController().getProfilo().haDroniPosseduti();
 
         ArrayList<String> elenco = new ArrayList<>(Arrays.asList(elenco_droni.split("#")));
 
-        if(elenco == null || elenco.isEmpty()){
+        if (elenco == null || elenco.isEmpty()) {
             Toast.makeText(Principale.getController().getContext(), "Non hai ancora aggiunto un drone!", Toast.LENGTH_LONG);
-        }else{
+        } else {
             //continua
         }
     }
 
     //----------------------------------------------------------------------------------------------
 
-    public void settaData(View view, int risorsa){
+    public void settaData(View view, int risorsa) {
         Bundle bundle = new Bundle();
         bundle.putInt("textView", risorsa);
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.setArguments(bundle);
-        newFragment.show(getSupportFragmentManager(),"Date Picker");
+        newFragment.show(getSupportFragmentManager(), "Date Picker");
     }
 
-    public void settaDataTeoria(View view){
+    public void settaDataTeoria(View view) {
         settaData(view, R.id.textView_dataView);
     }
 
-    public void settaDataPratica(View view){
+    public void settaDataPratica(View view) {
         settaData(view, R.id.textView_dataView_pratica);
     }
 
-    public void settaDataVisitaMedicaData(View view){
+    public void settaDataVisitaMedicaData(View view) {
         settaData(view, R.id.textView_dataView_visita_medica_data);
     }
 
-    public void settaDataVisitaMedicaScadenza(View view){
+    public void settaDataVisitaMedicaScadenza(View view) {
         settaData(view, R.id.textView_dataView_visita_medica_scadenza);
+    }
+
+    public void settaDataLogBook(View view) {
+        settaData(view, R.id.textView_logbook_uno_data);
     }
 
     /**
@@ -905,28 +934,37 @@ public class StartPage extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             Log.v(StartPage.LOG_TAG, "getItem Position: " + position);
-            switch (position){
-                case 0: return new Fragment_Main();
+            switch (position) {
+                //case 0: return new Fragment_Main();
 
-                case 1: return new Fragment_CreaProfilo();
+                case 0:
+                    return new Fragment_CreaProfilo();
 
-                case 2: return new Fragment_Brevetto_Main();
+                case 1:
+                    return new Fragment_Brevetto_Main();
 
-                case 3: return new Fragment_Brevetto_Teoria();
+                case 2:
+                    return new Fragment_Brevetto_Teoria();
 
-                case 4: return new Fragment_Brevetto_Pratica();
+                case 3:
+                    return new Fragment_Brevetto_Pratica();
 
-                case 5: return new Fragment_Brevetto_Visita_Medica();
+                case 4:
+                    return new Fragment_Brevetto_Visita_Medica();
 
-                case 6: return Fragment_Profilo.nuovaIstanza(Principale.getController().getProfilo().getNome(),
-                        Principale.getController().getProfilo().getCognome(),
-                        "000000");
+                case 5:
+                    return Fragment_Profilo.nuovaIstanza(Principale.getController().getProfilo().getNome(),
+                            Principale.getController().getProfilo().getCognome(),
+                            "000000");
 
-                case 7: return new Fragment_CreaDrone();
+                case 6:
+                    return new Fragment_CreaDrone();
 
-                case 8: return new Fragment_CreaBatteria();
+                case 7:
+                    return new Fragment_CreaBatteria();
 
-                default: return new Fragment_CreaBrevetto();
+                default:
+                    return new Fragment_CreaBrevetto();
             }
         }
 
@@ -937,14 +975,19 @@ public class StartPage extends AppCompatActivity {
 
     }
 
-    private class SreenSlidePagerAdapterMain extends FragmentStatePagerAdapter{
-        public SreenSlidePagerAdapterMain (FragmentManager fm){ super(fm); }
+    private class SreenSlidePagerAdapterMain extends FragmentStatePagerAdapter {
+        public SreenSlidePagerAdapterMain(FragmentManager fm) {
+            super(fm);
+        }
 
         @Override
-        public Fragment getItem(int position){
+        public Fragment getItem(int position) {
             switch (position) {
                 case 0:
                     return new Fragment_Main();
+
+                case 1:
+                    return new Fragment_LibrettoVolo_Uno();
 
 
                 default:
@@ -957,6 +1000,141 @@ public class StartPage extends AppCompatActivity {
             return NUM_PAGES_APP;
         }
 
+    }
+
+    //----------------------------------------------------------------------------------------------
+
+
+    public void creaLibrettoDiVoloUno(View view){
+        mPager.setCurrentItem(1);
+    }
+
+    public void prendiCoordinate(View view) {
+        Context mContext = this;
+
+        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        } else {
+            Toast.makeText(mContext,"You need have granted permission",Toast.LENGTH_SHORT).show();
+            gps = new GPSTracker(mContext, this);
+
+            // Check if GPS enabled
+            if (gps.canGetLocation()) {
+
+                double latitude = gps.getLatitude();
+                double longitude = gps.getLongitude();
+
+                // \n is for new line
+                Fragment_LibrettoVolo_Uno.settaCoordinate(latitude, longitude, gps);
+
+                //------------ nome città
+                final Location location = new Location("");
+                location.setLatitude(latitude);
+                location.setLongitude(longitude);
+
+                getCityName(location, new OnGeocoderFinishedListener() {
+                    @Override
+                    public void onFinished(List<Address> results) {
+                        // do something with the result
+                        if(!results.isEmpty())
+                            Fragment_LibrettoVolo_Uno.settaLocation(results.get(0));
+                        else {
+                            Toast.makeText(Principale.getController().getContext(), "Impossibile stabilire il luogo.", Toast.LENGTH_LONG).show();
+                        }
+                    }
+        });
+
+
+            } else {
+                // Can't get location.
+                // GPS or network is not enabled.
+                // Ask user to enable GPS/network in settings.
+                gps.showSettingsAlert();
+            }
+        }
+
+        /*
+        GPSTracker gps = new GPSTracker(Principale.getController().getContext());
+        if(gps.canGetLocation()){
+            Fragment_LibrettoVolo_Uno.settaCoordinate(gps.getLatitude(), gps.getLongitude(), gps);
+        }else{
+            Log.v(StartPage.LOG_TAG, "GPS non va");
+            gps.showSettingsAlert();
+        }*/
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+
+                    // contacts-related task you need to do.
+
+                    gps = new GPSTracker(Principale.getController().getContext(), this);
+
+                    // Check if GPS enabled
+                    if (gps.canGetLocation()) {
+
+                        double latitude = gps.getLatitude();
+                        double longitude = gps.getLongitude();
+
+                        // \n is for new line
+                        Fragment_LibrettoVolo_Uno.settaCoordinate(latitude, longitude, gps);
+                    } else {
+                        // Can't get location.
+                        // GPS or network is not enabled.
+                        // Ask user to enable GPS/network in settings.
+                        gps.showSettingsAlert();
+                    }
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+
+                    Toast.makeText(Principale.getController().getContext(), "You need to grant permission", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    // Nome città
+
+    public abstract class OnGeocoderFinishedListener {
+        public abstract void onFinished(List<Address> results);
+    }
+
+    public void getCityName(final Location location, final OnGeocoderFinishedListener listener) {
+        new AsyncTask<Void, Integer, List<Address>>() {
+            @Override
+            protected List<Address> doInBackground(Void... arg0) {
+                Geocoder coder = new Geocoder(Principale.getController().getContext(), Locale.ENGLISH);
+                List<Address> results = null;
+                try {
+                    results = coder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                } catch (IOException e) {
+                    // nothing
+                }
+                return results;
+            }
+
+            @Override
+            protected void onPostExecute(List<Address> results) {
+                if (results != null && listener != null) {
+                    listener.onFinished(results);
+                }
+            }
+        }.execute();
     }
 
 }
