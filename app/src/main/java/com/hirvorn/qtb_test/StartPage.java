@@ -6,9 +6,6 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -36,11 +33,10 @@ import android.widget.Toast;
 
 import com.hirvorn.qtb_test.Batteria.Batteria;
 import com.hirvorn.qtb_test.Brevetto.BrevettoTeoria;
-import com.hirvorn.qtb_test.Controller.Controller;
 import com.hirvorn.qtb_test.CreaBatteria.Fragment_CreaBatteria;
 import com.hirvorn.qtb_test.Brevetto.BrevettoPratica;
 import com.hirvorn.qtb_test.Brevetto.BrevettoVisitaMedica;
-import com.hirvorn.qtb_test.CreaBrevetto.DatePickerFragment;
+import com.hirvorn.qtb_test.Utils.DatePickerFragment;
 import com.hirvorn.qtb_test.CreaBrevetto.Fragment_Brevetto_Main;
 import com.hirvorn.qtb_test.CreaBrevetto.Fragment_Brevetto_Pratica;
 import com.hirvorn.qtb_test.CreaBrevetto.Fragment_Brevetto_Teoria;
@@ -50,6 +46,7 @@ import com.hirvorn.qtb_test.CreaDrone.Fragment_CreaDrone;
 import com.hirvorn.qtb_test.CreaProfilo.Fragment_CreaProfilo;
 import com.hirvorn.qtb_test.GPS.GPSTracker;
 import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Due;
+import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Quattro;
 import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Tre;
 import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Uno;
 import com.hirvorn.qtb_test.Login.Login;
@@ -60,6 +57,7 @@ import com.hirvorn.qtb_test.Brevetto.Brevetto;
 import com.hirvorn.qtb_test.Utente.Fragment_Profilo;
 import com.hirvorn.qtb_test.Utente.Profilo;
 import com.hirvorn.qtb_test.Utils.CustomViewPager;
+import com.hirvorn.qtb_test.Utils.TimePickerFragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,8 +66,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static java.security.AccessController.getContext;
 
 
 public class StartPage extends AppCompatActivity {
@@ -142,7 +138,7 @@ public class StartPage extends AppCompatActivity {
      * The number of pages (wizard steps) to show in this demo.
      */
     private static final int NUM_PAGES = 9;
-    private static final int NUM_PAGES_APP = 4;
+    private static final int NUM_PAGES_APP = 5;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -998,6 +994,9 @@ public class StartPage extends AppCompatActivity {
                 case 3:
                     return new Fragment_LibrettoVolo_Tre();
 
+                case 4:
+                    return new Fragment_LibrettoVolo_Quattro();
+
 
                 default:
                     return new Fragment_Main();
@@ -1152,6 +1151,38 @@ public class StartPage extends AppCompatActivity {
 
     public void confermaLogbookDue(View view){
         mPager.setCurrentItem(3, true);
+    }
+
+    public void confermaLogbookTre(View view){
+        mPager.setCurrentItem(4, true);
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //set orari
+
+    public void settaOraTakeOffUno(View view){
+        settaOra(view, R.id.textView_logbook_quattro_ora_take_off);
+    }
+
+    public void settaOraDurataMissioneUno(View view){
+        settaOra(view, R.id.textView_logbook_quattro_durata_missione_uno);
+    }
+
+    public void settaOraTakeOffDue(View view){
+        settaOra(view, R.id.textView_logbook_quattro_ora_take_off_due);
+    }
+
+    public void settaOraDurataMissioneDue(View view){
+        settaOra(view, R.id.textView_logbook_quattro_durata_missione_due);
+    }
+
+    public void settaOra(View view, int risorsa){
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("risorsa", risorsa);
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.setArguments(bundle);
+        newFragment.show(getSupportFragmentManager(), "TimePicker");
     }
 
 }

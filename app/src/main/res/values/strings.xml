@@ -161,5 +161,27 @@
     <string name="logbook_tre_blos"></string>
     <string name="logbook_tre_conferma">Conferma</string>
 
+    <!-- fragment_logbook_quattro -->
+    <string name="logbook_quattro_titolo">Libretto di Volo</string>
+    <string name="logbook_quattro_didascalia">Qui di seguito è richiesto l\'orario di take off e la durata della missione.\nIn caso di una durata della missione minore di cinque minuti (esempio: urgente cambio di batteria), è possibile inserire l\'orario e la durata della missione immediatamente successiva.</string>
+    <string name="logbook_quattro_tv_orario_take_off">Orario take off:</string>
+    <string name="logbook_quattro_orario_take_off">Premere qui per inserire</string>
+    <string name="logbook_quattro_tv_orario_landing">Orario di landing</string>
+    <string name="logbook_quattro_orario_landing"></string>
+    <string name="logbook_quattro_tv_durata_missione_uno">Durata missione:</string>
+    <string name="logbook_quattro_durata_missione_uno">Premere qui per inserire</string>
+    <string name="logbook_quattro_tv_orario_take_off_due">Orario take off secondario:</string>
+    <string name="logbook_quattro_orario_take_off_due">Premere qui per inserire</string>
+    <string name="logbook_quattro_tv_orario_landing_due">Orario di landing secondario:</string>
+    <string name="logbook_quattro_orario_landing_due"></string>
+    <string name="logbook_quattro_tv_durata_missione_due">Durata missione secondaria:</string>
+    <string name="logbook_quattro_durata_missione_due">Premere qui per inserire</string>
+    <string name="logbook_quattro_tv_durata_missione">Durata missione totale:</string>
+    <string name="logbook_quattro_durata_missione_totale">0</string>
+    <string name="logbook_quattro_tv_tot_ore_volo">Totale ore di volo:</string>
+    <string name="logbook_quattro_tot_ore_volo"></string>
+    <string name="logbook_quattro_conferma">Conferma</string>
+
+
 
 </resources>
