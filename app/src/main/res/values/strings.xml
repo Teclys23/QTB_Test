@@ -133,5 +133,33 @@
     <string name="logbook_uno_vento">Vento:</string>
     <string name="logbook_uno_conferma">Conferma</string>
 
+    <!-- fragment_logbook_due -->
+    <string name="logbook_due_titolo">Libretto di Volo</string>
+    <string name="logbook_due_codice_identificativo">Codici identificativi</string>
+    <string name="logbook_due_apr">Apr:</string>
+    <string name="logbook_due_spr">Spr associati:</string>
+    <string name="logbook_due_simulatore">Simulatore:</string>
+    <string name="logbook_due_simulatore_utilizzato">Utilizzato</string>
+    <string name="logbook_due_conferma">Conferma</string>
+
+    <!-- fragment_logbook_tre -->
+    <string name="logbook_tre_titolo">Libretto di Volo</string>
+    <string name="logbook_tre_didascalia">Selezionare il tipo di attività e le modalità di volo</string>
+    <string name="logbook_tre_tw_sperimentali">Sperimentali:</string>
+    <string name="logbook_tre_sperimentali"></string>
+    <string name="logbook_tre_tw_critiche">Critiche:</string>
+    <string name="logbook_tre_critiche"></string>
+    <string name="logbook_tre_tw_non_critiche">Non critiche:</string>
+    <string name="logbook_tre_non_critiche"></string>
+    <string name="logbook_tre_tw_addestramento">Addestramento:</string>
+    <string name="logbook_tre_addestramento"></string>
+    <string name="logbook_tre_tw_aggiornamento">Aggiornamento:</string>
+    <string name="logbook_tre_aggiornamento"></string>
+    <string name="logbook_tre_tw_vlos">Vlos:</string>
+    <string name="logbook_tre_vlos"></string>
+    <string name="logbook_tre_tw_blos">Blos</string>
+    <string name="logbook_tre_blos"></string>
+    <string name="logbook_tre_conferma">Conferma</string>
+
 
 </resources>

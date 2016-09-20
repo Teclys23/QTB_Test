@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <TextView
+            android:text="@string/logbook_tre_titolo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/textView_logbook_tre_titolo"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"/>
+
+        <TextView
+            android:text="@string/logbook_tre_didascalia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_logbook_tre_titolo"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/textView_logbook_tre_didascalia"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"/>
+
+        <Button
+            android:text="@string/logbook_tre_conferma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_logbook_tre_conferma"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true">
+
+            <GridLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:rowCount="6"
+                android:columnCount="2"
+
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true">
+
+                <TextView
+                    android:text="@string/logbook_tre_tw_sperimentali"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_logbook_tre_sperimentali"
+
+
+                    android:layout_weight="0.34"/>
+
+                <CheckBox
+                    android:text="@string/logbook_tre_sperimentali"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/checkBox_sperimentali"
+
+                    android:layout_weight="0.83"/>
+
+                <TextView
+                    android:text="@string/logbook_tre_tw_critiche"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_logbook_tre_critiche"
+                    android:layout_weight="1"/>
+
+                <CheckBox
+                    android:text="@string/logbook_tre_critiche"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/checkBox_critiche"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:text="@string/logbook_tre_tw_non_critiche"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/textView_logbook_tre_non_critiche"/>
+
+                <CheckBox
+                    android:text="@string/logbook_tre_non_critiche"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/checkBox_non_critiche"/>
+
+                <TextView
+                    android:text="@string/logbook_tre_tw_addestramento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_logbook_tre_addestramento"
+                    android:layout_weight="1"/>
+
+                <CheckBox
+                    android:text="@string/logbook_tre_addestramento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/checkBox_addestramento"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:text="@string/logbook_tre_tw_aggiornamento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_logbook_tre_aggiornamento"/>
+
+                <CheckBox
+                    android:text="@string/logbook_tre_aggiornamento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/checkBox_aggiornamento"/>
+
+                <TextView
+                    android:text="@string/logbook_tre_tw_vlos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_logbook_tre_vlos"
+                    android:layout_weight="1"/>
+
+                <CheckBox
+                    android:text="@string/logbook_tre_vlos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/checkBox_vlos"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:text="@string/logbook_tre_tw_blos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_logbook_tre_blos"
+                    android:layout_weight="1"/>
+
+                <CheckBox
+                    android:text="@string/logbook_tre_blos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/checkBox_blos"
+                    android:layout_weight="1"/>
+            </GridLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</LinearLayout>

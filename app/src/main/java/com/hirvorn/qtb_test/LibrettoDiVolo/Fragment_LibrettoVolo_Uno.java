@@ -103,7 +103,7 @@ public class Fragment_LibrettoVolo_Uno extends Fragment{
             public void onClick(View view) {
 
                 luogo.setText("");
-                
+
                 lat.setText("");
                 lat.setVisibility(View.INVISIBLE);
 

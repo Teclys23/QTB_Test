@@ -100,7 +100,7 @@ public class Drone {
 
         //se non lo ha trovato, lo aggiunge
         if(!droneTrovato){
-            droni_posseduti.add(this.getApr() + this.getSpr());
+            droni_posseduti.add(this.getApr());
 
             //lo riscrive sul file del profilo
             keys.clear();

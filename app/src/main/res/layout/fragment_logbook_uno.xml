@@ -163,6 +163,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/logbook_uno_conferma"
                     android:id="@+id/button4"
+                    android:onClick="confermaLogbookUno"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"/>
             </RelativeLayout>

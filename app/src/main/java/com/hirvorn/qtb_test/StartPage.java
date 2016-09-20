@@ -49,6 +49,8 @@ import com.hirvorn.qtb_test.CreaBrevetto.Fragment_CreaBrevetto;
 import com.hirvorn.qtb_test.CreaDrone.Fragment_CreaDrone;
 import com.hirvorn.qtb_test.CreaProfilo.Fragment_CreaProfilo;
 import com.hirvorn.qtb_test.GPS.GPSTracker;
+import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Due;
+import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Tre;
 import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Uno;
 import com.hirvorn.qtb_test.Login.Login;
 import com.hirvorn.qtb_test.Main.Fragment_Main;
@@ -140,7 +142,7 @@ public class StartPage extends AppCompatActivity {
      * The number of pages (wizard steps) to show in this demo.
      */
     private static final int NUM_PAGES = 9;
-    private static final int NUM_PAGES_APP = 2;
+    private static final int NUM_PAGES_APP = 4;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -393,12 +395,13 @@ public class StartPage extends AppCompatActivity {
         keys.add("codiceCivico");
         keys.add("cap");
         keys.add("drones");
+        keys.add("totOreVolo");
 
         ArrayList<String> values = new ArrayList<>();
         try {
             values = reader.getPropertyValues(Principale.getController().getSessione().getCodiceUtente() + Principale.getConfig().getUserExtension(), keys, Principale.getController().getContext(), true);
 
-            Profilo profilo = new Profilo(values.get(0), values.get(1), values.get(2), values.get(3), values.get(4), values.get(5), values.get(6), values.get(7), values.get(8), values.get(9), values.get(10));
+            Profilo profilo = new Profilo(values.get(0), values.get(1), values.get(2), values.get(3), values.get(4), values.get(5), values.get(6), values.get(7), values.get(8), values.get(9), values.get(10), values.get(11));
             Principale.getController().setProfilo(profilo);
             Log.v(StartPage.LOG_TAG, "Profilo settato nel controller.");
             System.out.println(profilo.toString());
@@ -989,6 +992,12 @@ public class StartPage extends AppCompatActivity {
                 case 1:
                     return new Fragment_LibrettoVolo_Uno();
 
+                case 2:
+                    return new Fragment_LibrettoVolo_Due();
+
+                case 3:
+                    return new Fragment_LibrettoVolo_Tre();
+
 
                 default:
                     return new Fragment_Main();
@@ -1135,6 +1144,14 @@ public class StartPage extends AppCompatActivity {
                 }
             }
         }.execute();
+    }
+
+    public void confermaLogbookUno(View view){
+        mPager.setCurrentItem(2, true);
+    }
+
+    public void confermaLogbookDue(View view){
+        mPager.setCurrentItem(3, true);
     }
 
 }

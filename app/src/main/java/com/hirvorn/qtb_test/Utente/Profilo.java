@@ -26,6 +26,7 @@ public class Profilo {
     private String via;
     private String numeroCivico;
     private String cap;
+    private String totOreVolo;
 
 	private Brevetto brevetto;
 
@@ -39,7 +40,7 @@ public class Profilo {
 	/**
 	 * Costruttori
 	 */
-	public Profilo(String nome, String cognome, String mail, String telefono, String codiceFiscale, String residenza, String via, String numeroCivico, String cap){
+	public Profilo(String nome, String cognome, String mail, String telefono, String codiceFiscale, String residenza, String via, String numeroCivico, String cap, String totOreVolo){
 		this.nome = nome;
 		this.cognome = cognome;
 		this.mail = mail;
@@ -49,13 +50,13 @@ public class Profilo {
         this.via = via;
         this.numeroCivico = numeroCivico;
         this.cap = cap;
-
+        this.totOreVolo = totOreVolo;
 
         droni_posseduti = new ArrayList<>();
 
 	}
 
-    public Profilo(String codice, String nome, String cognome, String mail, String telefono, String codiceFiscale, String residenza, String via, String numeroCivico, String cap, String droni){
+    public Profilo(String codice, String nome, String cognome, String mail, String telefono, String codiceFiscale, String residenza, String via, String numeroCivico, String cap, String droni, String totOreVolo){
         this.codice = codice;
         this.nome = nome;
         this.cognome = cognome;
@@ -101,6 +102,7 @@ public class Profilo {
         keys.add("via");
         keys.add("numeroCivico");
         keys.add("cap");
+        keys.add("totOreVolo");
 
         ArrayList<String> values = null;
         try {
@@ -109,7 +111,7 @@ public class Profilo {
             e.printStackTrace();
         }
 
-        Profilo p = new Profilo(values.get(1), values.get(2), values.get(3), values.get(4), values.get(5), values.get(6), values.get(7), values.get(8), values.get(9));
+        Profilo p = new Profilo(values.get(1), values.get(2), values.get(3), values.get(4), values.get(5), values.get(6), values.get(7), values.get(8), values.get(9), values.get(10));
         p.setCodice(values.get(0));
 
         return p;
@@ -145,6 +147,7 @@ public class Profilo {
         keys.add("codiceCivico");
         keys.add("cap");
         keys.add("drones");
+        keys.add("totOreVolo");
 
         //creo l'elenco dei valori
         ArrayList<String> values = new ArrayList<String>();
@@ -159,6 +162,7 @@ public class Profilo {
         values.add(getNumeroCivico());
         values.add(getCap());
         values.add("#");
+        values.add(getTotOreVolo());
 
         writer.write(keys, values);
 
@@ -258,6 +262,10 @@ public class Profilo {
 
     public String getCap() {
         return cap;
+    }
+
+    public String getTotOreVolo(){
+        return totOreVolo;
     }
 
     public String toString(){
