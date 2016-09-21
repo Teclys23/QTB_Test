@@ -3,6 +3,7 @@ package com.hirvorn.qtb_test.LibrettoDiVolo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.R;
 import com.hirvorn.qtb_test.Settings.PropertiesWriter;
+import com.hirvorn.qtb_test.StartPage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -150,12 +152,13 @@ public class Fragment_LibrettoVolo_Quattro extends Fragment {
                 if(!TextUtils.isEmpty(durataDue)){
                     int durDue = Integer.parseInt(durataDue);
 
-                    durata_totale.setText(durUno + durDue);
-                    tot_ore_volo.setText(Principale.getController().getTotOreVolo());
+                    int somma = durUno + durDue;
+                    durata_totale.setText(String.valueOf(somma));
+                    tot_ore_volo.setText(String.valueOf(Principale.getController().getTotOreVolo() + somma));
                 }
             }else{
-                durata_totale.setText(durataUno);
-                tot_ore_volo.setText(Principale.getController().getTotOreVolo());
+                durata_totale.setText(String.valueOf(durataUno));
+                tot_ore_volo.setText(String.valueOf(Principale.getController().getTotOreVolo() + durUno));
             }
         }
     }
