@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ public class Fragment_LibrettoVolo_Due extends Fragment {
 
     private static Spinner spinner_apr;
     private static LinearLayout layout;
+    private static CheckBox checkBox_simulatore;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,6 +64,22 @@ public class Fragment_LibrettoVolo_Due extends Fragment {
 
         });
 
+        checkBox_simulatore = (CheckBox)view.findViewById(R.id.checkBox_simulatore);
+
         return view;
+    }
+
+    public static void salvaDati(){
+        ArrayList<String> keys = new ArrayList<>();
+        keys.add("apr");
+        keys.add("spr");
+        keys.add("utilizzatoSimulatore");
+
+        ArrayList<String> values = new ArrayList<>();
+        values.add(spinner_apr.getSelectedItem().toString());
+        values.add((new ReadPropertyValues()).getPropValue(spinner_apr.getSelectedItem() + Drone.DRONE_FILE_EXTENSION, "spr"));
+        values.add(checkBox_simulatore.isChecked() ? "true" : "false");
+
+        Principale.getController().getLibrettoDiVolo().salvaDati(keys, values);
     }
 }

@@ -44,7 +44,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:id="@+id/button_logbook_quattro_conferma"/>
+            android:id="@+id/button_logbook_quattro_conferma"
+            android:onClick="confermaLogbookQuattro"/>
 
         <LinearLayout
             android:orientation="vertical"

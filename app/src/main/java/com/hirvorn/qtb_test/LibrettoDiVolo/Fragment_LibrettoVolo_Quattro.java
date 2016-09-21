@@ -162,4 +162,38 @@ public class Fragment_LibrettoVolo_Quattro extends Fragment {
             }
         }
     }
+
+    public static void salvaDati(){
+        ArrayList<String> keys = new ArrayList<>();
+        keys.add("durataMissioneUno");
+        keys.add("takeOffUno");
+        keys.add("landingUno");
+        keys.add("durataMissioneDue");
+        keys.add("takeOffDue");
+        keys.add("landingDue");
+        keys.add("durataMissioneTotale");
+        keys.add("totOreDiVolo");
+        keys.add("completo");
+
+        ArrayList<String> values = new ArrayList<>();
+        values.add(durata_missione_uno.getText().toString());
+        values.add(take_off_uno.getText().toString());
+        values.add(landing_uno.getText().toString());
+
+        if(durataMinoreCinqueMinuti(Integer.parseInt(durata_missione_uno.getText().toString()))){
+            values.add(durata_missione_due.getText().toString());
+            values.add(take_off_due.getText().toString());
+            values.add(landing_due.getText().toString());
+        }else{
+            values.add("null");
+            values.add("null");
+            values.add("null");
+        }
+
+        values.add(durata_totale.getText().toString());
+        values.add(tot_ore_volo.getText().toString());
+        values.add("true");
+
+        Principale.getController().getLibrettoDiVolo().salvaDati(keys, values);
+    }
 }

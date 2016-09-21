@@ -5,6 +5,9 @@ import android.text.TextUtils;
 
 import java.util.ArrayList;
 
+import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Due;
+import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Quattro;
+import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Tre;
 import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Uno;
 import com.hirvorn.qtb_test.LibrettoDiVolo.LibrettoDiVolo;
 import com.hirvorn.qtb_test.Main.Principale;
@@ -177,6 +180,18 @@ public class Controller {
 
     public void salvaDati_Logbook_Uno(){
         Fragment_LibrettoVolo_Uno.salvaDati();
+    }
+
+    public void salvaDati_Logbook_Due(){
+        Fragment_LibrettoVolo_Due.salvaDati();
+    }
+
+    public void salvaDati_Logbook_Tre(){
+        Fragment_LibrettoVolo_Tre.salvaDati();
+    }
+
+    public void salvaDati_Logbook_Quattro(){
+        Fragment_LibrettoVolo_Quattro.salvaDati();
     }
 
 }

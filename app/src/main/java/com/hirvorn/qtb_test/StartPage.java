@@ -1156,11 +1156,17 @@ public class StartPage extends AppCompatActivity {
     }
 
     public void confermaLogbookDue(View view){
+        Principale.getController().salvaDati_Logbook_Due();
         mPager.setCurrentItem(3, true);
     }
 
     public void confermaLogbookTre(View view){
+        Principale.getController().salvaDati_Logbook_Tre();
         mPager.setCurrentItem(4, true);
+    }
+
+    public void confermaLogbookQuattro(View view){
+        Principale.getController().salvaDati_Logbook_Quattro();
     }
 
     //----------------------------------------------------------------------------------------------
