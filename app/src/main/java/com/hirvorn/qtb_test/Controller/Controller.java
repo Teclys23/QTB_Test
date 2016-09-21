@@ -20,6 +20,7 @@ public class Controller {
 	private Profilo profilo;
 	private Brevetto brevetto;
 	private String drone_attuale;
+    private int tot_ore_volo;
 	
 	
 	public Controller(Context context){
@@ -135,6 +136,28 @@ public class Controller {
 
     public String getDroneAttuale(){
         return this.drone_attuale;
+    }
+
+    public void initTotOreVolo(){
+        ReadPropertyValues reader = new ReadPropertyValues();
+        tot_ore_volo = Integer.parseInt(reader.getPropValue(profilo.getCodice() + Principale.getConfig().getUserExtension(), "totOreVolo"));
+    }
+
+    public void addTotOreVolo(int minuti){
+        tot_ore_volo  += minuti;
+
+        PropertiesWriter writer = new PropertiesWriter(profilo.getCodice() + Principale.getConfig().getUserExtension(), Principale.getController().getContext());
+        ArrayList<String> keys = new ArrayList<>();
+        keys.add("totOreVolo");
+
+        ArrayList<String> values = new ArrayList<>();
+        values.add(String.valueOf(tot_ore_volo));
+
+        writer.write(keys, values);
+    }
+
+    public int getTotOreVolo(){
+        return tot_ore_volo;
     }
 	
 }

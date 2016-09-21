@@ -5,11 +5,21 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Quattro;
+import com.hirvorn.qtb_test.R;
+import com.hirvorn.qtb_test.StartPage;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.concurrent.ThreadFactory;
 
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
@@ -19,8 +29,15 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     public Dialog onCreateDialog(Bundle savedInstanceState){
         //Use the current time as the default values for the time picker
         final Calendar c = Calendar.getInstance();
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
+        Bundle bundle = this.getArguments();
+        int hour, minute;
+        if(bundle.getInt("ora") == 0 && bundle.getInt("minuti") == 0){
+            hour = Fragment_LibrettoVolo_Quattro.oraLandingUno();
+            minute = Fragment_LibrettoVolo_Quattro.minutiLandingUno();
+        }else {
+            hour = c.get(Calendar.HOUR_OF_DAY);
+            minute = c.get(Calendar.MINUTE);
+        }
 
         //Create and return a new instance of TimePickerDialog
         return new TimePickerDialog(getActivity(),this, hour, minute,
@@ -37,5 +54,11 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         //Set a message for user
         //Display the user changed time on TextView
         tv.setText(String.valueOf(hourOfDay) + " : " + String.valueOf(minute));
+
+        if(risorsa == R.id.textView_logbook_quattro_ora_take_off)
+            StartPage.impostaTextView();
+        else
+            StartPage.impostaTextViewDue();
     }
+
 }

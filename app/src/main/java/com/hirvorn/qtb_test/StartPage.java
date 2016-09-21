@@ -1,6 +1,7 @@
 package com.hirvorn.qtb_test;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -62,6 +63,7 @@ import com.hirvorn.qtb_test.Utils.TimePickerFragment;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -126,12 +128,17 @@ public class StartPage extends AppCompatActivity {
     private static EditText crea_batteria_valore_tensione_batteria_carica;
     private static EditText crea_batteria_valore_percentuale_efficienza;
 
+    //Logbook quattro
+    private static EditText durata_missione_uno;
+    private static TextView landing_uno;
+
     /**
      * Controlli
      */
     private boolean sessioneValida;
     private boolean brevettoValido;
 
+    private static View view;
     private GPSTracker gps;
 
     /**
@@ -372,6 +379,7 @@ public class StartPage extends AppCompatActivity {
             login.creaNuovoProfilo(nome, cognome, mail, telefono, codiceFiscale, residenza, via, numeroCivico, cap);
             setSessioneCorrente(Principale.getController().getProfilo().getNome());
             setSessioneValida(true);
+            Principale.getController().initTotOreVolo();
             continuaDopoProfilo();
             //mPager.setCurrentItem(2, true);
         }
@@ -1062,14 +1070,6 @@ public class StartPage extends AppCompatActivity {
             }
         }
 
-        /*
-        GPSTracker gps = new GPSTracker(Principale.getController().getContext());
-        if(gps.canGetLocation()){
-            Fragment_LibrettoVolo_Uno.settaCoordinate(gps.getLatitude(), gps.getLongitude(), gps);
-        }else{
-            Log.v(StartPage.LOG_TAG, "GPS non va");
-            gps.showSettingsAlert();
-        }*/
     }
 
     @Override
@@ -1161,24 +1161,27 @@ public class StartPage extends AppCompatActivity {
     //set orari
 
     public void settaOraTakeOffUno(View view){
-        settaOra(view, R.id.textView_logbook_quattro_ora_take_off);
+        settaOra(view, R.id.textView_logbook_quattro_ora_take_off, Calendar.HOUR_OF_DAY, Calendar.MINUTE);
     }
 
-    public void settaOraDurataMissioneUno(View view){
-        settaOra(view, R.id.textView_logbook_quattro_durata_missione_uno);
-    }
 
     public void settaOraTakeOffDue(View view){
-        settaOra(view, R.id.textView_logbook_quattro_ora_take_off_due);
+        settaOra(view, R.id.textView_logbook_quattro_ora_take_off_due, 0, 0);
     }
 
-    public void settaOraDurataMissioneDue(View view){
-        settaOra(view, R.id.textView_logbook_quattro_durata_missione_due);
+    public static void impostaTextView(){
+        Fragment_LibrettoVolo_Quattro.settaLandingUno();
     }
 
-    public void settaOra(View view, int risorsa){
+    public static void impostaTextViewDue(){
+        Fragment_LibrettoVolo_Quattro.settaLandingDue();
+    }
+
+    public void settaOra(View view, int risorsa, int ora, int minuti){
 
         Bundle bundle = new Bundle();
+        bundle.putInt("ora", ora);
+        bundle.putInt("minuti", minuti);
         bundle.putInt("risorsa", risorsa);
         DialogFragment newFragment = new TimePickerFragment();
         newFragment.setArguments(bundle);
