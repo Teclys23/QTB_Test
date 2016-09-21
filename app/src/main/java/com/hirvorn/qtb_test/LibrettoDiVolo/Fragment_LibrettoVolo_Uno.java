@@ -29,6 +29,9 @@ import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.R;
 import com.hirvorn.qtb_test.StartPage;
 
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 
@@ -124,7 +127,36 @@ public class Fragment_LibrettoVolo_Uno extends Fragment{
     }
 
     public static void settaLocation(Address location){
+
         luogo.setText(location.getLocality());
+    }
+
+    public static void salvaDati(){
+        ArrayList<String> keys = new ArrayList<>();
+        keys.add("data");
+        keys.add("volumeDiVolo");
+        keys.add("luogo");
+        keys.add("latitudine");
+        keys.add("longitudine");
+        keys.add("meteo");
+        keys.add("vento");
+
+        ArrayList<String> values = new ArrayList<>();
+        values.add(new ArrayList<>(Arrays.asList(data.getText().toString().split(" "))).get(0));
+        values.add(volume_di_volo.getSelectedItem().toString());
+        values.add(luogo.getText().toString());
+        if(lat != null && lon != null){
+            values.add(lat.getText().toString());
+            values.add(lon.getText().toString());
+        }else{
+            values.add("null");
+            values.add("null");
+        }
+        values.add(meteo.getSelectedItem().toString());
+        values.add(vento.getSelectedItem().toString());
+
+        Principale.getController().getLibrettoDiVolo().salvaDati(keys, values);
+
     }
 
 }

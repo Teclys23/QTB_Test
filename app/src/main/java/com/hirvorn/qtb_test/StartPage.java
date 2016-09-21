@@ -37,6 +37,7 @@ import com.hirvorn.qtb_test.Brevetto.BrevettoTeoria;
 import com.hirvorn.qtb_test.CreaBatteria.Fragment_CreaBatteria;
 import com.hirvorn.qtb_test.Brevetto.BrevettoPratica;
 import com.hirvorn.qtb_test.Brevetto.BrevettoVisitaMedica;
+import com.hirvorn.qtb_test.LibrettoDiVolo.LibrettoDiVolo;
 import com.hirvorn.qtb_test.Utils.DatePickerFragment;
 import com.hirvorn.qtb_test.CreaBrevetto.Fragment_Brevetto_Main;
 import com.hirvorn.qtb_test.CreaBrevetto.Fragment_Brevetto_Pratica;
@@ -1053,8 +1054,10 @@ public class StartPage extends AppCompatActivity {
                     @Override
                     public void onFinished(List<Address> results) {
                         // do something with the result
-                        if(!results.isEmpty())
+                        if(!results.isEmpty()) {
                             Fragment_LibrettoVolo_Uno.settaLocation(results.get(0));
+
+                        }
                         else {
                             Toast.makeText(Principale.getController().getContext(), "Impossibile stabilire il luogo.", Toast.LENGTH_LONG).show();
                         }
@@ -1146,6 +1149,9 @@ public class StartPage extends AppCompatActivity {
     }
 
     public void confermaLogbookUno(View view){
+        Principale.getController().creaLibrettoDiVolo(Principale.getController().getProfilo().getCodice(),
+                (new ReadPropertyValues()).getPropValue(Principale.getController().getProfilo().getCodice() + Principale.getConfig().getUserExtension(), "numeroLogbook"));
+        Principale.getController().salvaDati_Logbook_Uno();
         mPager.setCurrentItem(2, true);
     }
 

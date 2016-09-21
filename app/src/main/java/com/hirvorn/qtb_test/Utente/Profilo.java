@@ -27,6 +27,7 @@ public class Profilo {
     private String numeroCivico;
     private String cap;
     private String totOreVolo;
+    private String numeroLogbook;
 
 	private Brevetto brevetto;
 
@@ -51,6 +52,7 @@ public class Profilo {
         this.numeroCivico = numeroCivico;
         this.cap = cap;
         this.totOreVolo = totOreVolo;
+        this.numeroLogbook = "0";
 
         droni_posseduti = new ArrayList<>();
 
@@ -67,6 +69,8 @@ public class Profilo {
         this.via = via;
         this.numeroCivico = numeroCivico;
         this.cap = cap;
+        this.totOreVolo = totOreVolo;
+
 
         ArrayList<String> droni_posseduti_nomi = new ArrayList<>(Arrays.asList(droni.split("#")));
 
@@ -148,6 +152,7 @@ public class Profilo {
         keys.add("cap");
         keys.add("drones");
         keys.add("totOreVolo");
+        keys.add("numeroLogbook");
 
         //creo l'elenco dei valori
         ArrayList<String> values = new ArrayList<String>();
@@ -163,6 +168,7 @@ public class Profilo {
         values.add(getCap());
         values.add("#");
         values.add(getTotOreVolo());
+        values.add(getNumeroLogbook());
 
         writer.write(keys, values);
 
@@ -267,6 +273,8 @@ public class Profilo {
     public String getTotOreVolo(){
         return totOreVolo;
     }
+
+    public String getNumeroLogbook(){ return numeroLogbook; }
 
     public String toString(){
         return "Profilo:\n\n" + this.codice + "\n" + this.nome + "\n" + this.cognome + "\n" + this.mail + "\n" + this.telefono + "\n" + this.codiceFiscale + "\n" + this.residenza + "\n" + this.via + "\n" + this.numeroCivico + "\n" + this.cap + "\n" + this.droni_posseduti;

@@ -5,7 +5,10 @@ import android.text.TextUtils;
 
 import java.util.ArrayList;
 
+import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Uno;
+import com.hirvorn.qtb_test.LibrettoDiVolo.LibrettoDiVolo;
 import com.hirvorn.qtb_test.Main.Principale;
+import com.hirvorn.qtb_test.QTB.QTB;
 import com.hirvorn.qtb_test.Settings.PropertiesWriter;
 import com.hirvorn.qtb_test.Objects.Sessione;
 import com.hirvorn.qtb_test.Brevetto.Brevetto;
@@ -21,13 +24,15 @@ public class Controller {
 	private Brevetto brevetto;
 	private String drone_attuale;
     private int tot_ore_volo;
-	
+
+    private LibrettoDiVolo librettoDiVolo;
 	
 	public Controller(Context context){
 		this.sessione = null;
 		this.context = context;
 		this.profilo = null;
         this.drone_attuale = null;
+        this.librettoDiVolo = null;
 	}
 
 	public Sessione getSessione() {
@@ -161,5 +166,17 @@ public class Controller {
         tot_ore_volo = Integer.parseInt(reader.getPropValue(profilo.getCodice() + Principale.getConfig().getUserExtension(), "totOreVolo"));
         return tot_ore_volo;
     }
-	
+
+    public void creaLibrettoDiVolo(String codiceUtente, String numeroLogbook){
+        this.librettoDiVolo = new LibrettoDiVolo(codiceUtente, numeroLogbook);
+    }
+
+    public LibrettoDiVolo getLibrettoDiVolo(){
+        return this.librettoDiVolo;
+    }
+
+    public void salvaDati_Logbook_Uno(){
+        Fragment_LibrettoVolo_Uno.salvaDati();
+    }
+
 }
