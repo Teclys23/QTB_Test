@@ -1,19 +1,24 @@
 package com.hirvorn.qtb_test.LibrettoDiVolo;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.hirvorn.qtb_test.Enum.VolumeDiVolo;
 import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.Objects.Sessione;
 import com.hirvorn.qtb_test.Settings.PropertiesWriter;
+import com.hirvorn.qtb_test.Settings.ReadPropertyValues;
 import com.hirvorn.qtb_test.StartPage;
 import com.hirvorn.qtb_test.Utente.Profilo;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class LibrettoDiVolo {
 
     public static final String LOGBOOK_EXTENSION = ".logbk";
+    private static final String APP_PACKAGE = "com.hirvorn.qtb_test";
 
     private String proprietario;
     private String numeroLogbook;
@@ -48,9 +53,20 @@ public class LibrettoDiVolo {
 
     public LibrettoDiVolo(String proprietario, String numeroLogbook){
         this.proprietario = proprietario;
-        this.numeroLogbook = String.valueOf(Integer.parseInt(numeroLogbook) + 1);
+        this.numeroLogbook = String.valueOf(Integer.parseInt(numeroLogbook));
 
-        PropertiesWriter writer = new PropertiesWriter(proprietario + LOGBOOK_EXTENSION, Principale.getController().getContext());
+        //controllo se il file esiste già
+
+        File file = new File("/data/data/" + APP_PACKAGE + "/shared_prefs/" + proprietario + "_" + this.numeroLogbook + LOGBOOK_EXTENSION + ".xml");
+        if(file.exists()){
+            //non completo
+            if((new ReadPropertyValues()).getPropValue(proprietario + "_" + this.numeroLogbook + LOGBOOK_EXTENSION, "completo").equals("false")){
+            }else{
+                this.numeroLogbook = String.valueOf(Integer.parseInt(this.numeroLogbook) + 1);
+            }
+        }
+
+        PropertiesWriter writer = new PropertiesWriter(proprietario + "_" + this.numeroLogbook + LOGBOOK_EXTENSION, Principale.getController().getContext());
         ArrayList<String> keys = new ArrayList<>();
         keys.add("proprietario");
         keys.add("numeroLogbook");
@@ -75,7 +91,7 @@ public class LibrettoDiVolo {
     }
 
     public void salvaDati(ArrayList<String> keys, ArrayList<String> values){
-        PropertiesWriter writer = new PropertiesWriter(proprietario + LOGBOOK_EXTENSION, Principale.getController().getContext());
+        PropertiesWriter writer = new PropertiesWriter(proprietario + "_" + this.numeroLogbook + LOGBOOK_EXTENSION, Principale.getController().getContext());
         writer.write(keys, values);
     }
 

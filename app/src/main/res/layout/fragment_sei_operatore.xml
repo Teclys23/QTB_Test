@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_sei_operatore_titolo"
+            android:layout_alignParentStart="true">
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:id="@+id/radioGroup_sei_operatore">
+
+                <RadioButton
+                    android:text="@string/sei_operatore_si"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="seiOperatore"
+                    android:id="@+id/radioButton_sei_operatore_si"/>
+
+                <RadioButton
+                    android:text="@string/sei_operatore_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="seiOperatore"
+                    android:id="@+id/radioButton_sei_operatore_no"
+                    android:layout_weight="1"/>
+            </RadioGroup>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:text="@string/sei_operatore_per"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sei_operatore_lavori_per"
+                    android:textAppearance="@android:style/TextAppearance.Medium"
+                    android:paddingBottom="20dp"
+                    android:paddingTop="20dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:visibility="invisible"/>
+            </RelativeLayout>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:id="@+id/radioGroup_sei_operatore_per">
+
+                <RadioButton
+                    android:text="@string/sei_operatore_si"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/radioButton_sei_operatore_per_si"
+                    android:visibility="invisible"/>
+
+                <RadioButton
+                    android:text="@string/sei_operatore_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/radioButton_sei_operatore_per_no"
+                    android:visibility="invisible"/>
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <Button
+            android:text="@string/sei_operatore_conferma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_sei_operatore_confermaù"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:text="@string/sei_operatore_titolo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_sei_operatore_titolo"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:paddingBottom="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"/>
+
+    </RelativeLayout>
+</LinearLayout>

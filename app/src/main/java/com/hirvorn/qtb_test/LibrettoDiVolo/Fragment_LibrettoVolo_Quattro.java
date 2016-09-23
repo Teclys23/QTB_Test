@@ -58,6 +58,7 @@ public class Fragment_LibrettoVolo_Quattro extends Fragment {
 
         durata_totale = (TextView)view.findViewById(R.id.textView_logbook_quattro_durata_missione);
         tot_ore_volo = (TextView)view.findViewById(R.id.textView_logbook_quattro_tot_ore_volo);
+        tot_ore_volo.setText(String.valueOf(Principale.getController().getTotOreVolo()));
 
         return view;
     }
@@ -91,7 +92,7 @@ public class Fragment_LibrettoVolo_Quattro extends Fragment {
         }
     }
 
-    private static boolean durataMinoreCinqueMinuti(int durata){
+    public static boolean durataMinoreCinqueMinuti(int durata){
         if(durata <= 5){
             tv_landing_due.setVisibility(View.VISIBLE);
             tv_durata_missione_due.setVisibility(View.VISIBLE);
@@ -192,8 +193,13 @@ public class Fragment_LibrettoVolo_Quattro extends Fragment {
 
         values.add(durata_totale.getText().toString());
         values.add(tot_ore_volo.getText().toString());
+
+        //completo
         values.add("true");
 
         Principale.getController().getLibrettoDiVolo().salvaDati(keys, values);
+
+        //aggiorna ore volo profilo
+        Principale.getController().addTotOreVolo(Integer.parseInt(durata_totale.getText().toString()));
     }
 }

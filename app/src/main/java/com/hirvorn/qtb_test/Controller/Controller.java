@@ -166,7 +166,7 @@ public class Controller {
 
     public int getTotOreVolo(){
         ReadPropertyValues reader = new ReadPropertyValues();
-        tot_ore_volo = Integer.parseInt(reader.getPropValue(profilo.getCodice() + Principale.getConfig().getUserExtension(), "totOreVolo"));
+        tot_ore_volo = Integer.parseInt(reader.getPropValue(profilo.getCodice()+ Principale.getConfig().getUserExtension(), "totOreVolo"));
         return tot_ore_volo;
     }
 

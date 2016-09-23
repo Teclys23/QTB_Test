@@ -183,5 +183,11 @@
     <string name="logbook_quattro_conferma">Conferma</string>
 
 
+    <!-- fragment_sei_operatore -->
+    <string name="sei_operatore_titolo">Sei un operatore?</string>
+    <string name="sei_operatore_si">Sì</string>
+    <string name="sei_operatore_no">No</string>
+    <string name="sei_operatore_per">Voli per un operatore?</string>
+    <string name="sei_operatore_conferma">Conferma</string>
 
 </resources>

@@ -27,6 +27,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -37,6 +39,7 @@ import com.hirvorn.qtb_test.Brevetto.BrevettoTeoria;
 import com.hirvorn.qtb_test.CreaBatteria.Fragment_CreaBatteria;
 import com.hirvorn.qtb_test.Brevetto.BrevettoPratica;
 import com.hirvorn.qtb_test.Brevetto.BrevettoVisitaMedica;
+import com.hirvorn.qtb_test.CreaProfilo.Fragment_SeiOperatore;
 import com.hirvorn.qtb_test.LibrettoDiVolo.LibrettoDiVolo;
 import com.hirvorn.qtb_test.Utils.DatePickerFragment;
 import com.hirvorn.qtb_test.CreaBrevetto.Fragment_Brevetto_Main;
@@ -129,9 +132,16 @@ public class StartPage extends AppCompatActivity {
     private static EditText crea_batteria_valore_tensione_batteria_carica;
     private static EditText crea_batteria_valore_percentuale_efficienza;
 
+    //Logbook uno
+    private static EditText luogo;
+
     //Logbook quattro
     private static EditText durata_missione_uno;
+    private static EditText durata_missione_due;
     private static TextView landing_uno;
+    private static TextView landing_due;
+    private static TextView take_off_uno;
+    private static TextView take_off_due;
 
     /**
      * Controlli
@@ -145,7 +155,7 @@ public class StartPage extends AppCompatActivity {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 9;
+    private static final int NUM_PAGES = 10;
     private static final int NUM_PAGES_APP = 5;
 
     /**
@@ -437,6 +447,38 @@ public class StartPage extends AppCompatActivity {
         }
 
     }
+
+    //----------------------------------------------------------------------------------------------
+    // Sei operatore
+
+    public void seiOperatore(View view){
+        if(((RadioGroup)findViewById(R.id.radioGroup_sei_operatore)).getCheckedRadioButtonId() == R.id.radioButton_sei_operatore_si)
+            Fragment_SeiOperatore.setVisibilitaOperatorePer(false);
+        else
+            Fragment_SeiOperatore.setVisibilitaOperatorePer(true);
+
+    }
+
+    public void seiOperatoreConferma(View view){
+        int seiOperatore = ((RadioGroup)findViewById(R.id.radioGroup_sei_operatore)).getCheckedRadioButtonId();
+
+        if(((RadioButton)findViewById(seiOperatore)).getText().equals(R.string.sei_operatore_no)){
+            int seiOperatorePer = ((RadioGroup)findViewById(R.id.radioGroup_sei_operatore_per)).getCheckedRadioButtonId();
+
+            if(((RadioButton)findViewById(seiOperatorePer)).getText().equals(R.string.sei_operatore_no)){
+                //no operatore, no lavoro per
+            }else{
+
+            }
+
+        }else{
+
+
+        }
+    }
+
+
+    //----------------------------------------------------------------------------------------------
 
     /**
      * Brevetto teoria
@@ -949,26 +991,29 @@ public class StartPage extends AppCompatActivity {
                     return new Fragment_CreaProfilo();
 
                 case 1:
-                    return new Fragment_Brevetto_Main();
+                    return new Fragment_SeiOperatore();
 
                 case 2:
-                    return new Fragment_Brevetto_Teoria();
+                    return new Fragment_Brevetto_Main();
 
                 case 3:
-                    return new Fragment_Brevetto_Pratica();
+                    return new Fragment_Brevetto_Teoria();
 
                 case 4:
-                    return new Fragment_Brevetto_Visita_Medica();
+                    return new Fragment_Brevetto_Pratica();
 
                 case 5:
+                    return new Fragment_Brevetto_Visita_Medica();
+
+                case 6:
                     return Fragment_Profilo.nuovaIstanza(Principale.getController().getProfilo().getNome(),
                             Principale.getController().getProfilo().getCognome(),
                             "000000");
 
-                case 6:
+                case 7:
                     return new Fragment_CreaDrone();
 
-                case 7:
+                case 8:
                     return new Fragment_CreaBatteria();
 
                 default:
@@ -1023,6 +1068,7 @@ public class StartPage extends AppCompatActivity {
 
 
     public void creaLibrettoDiVoloUno(View view){
+        Principale.getController().setDroneAttuale(((Spinner)findViewById(R.id.spinner_droni)).getSelectedItem().toString());
         mPager.setCurrentItem(1);
     }
 
@@ -1149,10 +1195,19 @@ public class StartPage extends AppCompatActivity {
     }
 
     public void confermaLogbookUno(View view){
-        Principale.getController().creaLibrettoDiVolo(Principale.getController().getProfilo().getCodice(),
-                (new ReadPropertyValues()).getPropValue(Principale.getController().getProfilo().getCodice() + Principale.getConfig().getUserExtension(), "numeroLogbook"));
-        Principale.getController().salvaDati_Logbook_Uno();
-        mPager.setCurrentItem(2, true);
+        luogo = (EditText)findViewById(R.id.editText_logbook_uno_luogo);
+        String location = luogo.getText().toString();
+
+        if(TextUtils.isEmpty(location)){
+            luogo.setError("Luogo mancante");
+        }
+
+        if(!TextUtils.isEmpty(location)) {
+            Principale.getController().creaLibrettoDiVolo(Principale.getController().getProfilo().getCodice(),
+                    (new ReadPropertyValues()).getPropValue(Principale.getController().getProfilo().getCodice() + Principale.getConfig().getUserExtension(), "numeroLogbook"));
+            Principale.getController().salvaDati_Logbook_Uno();
+            mPager.setCurrentItem(2, true);
+        }
     }
 
     public void confermaLogbookDue(View view){
@@ -1166,7 +1221,59 @@ public class StartPage extends AppCompatActivity {
     }
 
     public void confermaLogbookQuattro(View view){
-        Principale.getController().salvaDati_Logbook_Quattro();
+        durata_missione_uno = (EditText)findViewById(R.id.editText_logbook_quattro_durata_missione_uno);
+        String durataUno = durata_missione_uno.getText().toString();
+
+        if(TextUtils.isEmpty(durataUno)){
+            durata_missione_uno.setError("Durata missione mancante");
+            durata_missione_uno.requestFocus();
+        }
+
+        durata_missione_due = (EditText)findViewById(R.id.editText_logbook_quattro_durata_missione_due);
+        String durataDue = durata_missione_due.getText().toString();
+
+        if(!TextUtils.isEmpty(durataUno)) {
+            if (Fragment_LibrettoVolo_Quattro.durataMinoreCinqueMinuti(Integer.parseInt(durataUno))) {
+                if (TextUtils.isEmpty(durataDue)) {
+                    durata_missione_due.setError("Durata missione mancante");
+                    durata_missione_due.requestFocus();
+                }
+            }
+        }
+
+        take_off_uno = (TextView)findViewById(R.id.textView_logbook_quattro_ora_take_off);
+        take_off_due = (TextView)findViewById(R.id.textView_logbook_quattro_ora_take_off_due);
+
+        landing_uno = (TextView)findViewById(R.id.textView_logbook_quattro_landing);
+        String landingUno = landing_uno.getText().toString();
+
+        if(TextUtils.isEmpty(landingUno)){
+            take_off_uno.setError("Inserire orario di take off");
+        }
+
+        landing_due = (TextView)findViewById(R.id.textView_logbook_quattro_landing_due);
+        String landingDue = landing_due.getText().toString();
+
+        if(!TextUtils.isEmpty(durataUno)) {
+            if (Fragment_LibrettoVolo_Quattro.durataMinoreCinqueMinuti(Integer.parseInt(durataUno))) {
+                if (TextUtils.isEmpty(landingDue)) {
+                    take_off_due.setError("Inrerire orario di take off");
+                }
+            }
+        }
+
+        if(!TextUtils.isEmpty(durataUno)
+                && !TextUtils.isEmpty(landingUno)){
+            if(Fragment_LibrettoVolo_Quattro.durataMinoreCinqueMinuti(Integer.parseInt(durataUno))){
+                if(!TextUtils.isEmpty(durataDue)
+                        && !TextUtils.isEmpty(landingDue)){
+                    Principale.getController().salvaDati_Logbook_Quattro();
+                }
+            }else{
+                Principale.getController().salvaDati_Logbook_Quattro();
+            }
+        }
+
     }
 
     //----------------------------------------------------------------------------------------------
