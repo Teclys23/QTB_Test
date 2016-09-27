@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -41,6 +42,14 @@ import com.hirvorn.qtb_test.Brevetto.BrevettoPratica;
 import com.hirvorn.qtb_test.Brevetto.BrevettoVisitaMedica;
 import com.hirvorn.qtb_test.CreaProfilo.Fragment_SeiOperatore;
 import com.hirvorn.qtb_test.LibrettoDiVolo.LibrettoDiVolo;
+import com.hirvorn.qtb_test.Operatore.Fragment_CreaOperatore;
+import com.hirvorn.qtb_test.Operatore.Fragment_CreaOperatore_Critico;
+import com.hirvorn.qtb_test.Operatore.Fragment_CreaOperatore_Normale;
+import com.hirvorn.qtb_test.Operatore.Fragment_CreaOperatore_Terzi;
+import com.hirvorn.qtb_test.Operatore.Operatore;
+import com.hirvorn.qtb_test.Operatore.OperatoreCritico;
+import com.hirvorn.qtb_test.Operatore.OperatoreTerzi;
+import com.hirvorn.qtb_test.PreQTB.Fragment_DomandaOperatore;
 import com.hirvorn.qtb_test.Utils.DatePickerFragment;
 import com.hirvorn.qtb_test.CreaBrevetto.Fragment_Brevetto_Main;
 import com.hirvorn.qtb_test.CreaBrevetto.Fragment_Brevetto_Pratica;
@@ -143,6 +152,23 @@ public class StartPage extends AppCompatActivity {
     private static TextView take_off_uno;
     private static TextView take_off_due;
 
+    //CreaOperatore
+    private static Button creaOperatoreCritico;
+
+    //CreaOperatoreNormale
+    private static EditText codiceEnac;
+    private static TextView scadenzaNormale;
+
+    //CreaOperatoreCritico
+    private static EditText codiceEnacCritico;
+    private static TextView scadenzaCritico;
+
+    //CreaOperatoreTerzi
+    private static EditText nomeOperatoreTerzi;
+    private static EditText codiceTerzi;
+    private static EditText aprUtilizzatoTerzi;
+    private static CheckBox criticoTerzi;
+
     /**
      * Controlli
      */
@@ -155,7 +181,7 @@ public class StartPage extends AppCompatActivity {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 10;
+    private static final int NUM_PAGES = 13;
     private static final int NUM_PAGES_APP = 5;
 
     /**
@@ -449,6 +475,145 @@ public class StartPage extends AppCompatActivity {
     }
 
     //----------------------------------------------------------------------------------------------
+    // domanda operatore
+
+    public void domandaOperatore_SeiOperatore(View view){
+        Fragment_DomandaOperatore.seiOperatore();
+    }
+
+    public void creaOperatoreNormale(View view){
+        Principale.getController().setCritico(false);
+        creaOperatoreCritico = (Button)findViewById(R.id.button_crea_operatore_critico);
+        mPager.setCurrentItem(3, true);
+    }
+
+    public void creaOperatoreCritico(View view){
+        Principale.getController().setCritico(true);
+        mPager.setCurrentItem(4, true);
+    }
+
+    public void creaOperatoreTerzi(View view){
+        Principale.getController().setCritico(false);
+        mPager.setCurrentItem(5, true);
+    }
+
+    public void domandaOperatore_Conferma (View view){
+        mPager.setCurrentItem(8, true);
+    }
+
+    //----------------------------------------------------------------------------------------------
+    // Crea Operatore Normale
+
+    public void scadenzaOperatoreNormale(View view){
+        settaData(view, R.id.textView_crea_operatore_normale_data_scadenza);
+    }
+
+    public void aggiungiDroneOperatoreNormale(View view){
+        mPager.setCurrentItem(7, true);
+    }
+
+    public void confermaOperatoreNormale(View view){
+
+        codiceEnac = (EditText)findViewById(R.id.editText_crea_operatore_normale_codice_enac);
+        scadenzaNormale = (TextView)findViewById(R.id.textView_crea_operatore_normale_data_scadenza);
+
+        String codiceEnacNormale = codiceEnac.getText().toString();
+
+        if(TextUtils.isEmpty(codiceEnacNormale)){
+            codiceEnac.setError("Codice mancante");
+        }
+
+        String scadenza = scadenzaNormale.getText().toString();
+
+        if(scadenza.equals("Premi qui per inserire")){
+            scadenzaNormale.setError("Data mancante");
+            scadenzaNormale.setText(R.string.crea_operatore_normale_data_scadenza);
+        }
+
+        if(!TextUtils.isEmpty(codiceEnacNormale)
+                && !scadenza.equals("Premi qui per inserire")){
+            Operatore operatore = new Operatore(Principale.getController().getProfilo().getCodice(), codiceEnacNormale, scadenza);
+            operatore.salvaDati();
+            creaOperatoreCritico.setEnabled(true);
+            mPager.setCurrentItem(2, true);
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    // Crea Operatore Critico
+
+    public void scadenzaOperatoreCritico(View view){
+        settaData(view, R.id.textView_crea_operatore_critico_data_scadenza);
+    }
+
+    public void aggiungiDroneOperatoreCritico(View view){
+        mPager.setCurrentItem(7, true);
+    }
+
+    public void confermaOperatoreCritico(View view){
+
+        codiceEnacCritico = (EditText)findViewById(R.id.editText_crea_operatore_critico_codice_enac);
+        scadenzaCritico = (TextView)findViewById(R.id.textView_crea_operatore_critico_data_scadenza);
+
+        String codiceEnac = codiceEnacCritico.getText().toString();
+
+        if(TextUtils.isEmpty(codiceEnac)){
+            codiceEnacCritico.setError("Codice mancante");
+        }
+
+        String scadenza = scadenzaCritico.getText().toString();
+
+        if(scadenza.equals("Premi qui per inserire")){
+            scadenzaCritico.setError("Data mancante");
+            scadenzaCritico.setText(R.string.crea_operatore_critico_data_scadenza);
+        }
+
+        if(!TextUtils.isEmpty(codiceEnac)
+                && !scadenza.equals("Premi qui per inserire")){
+            OperatoreCritico operatore = new OperatoreCritico(Principale.getController().getProfilo().getCodice(), codiceEnac, scadenza);
+            operatore.salvaDati();
+            creaOperatoreCritico.setEnabled(true);
+            mPager.setCurrentItem(2, true);
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    // Crea Operatore Terzi
+
+    public void confermaOperatoreTerzi(View view){
+        nomeOperatoreTerzi = (EditText)findViewById(R.id.editText_crea_operatore_terzi_nome_operatore);
+        String nomeTerzi = nomeOperatoreTerzi.getText().toString();
+
+        if(TextUtils.isEmpty(nomeTerzi)){
+            nomeOperatoreTerzi.setError("Nome operatore mancante");
+        }
+
+        codiceTerzi = (EditText)findViewById(R.id.editText_crea_operatore_terzi_codice);
+        String codiceOpTerzi = codiceTerzi.getText().toString();
+
+        if(TextUtils.isEmpty(codiceOpTerzi)){
+            codiceTerzi.setError("Codice mancante");
+        }
+
+        aprUtilizzatoTerzi = (EditText)findViewById(R.id.editText_crea_operatore_terzi_apr);
+        String aprTerzi = aprUtilizzatoTerzi.getText().toString();
+
+        if(TextUtils.isEmpty(aprTerzi)){
+            aprUtilizzatoTerzi.setError("APR utilizzato mancante");
+        }
+
+        criticoTerzi = (CheckBox)findViewById(R.id.checkBox_crea_operatore_terzi_critico);
+
+        if(!TextUtils.isEmpty(nomeTerzi)
+                && !TextUtils.isEmpty(codiceOpTerzi)
+                && !TextUtils.isEmpty(aprTerzi)){
+            OperatoreTerzi operatoreTerzi = new OperatoreTerzi(Principale.getController().getProfilo().getCodice(), nomeTerzi, codiceOpTerzi, aprTerzi, criticoTerzi.isChecked());
+            operatoreTerzi.salvaDati();
+            mPager.setCurrentItem(2, true);
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
     // Sei operatore
 
     public void seiOperatore(View view){
@@ -462,18 +627,19 @@ public class StartPage extends AppCompatActivity {
     public void seiOperatoreConferma(View view){
         int seiOperatore = ((RadioGroup)findViewById(R.id.radioGroup_sei_operatore)).getCheckedRadioButtonId();
 
-        if(((RadioButton)findViewById(seiOperatore)).getText().equals(R.string.sei_operatore_no)){
+        if(((RadioButton)findViewById(seiOperatore)).getText().toString().equals(getResources().getString(R.string.sei_operatore_no))){
             int seiOperatorePer = ((RadioGroup)findViewById(R.id.radioGroup_sei_operatore_per)).getCheckedRadioButtonId();
 
-            if(((RadioButton)findViewById(seiOperatorePer)).getText().equals(R.string.sei_operatore_no)){
+            if(((RadioButton)findViewById(seiOperatorePer)).getText().equals(getResources().getString(R.string.sei_operatore_no))){
                 //no operatore, no lavoro per
+                mPager.setCurrentItem(8, true);
             }else{
-
+                mPager.setCurrentItem(5, true);
             }
 
         }else{
-
-
+            //è operatore
+            mPager.setCurrentItem(2, true);
         }
     }
 
@@ -485,7 +651,7 @@ public class StartPage extends AppCompatActivity {
      * @param view
      */
     public void inserisciBrevettoTeoria(View view) {
-        mPager.setCurrentItem(2, true);
+        mPager.setCurrentItem(9, true);
     }
 
     public void confermaBrevettoTeoria(View view) {
@@ -517,12 +683,12 @@ public class StartPage extends AppCompatActivity {
             BrevettoTeoria teoria = new BrevettoTeoria(Principale.getController().getSessione().getCodiceUtente(), luogo, data, numero);
             teoria.salvaBrevettoTeoria();
 
-            mPager.setCurrentItem(1, true);
+            mPager.setCurrentItem(8, true);
         }
     }
 
     public void inserisciBrevettoPratica(View view) {
-        mPager.setCurrentItem(3, true);
+        mPager.setCurrentItem(10, true);
     }
 
     public void confermaBrevettoPratica(View view) {
@@ -554,12 +720,12 @@ public class StartPage extends AppCompatActivity {
             BrevettoPratica teoria = new BrevettoPratica(Principale.getController().getSessione().getCodiceUtente(), luogo, data, numero);
             teoria.salvaBrevettoPratica();
 
-            mPager.setCurrentItem(1, true);
+            mPager.setCurrentItem(8, true);
         }
     }
 
     public void inserisciBrevettoVisitaMedica(View view) {
-        mPager.setCurrentItem(4, true);
+        mPager.setCurrentItem(11, true);
     }
 
     public void confermaBrevettoVisitaMedica(View view) {
@@ -591,12 +757,12 @@ public class StartPage extends AppCompatActivity {
             BrevettoVisitaMedica teoria = new BrevettoVisitaMedica(Principale.getController().getSessione().getCodiceUtente(), luogo, data, scadenza);
             teoria.salvaBrevettoVisitaMedica();
 
-            mPager.setCurrentItem(1, true);
+            mPager.setCurrentItem(8, true);
         }
     }
 
     public void tornaABrevettoMain(View view) {
-        mPager.setCurrentItem(1, true);
+        mPager.setCurrentItem(8, true);
     }
 
     public void confermaBrevettoCompleto(View view) {
@@ -674,7 +840,7 @@ public class StartPage extends AppCompatActivity {
                     mPager.setAdapter(mPagerAdapter);
                     mPager.setCurrentItem(0, true);
                 } else {
-                    mPager.setCurrentItem(5);
+                    mPager.setCurrentItem(12);
                     Fragment_Profilo.aggiornaBrevetto();
                 }
             }
@@ -836,6 +1002,13 @@ public class StartPage extends AppCompatActivity {
             crea_batteria_valore_batteria_carica.setError("Valore batteria carica mancante");
         }
 
+        crea_batteria_valore_batteria_storage = (EditText)findViewById(R.id.editTextvalore_batteria_storage);
+        String valore_batteria_storage = crea_batteria_valore_batteria_storage.getText().toString();
+
+        if(TextUtils.isEmpty(valore_batteria_storage)){
+            crea_batteria_valore_batteria_storage.setError("Valore batteria in storage mancante");
+        }
+
         crea_batteria_valore_batteria_scarica = (EditText) findViewById(R.id.editText_valore_batteria_scarica);
         String valore_batteria_scarica = crea_batteria_valore_batteria_scarica.getText().toString();
 
@@ -857,24 +1030,40 @@ public class StartPage extends AppCompatActivity {
             crea_batteria_valore_percentuale_efficienza.setError("Valore percentuale efficienza mancante");
         }
 
-        StringBuilder lettura_celle = new StringBuilder();
-        boolean celleSettate = true;
-        for (int i = 0; i < Integer.parseInt(numero_celle); i++) {
-            if (TextUtils.isEmpty(celle.get(i).getText().toString())) {
-                celle.get(i).setError("Valore lettura mancante");
-                celleSettate = false;
+        if(!numero_celle.equals("")) {
+            if (Integer.parseInt(numero_celle) > 0) {
+                StringBuilder lettura_celle = new StringBuilder();
+                boolean celleSettate = true;
+                for (int i = 0; i < Integer.parseInt(numero_celle); i++) {
+                    if (TextUtils.isEmpty(celle.get(i).getText().toString())) {
+                        celle.get(i).setError("Valore lettura mancante");
+                        celleSettate = false;
+                    }
+                }
+
+                if (celleSettate) {
+                    for (int i = 0; i < Integer.parseInt(numero_celle); i++) {
+                        lettura_celle.append(celle.get(0).getText().toString());
+                        lettura_celle.append("#");
+                    }
+                }
+
             }
         }
 
-        if (celleSettate) {
-            for (int i = 0; i < Integer.parseInt(numero_celle); i++) {
-                lettura_celle.append(celle.get(0).getText().toString());
-                lettura_celle.append("#");
-            }
-        }
 
-        //CONTROLLI DA FAREEEEEEEEEEEEEEEEEEE
-        if (!TextUtils.isEmpty(codiceBatteria)) {
+        
+        if (!TextUtils.isEmpty(codiceBatteria)
+                && !TextUtils.isEmpty(numero_celle)
+                && !TextUtils.isEmpty(amperaggio)
+                && !TextUtils.isEmpty(moltiplicatore_carica)
+                && !TextUtils.isEmpty(moltiplicatore_scarica)
+                && !TextUtils.isEmpty(valore_batteria_carica)
+                && !TextUtils.isEmpty(valore_batteria_scarica)
+                && !TextUtils.isEmpty(valore_batteria_storage)
+                && !TextUtils.isEmpty(valore_percentuale_efficienza)
+                && !TextUtils.isEmpty(valore_tensione_carica)
+                ) {
             Batteria batteria = new Batteria(codiceBatteria);
             Log.v(StartPage.LOG_TAG, "Drone attuale: " + Principale.getController().getDroneAttuale());
             batteria.salvaBatteria(Principale.getController().getDroneAttuale());
@@ -991,33 +1180,50 @@ public class StartPage extends AppCompatActivity {
                     return new Fragment_CreaProfilo();
 
                 case 1:
+                    //return new Fragment_DomandaOperatore();
                     return new Fragment_SeiOperatore();
 
                 case 2:
-                    return new Fragment_Brevetto_Main();
+                    return new Fragment_CreaOperatore();
+                    //return new Fragment_Brevetto_Main();
 
                 case 3:
-                    return new Fragment_Brevetto_Teoria();
+                    return new Fragment_CreaOperatore_Normale();
+                    //return new Fragment_Brevetto_Teoria();
 
                 case 4:
-                    return new Fragment_Brevetto_Pratica();
+                    return new Fragment_CreaOperatore_Critico();
+                    //return new Fragment_Brevetto_Pratica();
 
                 case 5:
-                    return new Fragment_Brevetto_Visita_Medica();
+                    return new Fragment_CreaOperatore_Terzi();
+                    //return new Fragment_Brevetto_Visita_Medica();
 
                 case 6:
+                    return new Fragment_CreaDrone();
+
+                case 7:
+                    return new Fragment_CreaBatteria();
+
+                case 8:
+                    return new Fragment_Brevetto_Main();
+
+                case 9:
+                    return new Fragment_Brevetto_Teoria();
+
+                case 10:
+                    return new Fragment_Brevetto_Pratica();
+
+                case 11:
+                    return new Fragment_Brevetto_Visita_Medica();
+
+                case 12:
                     return Fragment_Profilo.nuovaIstanza(Principale.getController().getProfilo().getNome(),
                             Principale.getController().getProfilo().getCognome(),
                             "000000");
 
-                case 7:
-                    return new Fragment_CreaDrone();
-
-                case 8:
-                    return new Fragment_CreaBatteria();
-
                 default:
-                    return new Fragment_CreaBrevetto();
+                    return new Fragment_CreaProfilo();
             }
         }
 
@@ -1306,5 +1512,6 @@ public class StartPage extends AppCompatActivity {
         newFragment.setArguments(bundle);
         newFragment.show(getSupportFragmentManager(), "TimePicker");
     }
+
 
 }

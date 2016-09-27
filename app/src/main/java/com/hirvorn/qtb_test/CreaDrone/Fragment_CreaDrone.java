@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.R;
@@ -32,6 +34,7 @@ public class Fragment_CreaDrone extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_crea_drone, container, false);
 
         spinner = (Spinner)view.findViewById(R.id.spinner_categorie);

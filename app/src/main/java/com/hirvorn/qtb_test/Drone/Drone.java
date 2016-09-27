@@ -52,6 +52,7 @@ public class Drone {
         keys.add("apr");
         keys.add("spr");
         keys.add("numero_motori");
+        keys.add("critico");
 
         //creo elenco dei valori
         ArrayList<String> values = new ArrayList<>();
@@ -61,6 +62,7 @@ public class Drone {
         values.add(this.getApr());
         values.add(this.getSpr());
         values.add(this.getNumero_motori());
+        values.add(String.valueOf(Principale.getController().getCritico()));
 
         writer.write(keys, values);
 

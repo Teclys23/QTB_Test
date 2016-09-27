@@ -190,4 +190,45 @@
     <string name="sei_operatore_per">Voli per un operatore?</string>
     <string name="sei_operatore_conferma">Conferma</string>
 
+    <!-- fragment_domanda_operatore -->
+    <string name="domanda_operatore_titolo">Sei operatore?</string>
+    <string name="domanda_operatore_domanda_operatore">Voli in conto proprio o per un operatore?</string>
+    <string name="domanda_operatore_operatore_si">In conto proprio</string>
+    <string name="domanda_operatore_operatore_no">Per un operatore</string>
+    <string name="domanda_operatore_domanda_quale_operatore">Per quale operatore stai lavorando?</string>
+    <string name="domanda_operatore_domanda_quale_macchina">Quale macchina stai utilizzando?</string>
+    <string name="domanda_operatore_conferma">Conferma</string>
+
+    <!-- fragment_crea_operatore -->
+    <string name="crea_operatore_titolo">Quale tipo di operatore vuoi creare?</string>
+    <string name="crea_operatore_normale">Operatore normale</string>
+    <string name="crea_operatore_critico">Operatore critico</string>
+    <string name="crea_operatore_terzi">Operatore per terzi</string>
+    <string name="crea_operatore_conferma">Conferma</string>
+
+    <!-- fragment_crea_operatore_normale -->
+    <string name="crea_operatore_normale_titolo">Dati operatore</string>
+    <string name="crea_operatore_normale_codice_enac">Codice E.N.A.C.:</string>
+    <string name="crea_operatore_normale_scadenza">Scadenza:</string>
+    <string name="crea_operatore_normale_data_scadenza">Premi qui per inserire</string>
+    <string name="crea_operatore_normale_aggiungi_drone">Aggiungi drone</string>
+    <string name="crea_operatore_normale_ritorna">Conferma</string>
+
+    <!-- fragment_crea_operatore_critico -->
+    <string name="crea_operatore_critico_titolo">Dati operatore critico</string>
+    <string name="crea_operatore_critico_codice_enac">Codice E.N.A.C.:</string>
+    <string name="crea_operatore_critico_scadenza">Scadenza:</string>
+    <string name="crea_operatore_critico_data_scadenza">Premi qui per inserire</string>
+    <string name="crea_operatore_critico_aggiungi_drone">Aggiungi drone</string>
+    <string name="crea_operatore_critico_ritorna">Conferma</string>
+
+    <!-- fragment_crea_operatore_terzi -->
+    <string name="crea_operatore_terzi_titolo">Dati operatore terzi</string>
+    <string name="crea_operatore_terzi_nome_operatore">Nome operatore:</string>
+    <string name="crea_operatore_terzi_codice">Codice operatore:</string>
+    <string name="crea_operatore_terzi_apr">Apr utilizzato:</string>
+    <string name="crea_operatore_terzi_critico">Missione critica:</string>
+    <string name="crea_operatore_terzi_conferma">Conferma</string>
+
+
 </resources>

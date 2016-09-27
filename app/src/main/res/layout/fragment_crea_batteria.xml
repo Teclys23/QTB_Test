@@ -177,7 +177,6 @@
                     android:layout_height="wrap_content"
                     android:inputType="number|numberDecimal"
                     android:id="@+id/editTextvalore_batteria_storage"/>
-
             </LinearLayout>
 
             <LinearLayout

@@ -28,6 +28,8 @@ public class Controller {
 	private String drone_attuale;
     private int tot_ore_volo;
 
+    private boolean critico;
+
     private LibrettoDiVolo librettoDiVolo;
 	
 	public Controller(Context context){
@@ -193,5 +195,14 @@ public class Controller {
     public void salvaDati_Logbook_Quattro(){
         Fragment_LibrettoVolo_Quattro.salvaDati();
     }
+
+    public void setCritico(boolean critico){
+        this.critico = critico;
+    }
+
+    public boolean getCritico(){
+        return this.critico;
+    }
+
 
 }

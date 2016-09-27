@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <TextView
+            android:text="@string/crea_operatore_titolo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/textView_crea_operatore_titolo"
+            android:textAppearance="@android:style/TextAppearance.Large"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:weightSum="1">
+
+                <Button
+                    android:text="@string/crea_operatore_normale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="creaOperatoreNormale"
+                    android:id="@+id/button_crea_operatore_normale"/>
+
+                <Button
+                    android:text="@string/crea_operatore_critico"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="creaOperatoreCritico"
+                    android:id="@+id/button_crea_operatore_critico"
+                    android:enabled="false"/>
+
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <Button
+            android:text="@string/crea_operatore_conferma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button13"
+            android:onClick="domandaOperatore_Conferma"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+</LinearLayout>

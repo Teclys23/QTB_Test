@@ -87,6 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button_sei_operatore_confermaù"
+            android:onClick="seiOperatoreConferma"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"/>
 
