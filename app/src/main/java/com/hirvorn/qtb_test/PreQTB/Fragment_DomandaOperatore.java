@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.hirvorn.qtb_test.Drone.Drone;
 import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.R;
 import com.hirvorn.qtb_test.Settings.ReadPropertyValues;
@@ -32,6 +33,9 @@ public class Fragment_DomandaOperatore extends Fragment {
     private static Spinner qualeOperatore;
     private static TextView tv_seleziona_macchina;
     private static Spinner qualeMacchina;
+    private static TextView tv_domanda_critico;
+    private static RadioButton checkBox_crit_si;
+    private static RadioButton checkBox_crit_no;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,12 +49,27 @@ public class Fragment_DomandaOperatore extends Fragment {
         qualeOperatore = (Spinner)view.findViewById(R.id.spinner_domanda_operatore_seleziona_operatore);
         tv_seleziona_macchina = (TextView)view.findViewById(R.id.textView_domanda_operatore_domanda_quale_macchina);
         qualeMacchina = (Spinner)view.findViewById(R.id.spinner_domanda_operatore_quale_macchina);
+        tv_domanda_critico = (TextView)view.findViewById(R.id.textView_domanda_operatore_domanda_critico);
+        checkBox_crit_si = (RadioButton)view.findViewById(R.id.radioButton_domanda_operatore_critico_si);
+        checkBox_crit_no = (RadioButton)view.findViewById(R.id.radioButton_domanda_operatore_critico_no);
 
         return view;
     }
 
     public static void seiOperatore(){
-        if(checkBox_si.isChecked()){
+
+        if(checkBox_si.isChecked() || checkBox_no.isChecked()){
+            if(tv_domanda_critico.getVisibility() == View.INVISIBLE)
+                tv_domanda_critico.setVisibility(View.VISIBLE);
+
+            if(checkBox_crit_si.getVisibility() == View.INVISIBLE)
+                checkBox_crit_si.setVisibility(View.VISIBLE);
+
+             if(checkBox_crit_no.getVisibility() == View.INVISIBLE)
+                checkBox_crit_no.setVisibility(View.VISIBLE);
+        }
+
+        if(checkBox_si.isChecked() && (checkBox_crit_si.isChecked() || checkBox_crit_no.isChecked())){
             if(tv_seleziona_operatore.getVisibility() == View.VISIBLE){
                 tv_seleziona_operatore.setVisibility(View.INVISIBLE);
             }
@@ -61,16 +80,30 @@ public class Fragment_DomandaOperatore extends Fragment {
 
             tv_seleziona_macchina.setVisibility(View.VISIBLE);
 
-            qualeMacchina.setAdapter(new ArrayAdapter<String>(Principale.getController().getContext(), android.R.layout.simple_spinner_item, new ArrayList<>(Arrays.asList((new ReadPropertyValues()).getPropValue(Principale.getController().getProfilo().getCodice() + Principale.getConfig().getUserExtension(), "drones").split("#")))));
+            if(checkBox_crit_si.isChecked()) {
+                //solo critici
+                ArrayList<String> droni = new ArrayList<>(Arrays.asList((new ReadPropertyValues()).getPropValue(Principale.getController().getProfilo().getCodice() + Principale.getConfig().getUserExtension(), "drones").split("#")));
+                for (String drone : droni) {
+                    if (!Boolean.valueOf((new ReadPropertyValues()).getPropValue(drone + Drone.DRONE_FILE_EXTENSION, "critico"))) {
+                        droni.remove(drone);
+                    }
+                }
+
+                qualeMacchina.setAdapter(new ArrayAdapter<String>(Principale.getController().getContext(), android.R.layout.simple_spinner_item, droni));
+            }else{
+                ArrayList<String> droni = new ArrayList<>(Arrays.asList((new ReadPropertyValues()).getPropValue(Principale.getController().getProfilo().getCodice() + Principale.getConfig().getUserExtension(), "drones").split("#")));
+
+                qualeMacchina.setAdapter(new ArrayAdapter<String>(Principale.getController().getContext(), android.R.layout.simple_spinner_item, droni));
+            }
 
             qualeMacchina.setVisibility(View.VISIBLE);
         }
 
-        if(checkBox_no.isChecked()){
+        if(checkBox_no.isChecked() && (checkBox_crit_si.isChecked() || checkBox_crit_no.isChecked())){
             tv_seleziona_operatore.setVisibility(View.VISIBLE);
             qualeOperatore.setVisibility(View.VISIBLE);
 
-            qualeOperatore.setAdapter(new ArrayAdapter<String>(Principale.getController().getContext(), android.R.layout.simple_spinner_item, new ArrayList<>(Arrays.asList((new ReadPropertyValues()).getPropValue(Principale.getController().getProfilo().getCodice() + Principale.getConfig().getUserExtension(), "operatori").split("#")))));
+            //qualeOperatore.setAdapter(new ArrayAdapter<String>(Principale.getController().getContext(), android.R.layout.simple_spinner_item, new ArrayList<>(Arrays.asList((new ReadPropertyValues()).getPropValue(Principale.getController().getProfilo().getCodice() + Principale.getConfig().getUserExtension(), "operatori").split("#")))));
         }
     }
 }

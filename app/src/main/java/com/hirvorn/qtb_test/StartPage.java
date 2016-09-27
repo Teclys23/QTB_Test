@@ -509,7 +509,7 @@ public class StartPage extends AppCompatActivity {
     }
 
     public void aggiungiDroneOperatoreNormale(View view){
-        mPager.setCurrentItem(7, true);
+        mPager.setCurrentItem(6, true);
     }
 
     public void confermaOperatoreNormale(View view){
@@ -547,7 +547,7 @@ public class StartPage extends AppCompatActivity {
     }
 
     public void aggiungiDroneOperatoreCritico(View view){
-        mPager.setCurrentItem(7, true);
+        mPager.setCurrentItem(6, true);
     }
 
     public void confermaOperatoreCritico(View view){
@@ -916,8 +916,8 @@ public class StartPage extends AppCompatActivity {
             Login login = new Login();
             login.creaNuovoDrone(categoria, marca, apr, lista_spr.toString(), numero_motori);
 
-            Fragment_Profilo.aggiungiCodiceDrone(apr);
-            mPager.setCurrentItem(6, true);
+            //Fragment_Profilo.aggiungiCodiceDrone(apr);
+            mPager.setCurrentItem(2, true);
 
         }
     }
@@ -1052,7 +1052,7 @@ public class StartPage extends AppCompatActivity {
         }
 
 
-        
+
         if (!TextUtils.isEmpty(codiceBatteria)
                 && !TextUtils.isEmpty(numero_celle)
                 && !TextUtils.isEmpty(amperaggio)
@@ -1246,7 +1246,8 @@ public class StartPage extends AppCompatActivity {
                     return new Fragment_Main();
 
                 case 1:
-                    return new Fragment_LibrettoVolo_Uno();
+                    return new Fragment_DomandaOperatore();
+                    //return new Fragment_LibrettoVolo_Uno();
 
                 case 2:
                     return new Fragment_LibrettoVolo_Due();

@@ -195,6 +195,9 @@
     <string name="domanda_operatore_domanda_operatore">Voli in conto proprio o per un operatore?</string>
     <string name="domanda_operatore_operatore_si">In conto proprio</string>
     <string name="domanda_operatore_operatore_no">Per un operatore</string>
+    <string name="domanda_operatore_domanda_critico">La missione è critica?</string>
+    <string name="domanda_operatore_critico_si">Sì</string>
+    <string name="domanda_operatore_critico_no">No</string>
     <string name="domanda_operatore_domanda_quale_operatore">Per quale operatore stai lavorando?</string>
     <string name="domanda_operatore_domanda_quale_macchina">Quale macchina stai utilizzando?</string>
     <string name="domanda_operatore_conferma">Conferma</string>
