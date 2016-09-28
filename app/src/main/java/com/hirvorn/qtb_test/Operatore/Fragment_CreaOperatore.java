@@ -20,6 +20,7 @@ import com.hirvorn.qtb_test.Settings.ReadPropertyValues;
 
 public class Fragment_CreaOperatore extends Fragment {
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -2,6 +2,7 @@ package com.hirvorn.qtb_test.Operatore;
 
 import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.Settings.PropertiesWriter;
+import com.hirvorn.qtb_test.Settings.ReadPropertyValues;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -29,20 +30,37 @@ public class OperatoreTerzi {
     }
 
     public void salvaDati(){
-        PropertiesWriter writer = new PropertiesWriter(proprietario + OPERATORE_TERZI_EXT, Principale.getController().getContext());
+        ReadPropertyValues reader = new ReadPropertyValues();
+        String apr = reader.getPropValue(Principale.getController().getProfilo().getCodice() + Principale.getConfig().getUserExtension(), "aprUtilizzati");
+
+        PropertiesWriter writer = new PropertiesWriter(proprietario + "_" + codiceEnacTerzi + OPERATORE_TERZI_EXT, Principale.getController().getContext());
         ArrayList<String> keys = new ArrayList<>();
         keys.add("proprietario");
         keys.add("nomeOperatoreTerzi");
         keys.add("codiceEnacTerzi");
-        keys.add("aprUtilizzato");
+        keys.add("aprUtilizzati");
         keys.add("critico");
 
         ArrayList<String> values = new ArrayList<>();
         values.add(proprietario);
         values.add(nomeOperatoreTerzi);
         values.add(codiceEnacTerzi);
-        values.add(aprUtilizzato);
+        values.add(apr + "#" + aprUtilizzato);
         values.add(critico);
+
+        writer.write(keys, values);
+
+        //lo aggiungo al profilo
+
+        String operatori = reader.getPropValue(Principale.getController().getProfilo().getCodice() + Principale.getConfig().getUserExtension(), "fileOperatoreTerzi");
+
+        writer = new PropertiesWriter(Principale.getController().getProfilo().getCodice() + Principale.getConfig().getUserExtension(), Principale.getController().getContext());
+
+        keys.clear();
+        values.clear();
+
+        keys.add("fileOperatoreTerzi");
+        values.add(operatori + "#" + Principale.getController().getProfilo().getCodice() + "_" + codiceEnacTerzi + OPERATORE_TERZI_EXT);
 
         writer.write(keys, values);
     }

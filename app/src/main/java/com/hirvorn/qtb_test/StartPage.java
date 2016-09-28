@@ -154,6 +154,7 @@ public class StartPage extends AppCompatActivity {
 
     //CreaOperatore
     private static Button creaOperatoreCritico;
+    private static Button creaOperatoreTerzi;
 
     //CreaOperatoreNormale
     private static EditText codiceEnac;
@@ -481,6 +482,14 @@ public class StartPage extends AppCompatActivity {
         Fragment_DomandaOperatore.seiOperatore();
     }
 
+    public void domandaOperatore_nonOperatore(View view){
+        Fragment_DomandaOperatore.nonOperatore();
+    }
+
+    public void domanda_Operatore_qualeMacchina(View view){
+        Fragment_DomandaOperatore.qualeMacchina();
+    }
+
     public void creaOperatoreNormale(View view){
         Principale.getController().setCritico(false);
         creaOperatoreCritico = (Button)findViewById(R.id.button_crea_operatore_critico);
@@ -580,7 +589,7 @@ public class StartPage extends AppCompatActivity {
     //----------------------------------------------------------------------------------------------
     // Crea Operatore Terzi
 
-    public void confermaOperatoreTerzi(View view){
+    public void salvaOperatoreTerzi(View view){
         nomeOperatoreTerzi = (EditText)findViewById(R.id.editText_crea_operatore_terzi_nome_operatore);
         String nomeTerzi = nomeOperatoreTerzi.getText().toString();
 
@@ -609,8 +618,18 @@ public class StartPage extends AppCompatActivity {
                 && !TextUtils.isEmpty(aprTerzi)){
             OperatoreTerzi operatoreTerzi = new OperatoreTerzi(Principale.getController().getProfilo().getCodice(), nomeTerzi, codiceOpTerzi, aprTerzi, criticoTerzi.isChecked());
             operatoreTerzi.salvaDati();
-            mPager.setCurrentItem(2, true);
+
+            Toast.makeText(Principale.getController().getContext(), "Operatore salvato con successo!", Toast.LENGTH_LONG).show();
+
+            nomeOperatoreTerzi.setText("");
+            codiceTerzi.setText("");
+            aprUtilizzatoTerzi.setText("");
+            criticoTerzi.setChecked(false);
         }
+    }
+
+    public void confermaOperatoreTerzi(View view){
+        mPager.setCurrentItem(2, true);
     }
 
     //----------------------------------------------------------------------------------------------

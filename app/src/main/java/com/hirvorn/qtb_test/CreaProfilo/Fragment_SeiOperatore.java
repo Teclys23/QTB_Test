@@ -45,8 +45,8 @@ public class Fragment_SeiOperatore extends Fragment {
             operatore_per_no.setVisibility(View.VISIBLE);
         }else{
             tv_operatore_per.setVisibility(View.INVISIBLE);
-            tv_operatore_per.setVisibility(View.INVISIBLE);
-            tv_operatore_per.setVisibility(View.INVISIBLE);
+            operatore_per_si.setVisibility(View.INVISIBLE);
+            operatore_per_no.setVisibility(View.INVISIBLE);
         }
     }
 }

@@ -45,6 +45,13 @@
                     android:id="@+id/button_crea_operatore_critico"
                     android:enabled="false"/>
 
+                <Button
+                    android:text="@string/crea_operatore_terzi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="creaOperatoreTerzi"
+                    android:id="@+id/button_crea_operatore_terzi"/>
+
 
             </LinearLayout>
         </RelativeLayout>

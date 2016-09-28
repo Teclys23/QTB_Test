@@ -112,6 +112,13 @@
                     android:layout_weight="1"/>
 
             </LinearLayout>
+
+            <Button
+                android:text="@string/crea_operatore_terzi_salva_operatore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="salvaOperatoreTerzi"
+                android:id="@+id/button_crea_operatore_salva_operatore"/>
         </LinearLayout>
 
         <Button

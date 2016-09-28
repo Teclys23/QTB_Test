@@ -201,9 +201,12 @@
     <string name="domanda_operatore_domanda_quale_operatore">Per quale operatore stai lavorando?</string>
     <string name="domanda_operatore_domanda_quale_macchina">Quale macchina stai utilizzando?</string>
     <string name="domanda_operatore_conferma">Conferma</string>
+    <string name="domanda_operatore_quale_operatore">Per quale operatore voli?</string>
+    <string name="domanda_operatore_seleziona_operatore">..seleziona operatore..</string>
+    <string name="domanda_operatore_allerta_critico">Attenzione! Il drone deve essere abilitato per le missioni critiche!</string>
 
     <!-- fragment_crea_operatore -->
-    <string name="crea_operatore_titolo">Quale tipo di operatore vuoi creare?</string>
+    <string name="crea_operatore_titolo">Quale tipo di operatore vuoi aggiungere?</string>
     <string name="crea_operatore_normale">Operatore normale</string>
     <string name="crea_operatore_critico">Operatore critico</string>
     <string name="crea_operatore_terzi">Operatore per terzi</string>
@@ -231,7 +234,8 @@
     <string name="crea_operatore_terzi_codice">Codice operatore:</string>
     <string name="crea_operatore_terzi_apr">Apr utilizzato:</string>
     <string name="crea_operatore_terzi_critico">Missione critica:</string>
-    <string name="crea_operatore_terzi_conferma">Conferma</string>
+    <string name="crea_operatore_terzi_conferma">Torna indietro</string>
+    <string name="crea_operatore_terzi_salva_operatore">Salva operatore</string>
 
 
 </resources>
