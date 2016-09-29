@@ -21,12 +21,14 @@
         android:id="@+id/textView24"
         android:layout_gravity="center_horizontal"
         android:paddingTop="40dp"
-        android:paddingBottom="10dp"/>
+        android:paddingBottom="10dp"
+        android:visibility="invisible"/>
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner_droni"/>
+        android:id="@+id/spinner_droni"
+        android:visibility="invisible"/>
 
     <Button
         android:layout_width="wrap_content"

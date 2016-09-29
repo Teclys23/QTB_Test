@@ -1,4 +1,4 @@
-package com.hirvorn.qtb_test.LibrettoDiVolo;
+package com.hirvorn.qtb_test.PreQTB;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -50,27 +50,6 @@ public class Fragment_LibrettoVolo_Due extends Fragment {
         Log.v("ASD", "Drone attuale: " + Principale.getController().getDroneAttuale());
 
         layout = (LinearLayout)view.findViewById(R.id.logbook_due_layout_spr);
-
-        /*
-        spinner_apr.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                ArrayList<String> lista_spr = new ArrayList<String>(Arrays.asList((new ReadPropertyValues()).getPropValue(spinner_apr.getSelectedItem() + Drone.DRONE_FILE_EXTENSION, "spr").split("#")));
-                for(String spr : lista_spr){
-                    TextView textView_spr = new TextView(Principale.getController().getContext());
-                    textView_spr.setText(spr);
-                    textView_spr.setTextColor(Color.BLACK);
-                    layout.addView(textView_spr);
-                }
-            }
-
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
-
-        });*/
 
         ArrayList<String> lista_spr = new ArrayList<String>(Arrays.asList((new ReadPropertyValues()).getPropValue(apr_utilizzato.getText().toString() + Drone.DRONE_FILE_EXTENSION, "spr").split("#")));
         for(String spr : lista_spr){

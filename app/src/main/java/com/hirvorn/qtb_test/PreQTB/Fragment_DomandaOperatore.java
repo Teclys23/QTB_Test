@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -41,6 +42,7 @@ public class Fragment_DomandaOperatore extends Fragment {
     private static RadioButton checkBox_crit_no;
     private static LinearLayout layout;
     private static LinearLayout layout_macchina;
+    private static Button button_conferma;
 
     private static TextView tv_scegli_operatore_terzi;
     private static Spinner scegli_operatore_terzi;
@@ -64,6 +66,7 @@ public class Fragment_DomandaOperatore extends Fragment {
         layout = (LinearLayout)view.findViewById(R.id.domanda_operatore_layout);
         tv_allerta_critico = new TextView(Principale.getController().getContext());
         layout_macchina = (LinearLayout)view.findViewById(R.id.domanda_operatore_layout_macchina);
+        button_conferma = (Button)view.findViewById(R.id.button_domanda_operatore_conferma);
 
         return view;
     }
@@ -127,6 +130,7 @@ public class Fragment_DomandaOperatore extends Fragment {
 
                 qualeMacchina.setAdapter(new ArrayAdapter<String>(Principale.getController().getContext(), android.R.layout.simple_spinner_item, droni));
             }
+
 
             qualeMacchina.setVisibility(View.VISIBLE);
         }
@@ -260,5 +264,21 @@ public class Fragment_DomandaOperatore extends Fragment {
             checkBox_crit_no.setVisibility(View.VISIBLE);
 
 
+    }
+
+    public static boolean tuttoSettato(){
+        boolean tuttoSettato = true;
+
+        if(!(checkBox_si.isChecked() || checkBox_no.isChecked()))
+            tuttoSettato = false;
+
+        if(!(checkBox_crit_si.isChecked() || checkBox_crit_no.isChecked()))
+            tuttoSettato = false;
+
+        return tuttoSettato;
+    }
+
+    public static String droneScelto(){
+        return qualeMacchina.getSelectedItem().toString();
     }
 }

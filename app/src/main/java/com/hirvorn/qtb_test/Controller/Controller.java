@@ -5,13 +5,12 @@ import android.text.TextUtils;
 
 import java.util.ArrayList;
 
-import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Due;
-import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Quattro;
-import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Tre;
-import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Uno;
+import com.hirvorn.qtb_test.PreQTB.Fragment_LibrettoVolo_Due;
+import com.hirvorn.qtb_test.PreQTB.Fragment_LibrettoVolo_Quattro;
+import com.hirvorn.qtb_test.PreQTB.Fragment_LibrettoVolo_Tre;
+import com.hirvorn.qtb_test.PreQTB.Fragment_LibrettoVolo_Uno;
 import com.hirvorn.qtb_test.LibrettoDiVolo.LibrettoDiVolo;
 import com.hirvorn.qtb_test.Main.Principale;
-import com.hirvorn.qtb_test.QTB.QTB;
 import com.hirvorn.qtb_test.Settings.PropertiesWriter;
 import com.hirvorn.qtb_test.Objects.Sessione;
 import com.hirvorn.qtb_test.Brevetto.Brevetto;

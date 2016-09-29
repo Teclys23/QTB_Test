@@ -1,4 +1,4 @@
-package com.hirvorn.qtb_test.LibrettoDiVolo;
+package com.hirvorn.qtb_test.PreQTB;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

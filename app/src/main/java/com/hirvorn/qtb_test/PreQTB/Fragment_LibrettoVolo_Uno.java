@@ -1,4 +1,4 @@
-package com.hirvorn.qtb_test.LibrettoDiVolo;
+package com.hirvorn.qtb_test.PreQTB;
 
 import android.Manifest;
 import android.content.Context;

@@ -5,21 +5,15 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.text.TextUtils;
 import android.text.format.DateFormat;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Quattro;
+import com.hirvorn.qtb_test.PreQTB.Fragment_LibrettoVolo_Quattro;
 import com.hirvorn.qtb_test.R;
 import com.hirvorn.qtb_test.StartPage;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.concurrent.ThreadFactory;
 
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener{

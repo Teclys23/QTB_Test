@@ -1,7 +1,6 @@
 package com.hirvorn.qtb_test;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -41,7 +40,6 @@ import com.hirvorn.qtb_test.CreaBatteria.Fragment_CreaBatteria;
 import com.hirvorn.qtb_test.Brevetto.BrevettoPratica;
 import com.hirvorn.qtb_test.Brevetto.BrevettoVisitaMedica;
 import com.hirvorn.qtb_test.CreaProfilo.Fragment_SeiOperatore;
-import com.hirvorn.qtb_test.LibrettoDiVolo.LibrettoDiVolo;
 import com.hirvorn.qtb_test.Operatore.Fragment_CreaOperatore;
 import com.hirvorn.qtb_test.Operatore.Fragment_CreaOperatore_Critico;
 import com.hirvorn.qtb_test.Operatore.Fragment_CreaOperatore_Normale;
@@ -50,19 +48,19 @@ import com.hirvorn.qtb_test.Operatore.Operatore;
 import com.hirvorn.qtb_test.Operatore.OperatoreCritico;
 import com.hirvorn.qtb_test.Operatore.OperatoreTerzi;
 import com.hirvorn.qtb_test.PreQTB.Fragment_DomandaOperatore;
+import com.hirvorn.qtb_test.PreQTB.Fragment_Volo;
 import com.hirvorn.qtb_test.Utils.DatePickerFragment;
 import com.hirvorn.qtb_test.CreaBrevetto.Fragment_Brevetto_Main;
 import com.hirvorn.qtb_test.CreaBrevetto.Fragment_Brevetto_Pratica;
 import com.hirvorn.qtb_test.CreaBrevetto.Fragment_Brevetto_Teoria;
 import com.hirvorn.qtb_test.CreaBrevetto.Fragment_Brevetto_Visita_Medica;
-import com.hirvorn.qtb_test.CreaBrevetto.Fragment_CreaBrevetto;
 import com.hirvorn.qtb_test.CreaDrone.Fragment_CreaDrone;
 import com.hirvorn.qtb_test.CreaProfilo.Fragment_CreaProfilo;
 import com.hirvorn.qtb_test.GPS.GPSTracker;
-import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Due;
-import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Quattro;
-import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Tre;
-import com.hirvorn.qtb_test.LibrettoDiVolo.Fragment_LibrettoVolo_Uno;
+import com.hirvorn.qtb_test.PreQTB.Fragment_LibrettoVolo_Due;
+import com.hirvorn.qtb_test.PreQTB.Fragment_LibrettoVolo_Quattro;
+import com.hirvorn.qtb_test.PreQTB.Fragment_LibrettoVolo_Tre;
+import com.hirvorn.qtb_test.PreQTB.Fragment_LibrettoVolo_Uno;
 import com.hirvorn.qtb_test.Login.Login;
 import com.hirvorn.qtb_test.Main.Fragment_Main;
 import com.hirvorn.qtb_test.Main.Principale;
@@ -475,40 +473,7 @@ public class StartPage extends AppCompatActivity {
 
     }
 
-    //----------------------------------------------------------------------------------------------
-    // domanda operatore
 
-    public void domandaOperatore_SeiOperatore(View view){
-        Fragment_DomandaOperatore.seiOperatore();
-    }
-
-    public void domandaOperatore_nonOperatore(View view){
-        Fragment_DomandaOperatore.nonOperatore();
-    }
-
-    public void domanda_Operatore_qualeMacchina(View view){
-        Fragment_DomandaOperatore.qualeMacchina();
-    }
-
-    public void creaOperatoreNormale(View view){
-        Principale.getController().setCritico(false);
-        creaOperatoreCritico = (Button)findViewById(R.id.button_crea_operatore_critico);
-        mPager.setCurrentItem(3, true);
-    }
-
-    public void creaOperatoreCritico(View view){
-        Principale.getController().setCritico(true);
-        mPager.setCurrentItem(4, true);
-    }
-
-    public void creaOperatoreTerzi(View view){
-        Principale.getController().setCritico(false);
-        mPager.setCurrentItem(5, true);
-    }
-
-    public void domandaOperatore_Conferma (View view){
-        mPager.setCurrentItem(8, true);
-    }
 
     //----------------------------------------------------------------------------------------------
     // Crea Operatore Normale
@@ -641,6 +606,22 @@ public class StartPage extends AppCompatActivity {
         else
             Fragment_SeiOperatore.setVisibilitaOperatorePer(true);
 
+    }
+
+    public void creaOperatoreNormale(View view){
+        Principale.getController().setCritico(false);
+        creaOperatoreCritico = (Button)findViewById(R.id.button_crea_operatore_critico);
+        mPager.setCurrentItem(3, true);
+    }
+
+    public void creaOperatoreCritico(View view){
+        Principale.getController().setCritico(true);
+        mPager.setCurrentItem(4, true);
+    }
+
+    public void creaOperatoreTerzi(View view){
+        Principale.getController().setCritico(false);
+        mPager.setCurrentItem(5, true);
     }
 
     public void seiOperatoreConferma(View view){
@@ -1269,13 +1250,16 @@ public class StartPage extends AppCompatActivity {
                     //return new Fragment_LibrettoVolo_Uno();
 
                 case 2:
-                    return new Fragment_LibrettoVolo_Due();
+                    return new Fragment_LibrettoVolo_Uno();
 
                 case 3:
                     return new Fragment_LibrettoVolo_Tre();
+                    //return new Fragment_LibrettoVolo_Due();
 
                 case 4:
-                    return new Fragment_LibrettoVolo_Quattro();
+                    return new Fragment_Volo();
+
+                    //return new Fragment_LibrettoVolo_Quattro();
 
 
                 default:
@@ -1288,6 +1272,33 @@ public class StartPage extends AppCompatActivity {
             return NUM_PAGES_APP;
         }
 
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //Domanda operatore
+
+    public void domandaOperatore_SeiOperatore(View view){
+        Fragment_DomandaOperatore.seiOperatore();
+    }
+
+    public void domandaOperatore_nonOperatore(View view){
+        Fragment_DomandaOperatore.nonOperatore();
+    }
+
+    public void domanda_Operatore_qualeMacchina(View view){
+        Fragment_DomandaOperatore.qualeMacchina();
+    }
+
+
+    public void domandaOperatore_Conferma (View view){
+
+        if(Fragment_DomandaOperatore.tuttoSettato()) {
+            Principale.getController().setDroneAttuale(Fragment_DomandaOperatore.droneScelto());
+            mPager.setCurrentItem(2, true);
+        }
+        else{
+            Toast.makeText(Principale.getController().getContext(), "Inserire i dati richiesti in questa pagina", Toast.LENGTH_LONG).show();
+        }
     }
 
     //----------------------------------------------------------------------------------------------
@@ -1432,18 +1443,18 @@ public class StartPage extends AppCompatActivity {
             Principale.getController().creaLibrettoDiVolo(Principale.getController().getProfilo().getCodice(),
                     (new ReadPropertyValues()).getPropValue(Principale.getController().getProfilo().getCodice() + Principale.getConfig().getUserExtension(), "numeroLogbook"));
             Principale.getController().salvaDati_Logbook_Uno();
-            mPager.setCurrentItem(2, true);
+            mPager.setCurrentItem(3, true);
         }
     }
 
     public void confermaLogbookDue(View view){
         Principale.getController().salvaDati_Logbook_Due();
-        mPager.setCurrentItem(3, true);
+        mPager.setCurrentItem(4, true);
     }
 
     public void confermaLogbookTre(View view){
         Principale.getController().salvaDati_Logbook_Tre();
-        mPager.setCurrentItem(4, true);
+        mPager.setCurrentItem(5, true);
     }
 
     public void confermaLogbookQuattro(View view){
@@ -1494,9 +1505,11 @@ public class StartPage extends AppCompatActivity {
                 if(!TextUtils.isEmpty(durataDue)
                         && !TextUtils.isEmpty(landingDue)){
                     Principale.getController().salvaDati_Logbook_Quattro();
+                    //mPager.setCurrentItem(5, true);
                 }
             }else{
                 Principale.getController().salvaDati_Logbook_Quattro();
+                //mPager.setCurrentItem(5, true);
             }
         }
 
@@ -1533,5 +1546,13 @@ public class StartPage extends AppCompatActivity {
         newFragment.show(getSupportFragmentManager(), "TimePicker");
     }
 
+    //----------------------------------------------------------------------------------------------
+    // Volo
+    public void takeOff(View view){
+        Fragment_Volo.takeOff();
+    }
 
+    public void landing(View view){
+        Fragment_Volo.landing();
+    }
 }
