@@ -56,23 +56,6 @@
                 android:layout_centerHorizontal="true">
 
                 <TextView
-                    android:text="@string/logbook_tre_tw_sperimentali"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView_logbook_tre_sperimentali"
-
-
-                    android:layout_weight="0.34"/>
-
-                <CheckBox
-                    android:text="@string/logbook_tre_sperimentali"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/checkBox_sperimentali"
-
-                    android:layout_weight="0.83"/>
-
-                <TextView
                     android:text="@string/logbook_tre_tw_critiche"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -99,6 +82,23 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:id="@+id/checkBox_non_critiche"/>
+
+                <TextView
+                    android:text="@string/logbook_tre_tw_sperimentali"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_logbook_tre_sperimentali"
+
+
+                    android:layout_weight="0.34"/>
+
+                <CheckBox
+                    android:text="@string/logbook_tre_sperimentali"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/checkBox_sperimentali"
+
+                    android:layout_weight="0.83"/>
 
                 <TextView
                     android:text="@string/logbook_tre_tw_addestramento"

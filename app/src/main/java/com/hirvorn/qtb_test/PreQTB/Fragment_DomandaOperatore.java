@@ -275,6 +275,12 @@ public class Fragment_DomandaOperatore extends Fragment {
         if(!(checkBox_crit_si.isChecked() || checkBox_crit_no.isChecked()))
             tuttoSettato = false;
 
+        if(checkBox_crit_si.isChecked()){
+            Principale.getController().setMissioneCritica(true);
+        }else{
+            Principale.getController().setMissioneCritica(false);
+        }
+
         return tuttoSettato;
     }
 

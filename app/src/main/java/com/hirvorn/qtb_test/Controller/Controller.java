@@ -26,8 +26,16 @@ public class Controller {
 	private Brevetto brevetto;
 	private String drone_attuale;
     private int tot_ore_volo;
+    private boolean preQTBMissionePrimaria;
 
+    //indica se la missione è critica
+    private boolean missioneCritica;
+
+    //indica se l'operatore è critico
     private boolean critico;
+
+    //indica se la missione è terminata
+    private boolean missioneChiusa;
 
     private LibrettoDiVolo librettoDiVolo;
 	
@@ -201,6 +209,30 @@ public class Controller {
 
     public boolean getCritico(){
         return this.critico;
+    }
+
+    public void setPreQTBMissionePrimaria(boolean missionePrimaria){
+        this.preQTBMissionePrimaria = missionePrimaria;
+    }
+
+    public boolean getPreQTBMissionePrimaria(){
+        return this.preQTBMissionePrimaria;
+    }
+
+    public boolean isMissioneCritica() {
+        return missioneCritica;
+    }
+
+    public void setMissioneCritica(boolean missioneCritica) {
+        this.missioneCritica = missioneCritica;
+    }
+
+    public synchronized boolean isMissioneChiusa(){
+        return this.missioneChiusa;
+    }
+
+    public synchronized void setMissioneChiusa(boolean missioneChiusa){
+        this.missioneChiusa = missioneChiusa;
     }
 
 

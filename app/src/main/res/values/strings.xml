@@ -237,5 +237,12 @@
     <string name="crea_operatore_terzi_conferma">Torna indietro</string>
     <string name="crea_operatore_terzi_salva_operatore">Salva operatore</string>
 
+    <!-- fragment_volo -->
+    <string name="volo_take_off">Take Off</string>
+    <string name="volo_landing">Landing</string>
+    <string name="volo_termina_missione">Termina missione</string>
+    <string name="volo_avviso">Essendo la missione durata meno di cinque minuti, è possibile eseguire un nuovo take off!</string>
+    <string name="volo_missione_terminata">Missione Terminata</string>
+
 
 </resources>

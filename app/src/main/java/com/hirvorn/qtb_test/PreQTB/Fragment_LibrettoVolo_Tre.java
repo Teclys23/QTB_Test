@@ -34,6 +34,8 @@ public class Fragment_LibrettoVolo_Tre extends Fragment {
         View view = inflater.inflate(R.layout.fragment_logbook_tre, container, false);
 
         sperimentali = (CheckBox)view.findViewById(R.id.checkBox_sperimentali);
+
+
         critiche = (CheckBox)view.findViewById(R.id.checkBox_critiche);
         nonCritiche = (CheckBox)view.findViewById(R.id.checkBox_non_critiche);
         addestramento = (CheckBox)view.findViewById(R.id.checkBox_addestramento);
@@ -41,10 +43,21 @@ public class Fragment_LibrettoVolo_Tre extends Fragment {
         vlos = (CheckBox)view.findViewById(R.id.checkBox_vlos);
         blos = (CheckBox)view.findViewById(R.id.checkBox_blos);
 
+        if(Principale.getController().isMissioneCritica())
+            critiche.setChecked(true);
+        else
+            nonCritiche.setChecked(true);
+
         return view;
     }
 
     public static void salvaDati(){
+        //setto la missione critica o meno
+        if(critiche.isChecked())
+            Principale.getController().setMissioneCritica(true);
+        else
+            Principale.getController().setMissioneCritica(false);
+
         ArrayList<String> keys = new ArrayList<>();
         keys.add("sperimentali");
         keys.add("critiche");

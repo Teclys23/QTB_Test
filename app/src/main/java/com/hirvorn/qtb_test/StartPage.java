@@ -1555,4 +1555,8 @@ public class StartPage extends AppCompatActivity {
     public void landing(View view){
         Fragment_Volo.landing();
     }
+
+    public void terminaMissione(View view){
+        Fragment_Volo.terminaMissione();
+    }
 }
