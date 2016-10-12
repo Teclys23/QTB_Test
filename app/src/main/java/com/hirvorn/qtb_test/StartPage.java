@@ -1,6 +1,7 @@
 package com.hirvorn.qtb_test;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -8,6 +9,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.print.PrintManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -47,6 +49,7 @@ import com.hirvorn.qtb_test.Operatore.Fragment_CreaOperatore_Terzi;
 import com.hirvorn.qtb_test.Operatore.Operatore;
 import com.hirvorn.qtb_test.Operatore.OperatoreCritico;
 import com.hirvorn.qtb_test.Operatore.OperatoreTerzi;
+import com.hirvorn.qtb_test.PDFCreator.PDFCreator;
 import com.hirvorn.qtb_test.PreQTB.Fragment_DomandaOperatore;
 import com.hirvorn.qtb_test.PreQTB.Fragment_Volo;
 import com.hirvorn.qtb_test.Utils.DatePickerFragment;
@@ -1302,6 +1305,12 @@ public class StartPage extends AppCompatActivity {
     }
 
     //----------------------------------------------------------------------------------------------
+    // Sei operatore
+    public void creaOperatore_Conferma(View view){
+        mPager.setCurrentItem(8, true);
+    }
+
+    //----------------------------------------------------------------------------------------------
 
 
     public void creaLibrettoDiVoloUno(View view){
@@ -1558,5 +1567,21 @@ public class StartPage extends AppCompatActivity {
 
     public void terminaMissione(View view){
         Fragment_Volo.terminaMissione();
+    }
+
+    public void missioneTerminata(View view){
+        printDocument();
+    }
+
+    private void printDocument()
+    {
+        PrintManager printManager = (PrintManager) this
+                .getSystemService(Context.PRINT_SERVICE);
+
+        String jobName = this.getString(R.string.app_name) +
+                " Document";
+
+        printManager.print(jobName, new PDFCreator().new MyPrintDocumentAdapter(Principale.getController().getContext()),
+                null);
     }
 }

@@ -109,7 +109,7 @@
                 android:text="@string/volo_missione_terminata"
                 android:textColor="#FFFFFF"
                 android:textSize="30sp"
-                android:onClick="takeOff"
+                android:onClick="missioneTerminata"
 
                 android:layout_width="200dp"
                 android:layout_height="200dp"

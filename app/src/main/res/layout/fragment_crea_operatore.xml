@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button13"
-            android:onClick="domandaOperatore_Conferma"
+            android:onClick="creaOperatore_Conferma"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"/>
     </RelativeLayout>
