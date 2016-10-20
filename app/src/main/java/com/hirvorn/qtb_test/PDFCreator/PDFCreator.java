@@ -18,6 +18,9 @@ import android.print.PageRange;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.content.Context;
+import android.util.Log;
+
+import com.hirvorn.qtb_test.StartPage;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -30,7 +33,7 @@ public class PDFCreator  extends AppCompatActivity {
         private int pageHeight;
         private int pageWidth;
         public PdfDocument myPdfDocument;
-        public int totalpages = 4;
+        public int totalpages = 1;
 
         public MyPrintDocumentAdapter(Context context)
         {
@@ -46,10 +49,18 @@ public class PDFCreator  extends AppCompatActivity {
 
             myPdfDocument = new PrintedPdfDocument(context, newAttributes);
 
-            pageHeight =
-                    newAttributes.getMediaSize().getHeightMils()/1000 * 72;
-            pageWidth =
-                    newAttributes.getMediaSize().getWidthMils()/1000 * 72;
+            //ISO_A4 = 210mm x 297mm
+            //pageHeight = newAttributes.getMediaSize().getHeightMils()/1000 * 72;
+            //pageHeight = (int)((newAttributes.getMediaSize().ISO_A4.getHeightMils() / 1000 * 72) / 0.039370);
+            Log.v(StartPage.LOG_TAG, "ISO A4: " + newAttributes.getMediaSize().ISO_A4.getWidthMils() + " x "
+                    + newAttributes.getMediaSize().ISO_A4.getHeightMils()
+                    + " - " + (int)((newAttributes.getMediaSize().ISO_A4.getHeightMils() * 0.0254)));
+            pageHeight = 2970;
+
+            //pageWidth = newAttributes.getMediaSize().getWidthMils()/1000 * 72;
+            //pageWidth = newAttributes.getMediaSize().ISO_A4.getWidthMils();
+            pageWidth = 2100;
+
 
             if (cancellationSignal.isCanceled() ) {
                 callback.onLayoutCancelled();
@@ -61,6 +72,7 @@ public class PDFCreator  extends AppCompatActivity {
                         .Builder("print_output.pdf")
                         .setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT)
                         .setPageCount(totalpages);
+
 
                 PrintDocumentInfo info = builder.build();
                 callback.onLayoutFinished(info, true);
@@ -125,37 +137,7 @@ public class PDFCreator  extends AppCompatActivity {
 
     private void drawPage(PdfDocument.Page page,
                           int pagenumber) {
-        Canvas canvas = page.getCanvas();
-
-        pagenumber++; // Make sure page numbers start at 1
-
-        int titleBaseLine = 72;
-        int leftMargin = 54;
-
-        Paint paint = new Paint();
-        paint.setColor(Color.BLACK);
-        paint.setTextSize(40);
-        canvas.drawText(
-                "Test Print Document Page " + pagenumber,
-                leftMargin,
-                titleBaseLine,
-                paint);
-
-        paint.setTextSize(14);
-        canvas.drawText("This is some test content to verify that custom document printing works", leftMargin, titleBaseLine + 35, paint);
-
-        if (pagenumber % 2 == 0)
-            paint.setColor(Color.RED);
-        else
-            paint.setColor(Color.GREEN);
-
-        PdfDocument.PageInfo pageInfo = page.getInfo();
-
-
-        canvas.drawCircle(pageInfo.getPageWidth()/2,
-                pageInfo.getPageHeight()/2,
-                150,
-                paint);
+        Pagina.disegnaPagina(page, pagenumber);
     }
 
 }

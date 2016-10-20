@@ -20,8 +20,8 @@ public class LibrettoDiVolo {
     public static final String LOGBOOK_EXTENSION = ".logbk";
     private static final String APP_PACKAGE = "com.hirvorn.qtb_test";
 
-    private String proprietario;
-    private String numeroLogbook;
+    private static String proprietario;
+    private static String numeroLogbook;
 
 	private String data;
     private VolumeDiVolo volume_volo;
@@ -93,6 +93,14 @@ public class LibrettoDiVolo {
     public void salvaDati(ArrayList<String> keys, ArrayList<String> values){
         PropertiesWriter writer = new PropertiesWriter(proprietario + "_" + this.numeroLogbook + LOGBOOK_EXTENSION, Principale.getController().getContext());
         writer.write(keys, values);
+    }
+
+    public static String getProprietario(){
+        return proprietario;
+    }
+
+    public static String getNumeroLogbook(){
+        return numeroLogbook;
     }
 
 }

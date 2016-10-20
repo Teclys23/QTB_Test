@@ -235,5 +235,14 @@ public class Controller {
         this.missioneChiusa = missioneChiusa;
     }
 
+    public String ottieniDatiPerLog(String file){
+        String result = "";
+
+        ReadPropertyValues reader = new ReadPropertyValues();
+        result += reader.getAllPropValues(file);
+
+        return result;
+    }
+
 
 }

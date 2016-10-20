@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.hirvorn.qtb_test.Controller.Controller;
 import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.StartPage;
 
@@ -12,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Properties;
 
 public class ReadPropertyValues {
@@ -76,5 +76,21 @@ public class ReadPropertyValues {
         SharedPreferences reader = Principale.getController().getContext().getSharedPreferences(file, Context.MODE_PRIVATE);
         return reader.getString(key, null);
     }
+
+	public String getAllPropValues(String file){
+		String result = "";
+
+		SharedPreferences reader = Principale.getController().getContext().getSharedPreferences(file, Context.MODE_PRIVATE);
+		Map<String, ?> elementi = reader.getAll();
+		for (Map.Entry<String,?> entry : elementi.entrySet()) {
+			String key = entry.getKey();
+			String value = String.valueOf(entry.getValue());
+
+			result += "\n" + key + "=" + value;
+		}
+
+
+		return result;
+	}
 
 }

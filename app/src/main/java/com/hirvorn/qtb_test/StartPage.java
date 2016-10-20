@@ -42,6 +42,8 @@ import com.hirvorn.qtb_test.CreaBatteria.Fragment_CreaBatteria;
 import com.hirvorn.qtb_test.Brevetto.BrevettoPratica;
 import com.hirvorn.qtb_test.Brevetto.BrevettoVisitaMedica;
 import com.hirvorn.qtb_test.CreaProfilo.Fragment_SeiOperatore;
+import com.hirvorn.qtb_test.LibrettoDiVolo.LibrettoDiVolo;
+import com.hirvorn.qtb_test.LogCreator.LogCreator;
 import com.hirvorn.qtb_test.Operatore.Fragment_CreaOperatore;
 import com.hirvorn.qtb_test.Operatore.Fragment_CreaOperatore_Critico;
 import com.hirvorn.qtb_test.Operatore.Fragment_CreaOperatore_Normale;
@@ -50,6 +52,7 @@ import com.hirvorn.qtb_test.Operatore.Operatore;
 import com.hirvorn.qtb_test.Operatore.OperatoreCritico;
 import com.hirvorn.qtb_test.Operatore.OperatoreTerzi;
 import com.hirvorn.qtb_test.PDFCreator.PDFCreator;
+import com.hirvorn.qtb_test.PDFCreator2.PDFCreator2;
 import com.hirvorn.qtb_test.PreQTB.Fragment_DomandaOperatore;
 import com.hirvorn.qtb_test.PreQTB.Fragment_Volo;
 import com.hirvorn.qtb_test.Utils.DatePickerFragment;
@@ -73,7 +76,9 @@ import com.hirvorn.qtb_test.Utente.Fragment_Profilo;
 import com.hirvorn.qtb_test.Utente.Profilo;
 import com.hirvorn.qtb_test.Utils.CustomViewPager;
 import com.hirvorn.qtb_test.Utils.TimePickerFragment;
+import com.itextpdf.text.DocumentException;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1570,18 +1575,31 @@ public class StartPage extends AppCompatActivity {
     }
 
     public void missioneTerminata(View view){
-        printDocument();
+        printLog();
+        printPDF2();
+        //printDocument();
+    }
+
+    private void printPDF2(){
+        try {
+            PDFCreator2.creaPDF();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void printLog(){
+        LogCreator.creaLog(LibrettoDiVolo.getProprietario() + "_" + LibrettoDiVolo.getNumeroLogbook());
     }
 
     private void printDocument()
     {
-        PrintManager printManager = (PrintManager) this
-                .getSystemService(Context.PRINT_SERVICE);
+        PrintManager printManager = (PrintManager) this.getSystemService(Context.PRINT_SERVICE);
 
-        String jobName = this.getString(R.string.app_name) +
-                " Document";
+        String jobName = this.getString(R.string.app_name) + " Document";
 
-        printManager.print(jobName, new PDFCreator().new MyPrintDocumentAdapter(Principale.getController().getContext()),
-                null);
+        printManager.print(jobName, new PDFCreator().new MyPrintDocumentAdapter(Principale.getController().getContext()), null);
     }
 }
