@@ -240,6 +240,7 @@ public class Controller {
 
         ReadPropertyValues reader = new ReadPropertyValues();
         result += reader.getAllPropValues(file);
+        System.out.println("----- " + file + " -----");
 
         return result;
     }

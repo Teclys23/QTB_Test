@@ -84,11 +84,15 @@ public class Profilo {
 	 */
 	//per configurare il profilo
 	public void configCodiceProfilo(){
+        /*
         Log.v(StartPage.LOG_TAG, "CONFIG CODICE PROFILO" + this.getNome() + this.getCognome());
         String subcode = getNome().substring(SUB_BEGIN_INDEX, SUB_END_INDEX).toUpperCase() + "-" +
 							getCognome().substring(SUB_BEGIN_INDEX, SUB_END_INDEX).toUpperCase();
 		setCodice(Principale.getConfig().getLastCode() + "-" + subcode);
 		System.out.println("codice: " + getCodice());
+		*/
+        setCodice(this.codiceFiscale);
+
 	}
 
     public static Profilo getProfilo(String codiceUtente){

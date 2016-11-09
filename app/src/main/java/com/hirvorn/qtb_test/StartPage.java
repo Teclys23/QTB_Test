@@ -1591,7 +1591,7 @@ public class StartPage extends AppCompatActivity {
     }
 
     private void printLog(){
-        LogCreator.creaLog(LibrettoDiVolo.getProprietario() + "_" + LibrettoDiVolo.getNumeroLogbook());
+        LogCreator.creaLog(Principale.getController().getSessione().getCodiceUtente() + "_" + LibrettoDiVolo.getNumeroLogbook());
     }
 
     private void printDocument()

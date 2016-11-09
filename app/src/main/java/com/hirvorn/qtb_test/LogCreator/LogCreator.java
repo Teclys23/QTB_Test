@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Environment;
 import android.widget.Toast;
 
+import com.hirvorn.qtb_test.Controller.ThreadLogCreator;
 import com.hirvorn.qtb_test.LibrettoDiVolo.LibrettoDiVolo;
 import com.hirvorn.qtb_test.Main.Principale;
 import com.hirvorn.qtb_test.R;
@@ -54,13 +55,17 @@ public class LogCreator {
     private static void scriviDati(String name){
         System.out.println("Nome: " + name + LibrettoDiVolo.LOGBOOK_EXTENSION);
 
+        /*
         try {
-
+            //Prende tutti i dati dal file name + librettodivolo.logbook_extension
             String s = Principale.getController().ottieniDatiPerLog(name + LibrettoDiVolo.LOGBOOK_EXTENSION);
             System.out.println("Prova dati: " + s);
             out.write(s.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
+        ThreadLogCreator logCreator = new ThreadLogCreator(out, name);
+        Thread threadLog = new Thread(logCreator);
+        threadLog.run();
     }
 }
