@@ -1072,7 +1072,16 @@ public class StartPage extends AppCompatActivity {
                 && !TextUtils.isEmpty(valore_percentuale_efficienza)
                 && !TextUtils.isEmpty(valore_tensione_carica)
                 ) {
-            Batteria batteria = new Batteria(codiceBatteria);
+            Batteria batteria = new Batteria(codiceBatteria,
+                                                numero_celle,
+                                                amperaggio,
+                                                moltiplicatore_carica,
+                                                moltiplicatore_scarica,
+                                                valore_batteria_carica,
+                                                valore_batteria_scarica,
+                                                valore_batteria_storage,
+                                                valore_percentuale_efficienza,
+                                                valore_tensione_carica);
             Log.v(StartPage.LOG_TAG, "Drone attuale: " + Principale.getController().getDroneAttuale());
             batteria.salvaBatteria(Principale.getController().getDroneAttuale());
 

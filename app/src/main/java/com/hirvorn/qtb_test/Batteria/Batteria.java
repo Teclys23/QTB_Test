@@ -21,9 +21,36 @@ public class Batteria {
     public static final String BATTERIA_FILE_EXTENSION = ".batt";
 
     private String codice;
+    private String numero_celle;
+    private String amperaggio;
+    private String moltiplicatore_carica;
+    private String moltiplicatore_scarica;
+    private String valore_batteria_carica;
+    private String valore_batteria_scarica;
+    private String valore_batteria_storage;
+    private String valore_percentuale_efficienza;
+    private String valore_tensione_carica;
 
-    public Batteria(String codice){
+    public Batteria(String codice,
+                    String numero_celle,
+                    String amperaggio,
+                    String moltiplicatore_carica,
+                    String moltiplicatore_scarica,
+                    String valore_batteria_carica,
+                    String valore_batteria_scarica,
+                    String valore_batteria_storage,
+                    String valore_percentuale_efficienza,
+                    String valore_tensione_carica){
         this.codice = codice;
+        this.numero_celle = numero_celle;
+        this.amperaggio = amperaggio;
+        this.moltiplicatore_carica = moltiplicatore_carica;
+        this.moltiplicatore_scarica = moltiplicatore_scarica;
+        this.valore_batteria_carica = valore_batteria_carica;
+        this.valore_batteria_scarica = valore_batteria_scarica;
+        this.valore_batteria_storage = valore_batteria_storage;
+        this.valore_percentuale_efficienza = valore_percentuale_efficienza;
+        this.valore_tensione_carica = valore_tensione_carica;
     }
 
     public void salvaBatteria(String drone){
@@ -35,9 +62,27 @@ public class Batteria {
 
         ArrayList<String> keys = new ArrayList<>();
         keys.add("codice");
+        keys.add("numero_celle");
+        keys.add("amperaggio");
+        keys.add("moltiplicatore_carica");
+        keys.add("moltiplicatore_scarica");
+        keys.add("valore_batteria_carica");
+        keys.add("valore_batteria_scarica");
+        keys.add("valore_batteria_storage");
+        keys.add("valore_percentuale_efficienza");
+        keys.add("valore_tensione_carica");
 
         ArrayList<String> values = new ArrayList<>();
         values.add(codice);
+        values.add(numero_celle);
+        values.add(amperaggio);
+        values.add(moltiplicatore_carica);
+        values.add(moltiplicatore_scarica);
+        values.add(valore_batteria_carica);
+        values.add(valore_batteria_scarica);
+        values.add(valore_batteria_storage);
+        values.add(valore_percentuale_efficienza);
+        values.add(valore_tensione_carica);
 
         writer.write(keys, values);
 
